@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export function useApiData(url, errorMsg) {
+export function useApiData(url, errorMsg, refreshIntervalMs = 0) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -21,7 +21,12 @@ export function useApiData(url, errorMsg) {
       }
     }
     fetchData();
-  }, [url]);
+
+    if (refreshIntervalMs > 0) {
+      const intervalId = setInterval(fetchData, refreshIntervalMs);
+      return () => clearInterval(intervalId);
+    }
+  }, [url, refreshIntervalMs]);
 
   return { data, isLoading, error };
 }
