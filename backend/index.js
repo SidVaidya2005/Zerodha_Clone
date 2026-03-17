@@ -5,8 +5,6 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-const rateLimit = require("express-rate-limit");
-
 const { HoldingsModel } = require("./model/HoldingsModel");
 
 const { PositionsModel } = require("./model/PositionsModel");
@@ -19,13 +17,6 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-
-const newOrderLimiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 30, // limit each IP to 30 /newOrder requests per windowMs
-  standardHeaders: true,
-  legacyHeaders: false,
-});
 
 app.get("/allHoldings", async (req, res) => {
   try {
@@ -57,7 +48,7 @@ app.get("/allOrders", async (req, res) => {
   }
 });
 
-app.post("/newOrder", newOrderLimiter, async (req, res) => {
+app.post("/newOrder", async (req, res) => {
   try {
     const { name, qty, price, mode } = req.body;
     if (typeof name !== "string") {
