@@ -1,0 +1,136 @@
+/* BUY ACTION WINDOW */
+
+.container {
+  --radius: 4px;
+  width: 40%;
+  height: 63%;
+  background: rgb(245, 245, 245);
+  position: absolute;
+  bottom: 0;
+  left: 35%;
+  cursor: move;
+  box-sizing: border-box;
+  z-index: 100;
+  border-radius: var(--radius);
+  border: 1px solid rgb(238, 238, 238);
+}
+
+.regular-order {
+  padding: 16px 26px;
+  background-color: #fff;
+  padding-bottom: 30px;
+}
+
+.inputs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.inputs fieldset {
+  max-width: 120px;
+  box-sizing: border-box;
+  border: 0.7px solid #ddd;
+  margin-right: 8px;
+}
+
+.inputs fieldset legend {
+  margin-left: 10px;
+  font-size: 0.8rem;
+  padding: 0 4px;
+}
+
+.inputs fieldset input {
+  border: none;
+  margin-right: 8px;
+  max-width: 130px;
+  min-height: 35px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  font-size: 1.1rem;
+}
+
+.inputs fieldset:focus {
+  outline: none;
+  border: 0.7px solid rgb(49, 49, 49);
+  border-radius: 2px;
+}
+
+.inputs fieldset input:focus {
+  outline: none;
+}
+
+.inputs fieldset input:disabled {
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
+.buttons {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  top: 10%;
+  padding: 0 20px;
+}
+
+.buttons span {
+  font-size: 0.8rem;
+}
+
+.btn-grey {
+  background: #d4d4d4;
+  color: #666666;
+}
+
+.btn-grey:hover {
+  background: #9b9b9b;
+  color: #fff;
+}
+
+.btn-red {
+  background: var(--app-loss);
+}
+
+.btn-red:hover {
+  background: #c62828;
+}
+
+.order-toast {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+.order-toast-success {
+  background: #2e7d32;
+}
+
+.order-toast-error {
+  background: #d32f2f;
+}
+
+/* STOCK INFO HEADER */
+
+.baw-stock-info {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  color: var(--app-muted);
+}
+
+.baw-stock-name {
+  color: var(--app-text);
+}
+
+.baw-stock-price {
+  margin-left: 8px;
+}
