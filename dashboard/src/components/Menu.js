@@ -14,7 +14,6 @@ const Menu = () => {
     { label: "Holdings", to: "/holdings" },
     { label: "Positions", to: "/positions" },
     { label: "Funds", to: "/funds" },
-    { label: "Apps", to: "/apps" },
   ];
 
   return (
@@ -24,13 +23,11 @@ const Menu = () => {
         <ul>
           {menuItems.map((item) => (
             <li key={item.label}>
-              <NavLink
-                className="menu-link"
-                to={item.to}
-                end={item.to === "/"}
-              >
+              <NavLink className="menu-link" to={item.to} end={item.to === "/"}>
                 {({ isActive }) => (
-                  <p className={isActive ? "menu selected" : "menu"}>{item.label}</p>
+                  <p className={isActive ? "menu selected" : "menu"}>
+                    {item.label}
+                  </p>
                 )}
               </NavLink>
             </li>
@@ -42,8 +39,8 @@ const Menu = () => {
           <p className="username">USERID</p>
           {isProfileDropdownOpen && (
             <div className="profile-dropdown">
-              <button 
-                className="logout-btn" 
+              <button
+                className="logout-btn"
                 onClick={(e) => {
                   e.stopPropagation();
                   window.location.href = "http://localhost:3000/";

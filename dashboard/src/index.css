@@ -76,6 +76,17 @@ code {
   line-height: 1.4;
 }
 
+.funds-action-btn {
+  min-height: 42px;
+  padding: 11px 22px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.88rem;
+  line-height: 1;
+}
+
 .btn {
   text-decoration: none;
   padding: 10px 20px;
@@ -200,6 +211,16 @@ code {
   color: var(--app-muted);
 }
 
+.commodity-action-btn {
+  min-height: 42px;
+  padding: 12px 24px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(56, 126, 209, 0.2);
+}
+
 .title {
   font-size: 1.3rem;
   font-weight: 500;
@@ -243,7 +264,6 @@ code {
 .order-table tr td:first-child {
   text-align: left;
 }
-
 
 .order-table tr td:last-child {
   font-size: 0.8rem;
@@ -309,7 +329,9 @@ code {
   padding: 16px;
   background-color: var(--app-surface);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transition: transform 180ms ease, box-shadow 180ms ease;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .quick-stat-card:hover {
@@ -1008,8 +1030,12 @@ hr {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .analytics-modal {
@@ -1030,8 +1056,14 @@ hr {
 }
 
 @keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .analytics-header {
@@ -1066,12 +1098,12 @@ hr {
 }
 
 .close-btn:hover {
-  background-color: rgba(0,0,0,0.05);
+  background-color: rgba(0, 0, 0, 0.05);
   color: var(--app-text);
 }
 
 [data-theme="dark"] .close-btn:hover {
-  background-color: rgba(255,255,255,0.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .analytics-body {
