@@ -9,7 +9,7 @@ function Team() {
 
       <div className="row p-3 text-muted app-rich-text">
         <div className="col-6 p-3 text-center">
-          <img src="media/images/Myimage.jpg" className="app-team-avatar" />
+          <img src="frontend/public/media/images/MyImage.jpg" className="app-team-avatar" />
           <h4 className="mt-5">Siddarth Vaidya</h4>
           <h6>Student Developer</h6>
         </div>
