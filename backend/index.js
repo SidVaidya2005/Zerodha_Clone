@@ -51,26 +51,30 @@ app.get("/allOrders", async (req, res) => {
 app.post("/newOrder", async (req, res) => {
   try {
     const { name, qty, price, mode } = req.body;
+    if (typeof name !== "string") {
+      return res.status(400).send("Invalid name");
+    }
+    const safeName = name.trim();
     const numQty = Number(qty);
     const numPrice = Number(price);
 
 
-    const newOrder = new OrdersModel({ name, qty: numQty, price: numPrice, mode });
+    const newOrder = new OrdersModel({ name: safeName, qty: numQty, price: numPrice, mode });
     await newOrder.save();
 
     if (mode === "BUY") {
 
-      const existing = await HoldingsModel.findOne({ name });
+      const existing = await HoldingsModel.findOne({ name: safeName });
       if (existing) {
         const totalQty = existing.qty + numQty;
         const newAvg = ((existing.avg * existing.qty) + (numPrice * numQty)) / totalQty;
         await HoldingsModel.updateOne(
-          { name },
+          { name: safeName },
           { qty: totalQty, avg: parseFloat(newAvg.toFixed(2)), price: numPrice || existing.price }
         );
       } else {
         await HoldingsModel.create({
-          name,
+          name: safeName,
           qty: numQty,
           avg: numPrice,
           price: numPrice,
@@ -80,16 +84,16 @@ app.post("/newOrder", async (req, res) => {
       }
     } else if (mode === "SELL") {
 
-      const existingPos = await PositionsModel.findOne({ name });
+      const existingPos = await PositionsModel.findOne({ name: safeName });
       if (existingPos) {
         await PositionsModel.updateOne(
-          { name },
+          { name: safeName },
           { qty: existingPos.qty + numQty, price: numPrice || existingPos.price }
         );
       } else {
         await PositionsModel.create({
           product: "CNC",
-          name,
+          name: safeName,
           qty: numQty,
           avg: numPrice,
           price: numPrice,
@@ -100,13 +104,13 @@ app.post("/newOrder", async (req, res) => {
       }
 
 
-      const holding = await HoldingsModel.findOne({ name });
+      const holding = await HoldingsModel.findOne({ name: safeName });
       if (holding) {
         const remainingQty = holding.qty - numQty;
         if (remainingQty <= 0) {
-          await HoldingsModel.deleteOne({ name });
+          await HoldingsModel.deleteOne({ name: safeName });
         } else {
-          await HoldingsModel.updateOne({ name }, { qty: remainingQty });
+          await HoldingsModel.updateOne({ name: safeName }, { qty: remainingQty });
         }
       }
     }
