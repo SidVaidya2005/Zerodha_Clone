@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const accountOpeningLinks = [
   "Getting started",
@@ -107,9 +108,9 @@ function AccordionItem({ section, isOpen, onToggle }) {
       {isOpen && (
         <div className="accordion-content">
           {section.links.map((link, index) => (
-            <a href="" key={index} className="accordion-link">
+            <Link to="/support" key={index} className="accordion-link">
               {link}
-            </a>
+            </Link>
           ))}
         </div>
       )}
@@ -144,9 +145,9 @@ function CreateTicket() {
             <ul className="featured-list">
               {featuredLinks.map((link, index) => (
                 <li key={index}>
-                  <a href="" className="featured-link">
+                  <Link to="/support" className="featured-link">
                     {link}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -156,9 +157,9 @@ function CreateTicket() {
             <ol className="quick-links-list">
               {quickLinks.map((link, index) => (
                 <li key={index}>
-                  <a href="" className="quick-link">
+                  <Link to="/support" className="quick-link">
                     {link}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ol>
