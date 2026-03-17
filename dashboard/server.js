@@ -76,7 +76,7 @@ app.get("/api/indian-stocks", async (req, res) => {
             },
           };
         } catch (err) {
-          console.error(`Error fetching ${symbol}:`, err.message);
+          console.error("Error fetching symbol:", symbol, err.message);
           return { symbol, error: true, message: err.message };
         }
       }),
