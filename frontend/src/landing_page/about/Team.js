@@ -9,7 +9,11 @@ function Team() {
 
       <div className="row p-3 text-muted app-rich-text">
         <div className="col-6 p-3 text-center">
-          <img src="frontend/public/media/images/MyImage.jpg" className="app-team-avatar" />
+          <img
+            src="media/images/MyImage.jpg"
+            className="app-team-avatar"
+            alt="Siddarth Vaidya"
+          />
           <h4 className="mt-5">Siddarth Vaidya</h4>
           <h6>Student Developer</h6>
         </div>
@@ -41,7 +45,7 @@ function Team() {
             <a
               href="https://github.com/SidVaidya2005"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               GitHub
             </a>{" "}
@@ -49,7 +53,7 @@ function Team() {
             <a
               href="https://www.linkedin.com/in/siddarth-vaidya-885871239"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               LinkedIn
             </a>
