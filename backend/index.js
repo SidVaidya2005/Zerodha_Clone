@@ -34,7 +34,14 @@ const positionsLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-app.get("/allHoldings", async (req, res) => {
+const holdingsLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 60, // limit each IP to 60 /allHoldings requests per windowMs
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.get("/allHoldings", holdingsLimiter, async (req, res) => {
   try {
     const allHoldings = await HoldingsModel.find({});
     res.json(allHoldings);
