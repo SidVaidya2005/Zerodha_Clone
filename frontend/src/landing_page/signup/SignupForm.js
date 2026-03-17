@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { DASHBOARD_URL } from "../../config";
 
 function SignupForm() {
   const [formData, setFormData] = useState({
@@ -45,7 +46,7 @@ function SignupForm() {
     if (validate()) {
       setSuccessMsg("Signup successful! Redirecting to dashboard...");
       setTimeout(() => {
-        window.location.href = `http://localhost:3001/?name=${encodeURIComponent(
+        window.location.href = `${DASHBOARD_URL}/?name=${encodeURIComponent(
           formData.fullName
         )}`;
       }, 2000);
