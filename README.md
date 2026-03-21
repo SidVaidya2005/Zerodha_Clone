@@ -10,6 +10,7 @@ The project was built to practice real-world full-stack architecture, React UI d
 - Screenshots/GIFs: To be added
 
 ## 3. Features
+
 - Holdings and positions retrieval
 - Order placement simulation (`POST /newOrder`)
 - Dashboard with portfolio-focused UI
@@ -122,6 +123,15 @@ Optional frontend env (`frontend/.env.local`):
 REACT_APP_API_URL=http://localhost:3002/api
 REACT_APP_DEBUG=true
 ```
+
+Dashboard env (`dashboard/.env.local` for local, deployment env settings for hosted build):
+
+```env
+REACT_APP_BACKEND_URL=http://localhost:3002
+REACT_APP_PROXY_URL=http://localhost:3001
+```
+
+For production deployments, set these to your hosted API/proxy HTTPS URLs.
 
 ## 8. Folder Structure
 
