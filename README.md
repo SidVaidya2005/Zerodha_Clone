@@ -1,67 +1,83 @@
-## 1. Project Overview
+# Zerodha Clone
 
-This project is a Zerodha-inspired trading platform clone built as a full-stack learning and portfolio project.
-It includes a backend API, a public-facing frontend, and a dashboard app for trading-related workflows.
-The project was built to practice real-world full-stack architecture, React UI development, API integration, and data modeling with MongoDB.
+A Zerodha-inspired trading platform clone built as a full-stack learning project. Three independently-runnable apps share one MongoDB database.
 
-## 2. Demo
+## Screenshots
 
-- Live Demo Link: To be added
-- Screenshots/GIFs: To be added
+| Homepage | Sign Up | Pricing |
+|---|---|---|
+| ![Homepage](assets/Homepage.png) | ![Sign Up](assets/Sign%20Up.png) | ![Pricing](assets/Pricing.png) |
 
-## 3. Features
+| Dashboard | Holdings | Support |
+|---|---|---|
+| ![Dashboard](assets/Dashboard.png) | ![Holdings](assets/Dashboard:Holding%20.png) | ![Support](assets/Support.png) |
 
-- Holdings and positions retrieval
-- Order placement simulation (`POST /newOrder`)
-- Dashboard with portfolio-focused UI
-- Public marketing/landing pages
-- Watchlist and advanced trading features planned in roadmap
-- Responsive React UI across frontend and dashboard apps
+## Tech Stack
 
-## 4. Tech Stack
+| Layer | Tech |
+|---|---|
+| Frontend | React, React Router, Bootstrap 5 (CDN) |
+| Dashboard | React, React Router, MUI, Chart.js, Axios |
+| Backend | Node.js, Express, Mongoose |
+| Database | MongoDB |
+| Live Prices | Yahoo Finance (`yahoo-finance2`) via proxy server |
 
-### Frontend
+## System Architecture
 
-- HTML5
-- CSS3
-- JavaScript (ES6+)
-- React.js
-- React Router
-- Material UI (dashboard)
-- Chart.js + react-chartjs-2 (dashboard visualizations)
+```
+frontend (React, port 3000)
+    └── calls backend (port 3002) via REACT_APP_BACKEND_URL
 
-### Backend
+dashboard (React, port 3000 in dev)
+    ├── calls backend (port 3002) for holdings, positions, orders
+    └── calls proxy server (port 3001) for live NSE/BSE stock prices
 
-- Node.js
-- Express.js
-- Mongoose
-- JWT
-- bcrypt
-- passport
-- express-validator
-- helmet
+proxy server (Express, port 3001) — dashboard/server.js
+    └── wraps Yahoo Finance for Indian stock quotes
 
-### Database
+backend (Express, port 3002)
+    └── MongoDB via Mongoose
+```
 
-- MongoDB
+## Features
 
-### Other Tools
+- Live NSE/BSE stock price watchlist (polls every 15 seconds via Yahoo Finance proxy)
+- Holdings and positions portfolio view with P&L calculations
+- Order placement simulation (BUY/SELL with weighted average price tracking)
+- Order history
+- Market index display (Nifty 50, Sensex)
+- Public marketing/landing pages (home, about, pricing, product, support, sign up)
+- Dark mode support across both apps
 
-- REST APIs
-- Axios
-- Postman/Thunder Client for API testing
+## Folder Structure
 
-## 5. System Architecture
+```
+zerodha-clone/
+├── backend/               # Express REST API (port 3002)
+│   ├── index.js           # All routes — single file, no router layer
+│   ├── model/             # Mongoose models (HoldingsModel, PositionsModel, OrdersModel)
+│   ├── schemas/           # Mongoose schema definitions
+│   ├── seedHoldings.js    # Reset + reseed holdings collection
+│   └── seedPositions.js   # Reset + reseed positions collection
+│
+├── frontend/              # Public/marketing React app (port 3000)
+│   └── src/
+│       ├── index.js       # App entry — AppLayout with theme management
+│       ├── config.js      # BACKEND_URL, DASHBOARD_URL
+│       └── landing_page/  # Page components (home, about, pricing, product, support, signup)
+│
+├── dashboard/             # Trading dashboard (port 3000) + proxy server (port 3001)
+│   ├── server.js          # Express proxy for Yahoo Finance
+│   └── src/
+│       ├── index.js       # Dashboard entry
+│       ├── config.js      # BACKEND_URL, PROXY_URL
+│       ├── components/    # Dashboard UI components
+│       └── hooks/         # useApiData custom hook
+│
+└── assets/                # README screenshots
+```
 
-High-level flow:
-
-`Frontend/Dashboard -> API Layer -> Express Backend -> MongoDB`
-
-Detailed app flow:
-
-`React UI -> Context/Hooks -> Service Layer (Axios) -> Express Routes -> Middleware -> Controllers/Models -> MongoDB`
-
-## 6. Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 
@@ -69,144 +85,88 @@ Detailed app flow:
 - npm
 - MongoDB (local or Atlas)
 
-### Clone the Repository
+### Clone & Install
 
 ```bash
-git clone https://github.com/your-username/zerodha-clone.git
-cd zerodha-clone
-```
+git clone https://github.com/SidVaidya2005/Zerodha_Clone.git
+cd Zerodha_Clone
 
-### Install Dependencies
-
-Install dependencies for each app:
-
-```bash
 cd backend && npm install
 cd ../frontend && npm install
 cd ../dashboard && npm install
 ```
 
-### Run the Project
+### Environment Variables
 
-Run each app in separate terminals:
-
-```bash
-cd backend
-npm start
-```
-
-```bash
-cd frontend
-npm start
-```
-
-```bash
-cd dashboard
-npm start
-```
-
-## 7. Environment Variables
-
-Create `backend/.env` and add:
-
+**`backend/.env`**
 ```env
 PORT=3002
-MONGO_URL=your_mongodb_connection
-JWT_SECRET=your_secret_key
-JWT_EXPIRE=7d
+MONGO_URL=your_mongodb_connection_string
 NODE_ENV=development
 ```
 
-Optional frontend env (`frontend/.env.local`):
-
+**`frontend/.env.local`**
 ```env
-REACT_APP_API_URL=http://localhost:3002/api
-REACT_APP_DEBUG=true
+REACT_APP_BACKEND_URL=http://localhost:3002
+REACT_APP_DASHBOARD_URL=http://localhost:3001
 ```
 
-Dashboard env (`dashboard/.env.local` for local, deployment env settings for hosted build):
-
+**`dashboard/.env.local`**
 ```env
 REACT_APP_BACKEND_URL=http://localhost:3002
 REACT_APP_PROXY_URL=http://localhost:3001
 ```
 
-For production deployments, set these to your hosted API/proxy HTTPS URLs.
+### Run
 
-## 8. Folder Structure
+Each app runs in its own terminal:
 
-```text
-zerodha-clone
-|
-|- backend/                  # Node + Express API
-|  |- index.js
-|  |- model/
-|  |- schemas/
-|
-|- frontend/                 # Public/marketing React app
-|  |- src/
-|  |- public/
-|
-|- dashboard/                # Trading dashboard React app
-|  |- src/components/
-|  |- src/data/
-|
-`- README.md
+```bash
+# Terminal 1 — Backend API
+cd backend && npm run dev
+
+# Terminal 2 — Frontend marketing site
+cd frontend && npm start
+
+# Terminal 3 — Dashboard + proxy server (both start together)
+cd dashboard && npm run dev
 ```
 
-## 9. API Endpoints
+### Seed the Database
 
-Current implemented backend endpoints:
+```bash
+cd backend
+npm run seed:holdings   # wipe + reseed holdings
+npm run seed:positions  # wipe + reseed positions
+```
 
-| Method | Endpoint      | Description         |
-| ------ | ------------- | ------------------- |
-| GET    | /allHoldings  | Fetch all holdings  |
-| GET    | /allPositions | Fetch all positions |
-| POST   | /newOrder     | Create a new order  |
+## API Endpoints
 
-Planned/target endpoints include `/api/auth/*`, `/api/orders/*`, `/api/watchlist/*`, and `/api/portfolio/*` routes.
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/allHoldings` | All holdings |
+| GET | `/allPositions` | All positions |
+| GET | `/allOrders` | All orders, newest first |
+| POST | `/newOrder` | Place a BUY or SELL order |
 
-## 10. Screenshots
+### Proxy Server Endpoints (port 3001)
 
-- Login Page: To be added
-- Dashboard: To be added
-- Trading Panel: To be added
-- Portfolio Page: To be added
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/indian-stocks?symbols=TCS,INFY` | Batch NSE/BSE quotes |
+| GET | `/api/indices` | Nifty 50 and Sensex |
+| GET | `/api/market-status` | NSE open/closed status |
 
-## 11. Future Improvements
+## Future Improvements
 
-- Authentication system with protected routes
-- Real-time stock price integration (WebSockets)
-- Advanced charting workspace and indicators
-- Watchlist CRUD + reorder support
-- Order history filters/sorting/pagination
-- CSV/PDF export support
-- Alerts and notifications
-- Paper trading/backtesting module
+- User authentication and protected routes
+- Real-time prices via WebSockets
+- Watchlist CRUD with reorder support
+- Order history filters, sorting, and pagination
+- Advanced charting workspace
+- CSV/PDF export
 - PWA/mobile improvements
 
-## 12. Learning Outcomes
+## Author
 
-- Built and connected multiple React apps with a shared backend
-- Practiced REST API creation using Express and MongoDB/Mongoose
-- Improved understanding of scalable project structure
-- Learned trade-offs between current implementation and production-ready architecture
-- Identified challenges around auth, data scoping, and real-time updates
-
-## 13. Contributing
-
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature/your-feature-name`).
-3. Commit your changes (`git commit -m "Add your message"`).
-4. Push to your fork (`git push origin feature/your-feature-name`).
-5. Open a Pull Request.
-
-## 14. License
-
-This project is open source. You can use the MIT License for distribution (add a `LICENSE` file if not present).
-
-## 15. Author
-
-- Name: Your Name
-- GitHub: https://github.com/your-username
-- LinkedIn: https://linkedin.com/in/your-profile
+- GitHub: [@SidVaidya2005](https://github.com/SidVaidya2005)
