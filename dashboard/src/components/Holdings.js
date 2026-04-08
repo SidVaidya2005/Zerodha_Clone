@@ -24,22 +24,26 @@ const Holdings = () => {
     [allHoldings],
   );
 
-  const { totalPnL, bestPerformer, worstPerformer } = useMemo(() => {
+  const { totalPnL, bestPerformer, worstPerformer, totalInvestment, totalCurrentValue } = useMemo(() => {
     if (holdingsWithPnL.length === 0) {
-      return { totalPnL: 0, bestPerformer: null, worstPerformer: null };
+      return { totalPnL: 0, bestPerformer: null, worstPerformer: null, totalInvestment: 0, totalCurrentValue: 0 };
     }
 
     let total = 0;
+    let investment = 0;
+    let currentValue = 0;
     let best = holdingsWithPnL[0];
     let worst = holdingsWithPnL[0];
 
     holdingsWithPnL.forEach((stock) => {
       total += stock.pnl;
+      investment += stock.avg * stock.qty;
+      currentValue += getCurrentValue(stock);
       if (stock.pnl > best.pnl) best = stock;
       if (stock.pnl < worst.pnl) worst = stock;
     });
 
-    return { totalPnL: total, bestPerformer: best, worstPerformer: worst };
+    return { totalPnL: total, bestPerformer: best, worstPerformer: worst, totalInvestment: investment, totalCurrentValue: currentValue };
   }, [holdingsWithPnL]);
 
   const data = useMemo(
@@ -135,19 +139,20 @@ const Holdings = () => {
 
       <div className="row">
         <div className="col">
-          <h5>
-            29,875.<span>55</span>{" "}
-          </h5>
+          <h5>{totalInvestment.toLocaleString("en-IN", { maximumFractionDigits: 2 })}</h5>
           <p>Total investment</p>
         </div>
         <div className="col">
-          <h5>
-            31,428.<span>95</span>{" "}
-          </h5>
+          <h5>{totalCurrentValue.toLocaleString("en-IN", { maximumFractionDigits: 2 })}</h5>
           <p>Current value</p>
         </div>
         <div className="col">
-          <h5>1,553.40 (+5.20%)</h5>
+          <h5 className={getProfitClass(totalPnL)}>
+            {totalPnL.toLocaleString("en-IN", { maximumFractionDigits: 2 })}{" "}
+            {totalInvestment > 0 && (
+              <small>({totalPnL >= 0 ? "+" : ""}{((totalPnL / totalInvestment) * 100).toFixed(2)}%)</small>
+            )}
+          </h5>
           <p>P&L</p>
         </div>
       </div>

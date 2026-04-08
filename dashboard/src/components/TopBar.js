@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Menu from "./Menu";
 import { PROXY_URL } from "../config";
+import { formatPercent } from "./portfolioUtils";
 
 const TopBar = () => {
   const [indices, setIndices] = useState({
@@ -12,11 +13,6 @@ const TopBar = () => {
   const formatIndexPoint = (value) => {
     if (typeof value !== "number" || !Number.isFinite(value)) return "--";
     return value.toLocaleString("en-IN", { maximumFractionDigits: 2 });
-  };
-
-  const formatPercent = (value) => {
-    if (typeof value !== "number" || !Number.isFinite(value)) return "--";
-    return `${value > 0 ? "+" : ""}${value.toFixed(2)}%`;
   };
 
   useEffect(() => {

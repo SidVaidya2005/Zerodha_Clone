@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect, useMemo } from "react";
 
 import GeneralContext from "./GeneralContext";
 import { PROXY_URL } from "../config";
+import { parseNumericPrice, formatPrice, formatPercent } from "./portfolioUtils";
 
 import { Tooltip, Grow } from "@mui/material";
 
@@ -14,60 +15,16 @@ import {
 
 import { DoughnutChart } from "./DoughnoutChart";
 
-const parseNumericPrice = (value) => {
-  if (typeof value === "number" && Number.isFinite(value)) return value;
-  if (typeof value === "string") {
-    const parsed = parseFloat(value.replace(/,/g, ""));
-    return Number.isFinite(parsed) ? parsed : 0;
-  }
-  return 0;
-};
-
-const formatPrice = (value) =>
-  parseNumericPrice(value).toLocaleString("en-IN", {
-    maximumFractionDigits: 2,
-  });
-
 const initialWatchlist = [
-  {
-    name: "HDFCBANK",
-    price: 0,
-    percent: "0.00%",
-    isDown: false,
-    isIndian: true,
-  },
-  {
-    name: "RELIANCE",
-    price: 0,
-    percent: "0.00%",
-    isDown: false,
-    isIndian: true,
-  },
-  {
-    name: "ICICIBANK",
-    price: 0,
-    percent: "0.00%",
-    isDown: false,
-    isIndian: true,
-  },
+  { name: "HDFCBANK", price: 0, percent: "0.00%", isDown: false, isIndian: true },
+  { name: "RELIANCE", price: 0, percent: "0.00%", isDown: false, isIndian: true },
+  { name: "ICICIBANK", price: 0, percent: "0.00%", isDown: false, isIndian: true },
   { name: "INFY", price: 0, percent: "0.00%", isDown: false, isIndian: true },
   { name: "ITC", price: 0, percent: "0.00%", isDown: false, isIndian: true },
   { name: "TCS", price: 0, percent: "0.00%", isDown: false, isIndian: true },
   { name: "LT", price: 0, percent: "0.00%", isDown: false, isIndian: true },
-  {
-    name: "BHARTIARTL",
-    price: 0,
-    percent: "0.00%",
-    isDown: false,
-    isIndian: true,
-  },
-  {
-    name: "AXISBANK",
-    price: 0,
-    percent: "0.00%",
-    isDown: false,
-    isIndian: true,
-  },
+  { name: "BHARTIARTL", price: 0, percent: "0.00%", isDown: false, isIndian: true },
+  { name: "AXISBANK", price: 0, percent: "0.00%", isDown: false, isIndian: true },
   { name: "SBIN", price: 0, percent: "0.00%", isDown: false, isIndian: true },
 ];
 
@@ -96,20 +53,20 @@ const WatchList = () => {
         }
 
         setLiveWatchlist((prev) => {
-          let updatedList = [...prev];
+          const updatedList = [...prev];
+          let changed = false;
+
           data.forEach((item) => {
             if (!item.error && item.data) {
               const stockIndex = updatedList.findIndex(
                 (s) => s.name === item.symbol,
               );
               if (stockIndex !== -1) {
-                const oldPrice = parseNumericPrice(
-                  updatedList[stockIndex].price,
-                );
+                const oldPrice = parseNumericPrice(updatedList[stockIndex].price);
                 const newPrice =
-                  typeof item.data.close === "number"
-                    ? item.data.close
-                    : oldPrice;
+                  typeof item.data.close === "number" ? item.data.close : oldPrice;
+
+                if (newPrice === oldPrice) return;
 
                 const prevClose =
                   typeof item.data.previousClose === "number"
@@ -118,24 +75,21 @@ const WatchList = () => {
                       ? item.data.open
                       : oldPrice;
 
-                const percentDiff =
-                  prevClose > 0
-                    ? (((newPrice - prevClose) / prevClose) * 100).toFixed(2)
-                    : "0.00";
+                const percentChange =
+                  prevClose > 0 ? ((newPrice - prevClose) / prevClose) * 100 : 0;
 
                 updatedList[stockIndex] = {
                   ...updatedList[stockIndex],
                   price: newPrice,
-                  percent:
-                    parseFloat(percentDiff) > 0
-                      ? `+${percentDiff}%`
-                      : `${percentDiff}%`,
+                  percent: formatPercent(percentChange),
                   isDown: newPrice < prevClose,
                 };
+                changed = true;
               }
             }
           });
-          return updatedList;
+
+          return changed ? updatedList : prev;
         });
       } catch (error) {
         console.error("Error fetching Indian stocks proxy:", error);
@@ -148,27 +102,25 @@ const WatchList = () => {
     return () => clearInterval(indiaInterval);
   }, []);
 
-  const filteredWatchlist = liveWatchlist;
-
   const data = useMemo(() => {
-    const totalPrice = filteredWatchlist.reduce(
+    const totalPrice = liveWatchlist.reduce(
       (acc, stock) => acc + parseNumericPrice(stock.price),
       0,
     );
 
-    const labels = filteredWatchlist.map((stock) => {
+    const labels = liveWatchlist.map((stock) => {
       const price = parseNumericPrice(stock.price);
       const percentage =
         totalPrice > 0 ? ((price / totalPrice) * 100).toFixed(2) : 0;
       return `${stock.name}: ${percentage}%`;
     });
 
-    const dataPoints = filteredWatchlist.map((stock) =>
+    const dataPoints = liveWatchlist.map((stock) =>
       parseNumericPrice(stock.price),
     );
 
     return {
-      labels: labels,
+      labels,
       datasets: [
         {
           label: "Price",
@@ -221,20 +173,18 @@ const WatchList = () => {
         },
       ],
     };
-  }, [filteredWatchlist]);
+  }, [liveWatchlist]);
 
   return (
     <div className="watchlist-container">
       <ul className="list">
-        {filteredWatchlist.map((stock) => {
-          return (
-            <WatchListItem
-              stock={stock}
-              key={stock.name}
-              onAnalyticsClick={setAnalyticsStock}
-            />
-          );
-        })}
+        {liveWatchlist.map((stock) => (
+          <WatchListItem
+            stock={stock}
+            key={stock.name}
+            onAnalyticsClick={setAnalyticsStock}
+          />
+        ))}
       </ul>
 
       <DoughnutChart data={data} />
@@ -284,16 +234,11 @@ export default WatchList;
 const WatchListItem = ({ stock, onAnalyticsClick }) => {
   const [showWatchlistActions, setShowWatchlistActions] = useState(false);
 
-  const handleMouseEnter = () => {
-    setShowWatchlistActions(true);
-  };
-
-  const handleMouseLeave = () => {
-    setShowWatchlistActions(false);
-  };
-
   return (
-    <li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <li
+      onMouseEnter={() => setShowWatchlistActions(true)}
+      onMouseLeave={() => setShowWatchlistActions(false)}
+    >
       <div className="item">
         <p className={stock.isDown ? "down" : "up"}>{stock.name}</p>
         <div className="item-info">
@@ -301,7 +246,7 @@ const WatchListItem = ({ stock, onAnalyticsClick }) => {
           {stock.isDown ? (
             <KeyboardArrowDown className="down" />
           ) : (
-            <KeyboardArrowUp className="down" />
+            <KeyboardArrowUp className="up" />
           )}
           <span className="price">{formatPrice(stock.price)}</span>
         </div>
@@ -320,49 +265,28 @@ const WatchListItem = ({ stock, onAnalyticsClick }) => {
 const WatchListActions = ({ uid, stock, onAnalyticsClick }) => {
   const generalContext = useContext(GeneralContext);
 
-  const handleBuyClick = () => {
-    const numericPrice = parseNumericPrice(stock.price);
-    generalContext.openBuyWindow(uid, numericPrice);
+  const openWindow = () => {
+    generalContext.openBuyWindow(uid, parseNumericPrice(stock.price));
   };
 
   return (
     <span className="actions">
-      <span>
-        <Tooltip
-          title="Buy (B)"
-          placement="top"
-          arrow
-          TransitionComponent={Grow}
-          onClick={handleBuyClick}
-        >
-          <button className="buy">Buy</button>
-        </Tooltip>
-        <Tooltip
-          title="Sell (S)"
-          placement="top"
-          arrow
-          TransitionComponent={Grow}
-        >
-          <button className="sell" onClick={handleBuyClick}>
-            Sell
-          </button>
-        </Tooltip>
-        <Tooltip
-          title="Analytics (A)"
-          placement="top"
-          arrow
-          TransitionComponent={Grow}
-        >
-          <button className="action" onClick={() => onAnalyticsClick(stock)}>
-            <BarChartOutlined className="icon" />
-          </button>
-        </Tooltip>
-        <Tooltip title="More" placement="top" arrow TransitionComponent={Grow}>
-          <button className="action">
-            <MoreHoriz className="icon" />
-          </button>
-        </Tooltip>
-      </span>
+      <Tooltip title="Buy (B)" placement="top" arrow TransitionComponent={Grow}>
+        <button className="buy" onClick={openWindow}>Buy</button>
+      </Tooltip>
+      <Tooltip title="Sell (S)" placement="top" arrow TransitionComponent={Grow}>
+        <button className="sell" onClick={openWindow}>Sell</button>
+      </Tooltip>
+      <Tooltip title="Analytics (A)" placement="top" arrow TransitionComponent={Grow}>
+        <button className="action" onClick={() => onAnalyticsClick(stock)}>
+          <BarChartOutlined className="icon" />
+        </button>
+      </Tooltip>
+      <Tooltip title="More" placement="top" arrow TransitionComponent={Grow}>
+        <button className="action">
+          <MoreHoriz className="icon" />
+        </button>
+      </Tooltip>
     </span>
   );
 };

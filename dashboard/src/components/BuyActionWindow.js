@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 
 import axios from "axios";
 
 import GeneralContext from "./GeneralContext";
 import { BACKEND_URL } from "../config";
+import { parseNumericPrice, formatPrice } from "./portfolioUtils";
 import "./BuyActionWindow.css";
 
 const BuyActionWindow = ({ uid, price }) => {
@@ -56,20 +56,13 @@ const BuyActionWindow = ({ uid, price }) => {
     }
   };
 
-  const handleBuyClick = () => placeOrder("BUY");
-  const handleSellClick = () => placeOrder("SELL");
-
-  const handleCancelClick = () => {
-    generalContext.closeBuyWindow();
-  };
-
   return (
     <div className="container" id="buy-window" draggable="true">
       <div className="regular-order">
         <p className="baw-stock-info">
           <strong className="baw-stock-name">{uid}</strong>
           {stockPrice > 0 && (
-            <span className="baw-stock-price">@ ₹{typeof stockPrice === "number" ? stockPrice.toLocaleString("en-IN") : stockPrice}</span>
+            <span className="baw-stock-price">@ ₹{formatPrice(stockPrice)}</span>
           )}
         </p>
         <div className="inputs">
@@ -88,17 +81,17 @@ const BuyActionWindow = ({ uid, price }) => {
       </div>
 
       <div className="buttons">
-        <span>Margin required ₹{stockPrice > 0 ? (stockPrice * stockQuantity).toLocaleString("en-IN", { maximumFractionDigits: 2 }) : "--"}</span>
+        <span>Margin required ₹{stockPrice > 0 ? formatPrice(parseNumericPrice(stockPrice) * stockQuantity) : "--"}</span>
         <div>
-          <Link className="btn btn-blue" onClick={handleBuyClick}>
+          <button type="button" className="btn btn-blue" onClick={() => placeOrder("BUY")}>
             Buy
-          </Link>
-          <Link className="btn btn-red" onClick={handleSellClick}>
+          </button>
+          <button type="button" className="btn btn-red" onClick={() => placeOrder("SELL")}>
             Sell
-          </Link>
-          <Link to="" className="btn btn-grey" onClick={handleCancelClick}>
+          </button>
+          <button type="button" className="btn btn-grey" onClick={generalContext.closeBuyWindow}>
             Cancel
-          </Link>
+          </button>
         </div>
       </div>
 
