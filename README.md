@@ -8,9 +8,9 @@ A Zerodha-inspired trading platform clone built as a full-stack learning project
 |---|---|---|
 | ![Homepage](assets/Homepage.png) | ![Sign Up](assets/Sign%20Up.png) | ![Pricing](assets/Pricing.png) |
 
-| Dashboard | Holdings | Support |
-|---|---|---|
-| ![Dashboard](assets/Dashboard.png) | ![Holdings](assets/Dashboard:Holding%20.png) | ![Support](assets/Support.png) |
+| Dashboard | Holdings | Holdings Chart | Support |
+|---|---|---|---|
+| ![Dashboard](assets/Dashboard.png) | ![Holdings](assets/Dashboard:Holding%20.png) | ![Holdings Chart](assets/Dashboard:Holding%20Chart.png) | ![Support](assets/Support.png) |
 
 ## Tech Stack
 
