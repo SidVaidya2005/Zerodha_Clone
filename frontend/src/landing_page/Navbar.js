@@ -54,26 +54,16 @@ function Navbar({ theme, onToggleTheme }) {
             </ul>
             <button
               type="button"
-              className="ms-3 theme-toggle-btn"
+              className={`ms-3 theme-toggle-pill${theme === "dark" ? " is-dark" : ""}`}
               onClick={onToggleTheme}
-              aria-label={
-                theme === "dark"
-                  ? "Switch to light mode"
-                  : "Switch to dark mode"
-              }
+              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
               title={theme === "dark" ? "Light mode" : "Dark mode"}
             >
-              <span className="theme-icon-stack" aria-hidden="true">
-                <i
-                  className={`fa-regular fa-moon theme-icon ${
-                    theme === "light" ? "is-visible" : "is-hidden"
-                  }`}
-                ></i>
-                <i
-                  className={`fa-solid fa-moon theme-icon ${
-                    theme === "dark" ? "is-visible" : "is-hidden"
-                  }`}
-                ></i>
+              <span className="theme-pill-track">
+                <span className="theme-pill-knob">
+                  <i className="fa-regular fa-sun theme-pill-sun" aria-hidden="true"></i>
+                  <i className="fa-regular fa-moon theme-pill-moon" aria-hidden="true"></i>
+                </span>
               </span>
             </button>
           </form>

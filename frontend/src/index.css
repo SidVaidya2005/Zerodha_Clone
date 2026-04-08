@@ -100,57 +100,97 @@ a:hover {
   color: var(--app-link-hover);
 }
 
-.theme-toggle-btn {
+/* Theme toggle pill */
+.theme-toggle-pill {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--app-border);
-  border-radius: 999px;
-  color: var(--app-text);
-  background: transparent;
-  cursor: pointer;
-  transition:
-    color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.15s ease;
 }
 
-.theme-toggle-btn:hover {
-  border-color: var(--app-link);
-  color: var(--app-link);
+.theme-toggle-pill:focus-visible .theme-pill-track {
+  outline: 2px solid var(--app-link);
+  outline-offset: 2px;
+  border-radius: 14px;
 }
 
-.theme-toggle-btn:active {
+.theme-toggle-pill:active .theme-pill-knob {
   transform: scale(0.92);
 }
 
-.theme-icon-stack {
+.theme-toggle-pill.is-dark:active .theme-pill-knob {
+  transform: translateX(23px) scale(0.92);
+}
+
+.theme-pill-track {
   position: relative;
-  width: 18px;
-  height: 18px;
-  display: inline-flex;
+  width: 52px;
+  height: 28px;
+  border-radius: 14px;
+  background: var(--app-border);
+  border: 1.5px solid var(--app-border);
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.theme-toggle-pill.is-dark .theme-pill-track {
+  background: var(--app-link);
+  border-color: var(--app-link);
+}
+
+.theme-pill-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.22);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 10px;
+  overflow: hidden;
 }
 
-.theme-icon {
+.theme-toggle-pill.is-dark .theme-pill-knob {
+  transform: translateX(23px);
+}
+
+.theme-pill-sun,
+.theme-pill-moon {
   position: absolute;
-  font-size: 18px;
   transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
-.theme-icon.is-visible {
+.theme-pill-sun {
+  color: #f59e0b;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.theme-toggle-pill.is-dark .theme-pill-sun {
+  opacity: 0;
+  transform: scale(0.4) rotate(90deg);
+}
+
+.theme-pill-moon {
+  color: #387ed1;
+  opacity: 0;
+  transform: scale(0.4) rotate(-90deg);
+}
+
+.theme-toggle-pill.is-dark .theme-pill-moon {
   opacity: 1;
   transform: scale(1) rotate(0deg);
-}
-
-.theme-icon.is-hidden {
-  opacity: 0;
-  transform: scale(0.6) rotate(-30deg);
 }
 
 .app-link-plain {
