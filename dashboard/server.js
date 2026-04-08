@@ -1,22 +1,34 @@
 const express = require("express");
 const cors = require("cors");
-const YahooFinance = require("yahoo-finance2").default;
+const axios = require("axios");
+require("dotenv").config();
 
 const app = express();
 app.use(cors());
 
 const port = process.env.PORT || 3001;
 
-// Instantiate yahoo-finance2 (v3+ requires explicit instantiation)
-const yahooFinance = new YahooFinance({ suppressNotices: ["yahooSurvey"] });
+const ALPHA_VANTAGE_API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
 
-const pickFirstFiniteNumber = (...values) => {
-  for (const value of values) {
-    if (typeof value === "number" && Number.isFinite(value)) {
-      return value;
-    }
+if (!ALPHA_VANTAGE_API_KEY) {
+  console.error("⚠️  ALPHA_VANTAGE_API_KEY is not set in .env file");
+  process.exit(1);
+}
+
+// Rate limiting for Alpha Vantage (5 calls/minute free tier)
+let apiCallCount = 0;
+let apiCallResetTime = Date.now() + 60000;
+
+const checkRateLimit = () => {
+  if (Date.now() > apiCallResetTime) {
+    apiCallCount = 0;
+    apiCallResetTime = Date.now() + 60000;
   }
-  return null;
+  if (apiCallCount >= 5) {
+    return false;
+  }
+  apiCallCount++;
+  return true;
 };
 
 app.get("/api/indian-stocks", async (req, res) => {
@@ -34,102 +46,157 @@ app.get("/api/indian-stocks", async (req, res) => {
   }
 
   try {
-    const results = await Promise.all(
-      symbols.map(async (symbol) => {
-        try {
-          // Try NSE first, then BSE as fallback for symbols that may not resolve on NSE.
-          let quote;
-          try {
-            quote = await yahooFinance.quote(`${symbol}.NS`);
-          } catch {
-            quote = await yahooFinance.quote(`${symbol}.BO`);
-          }
+    const results = [];
+    
+    // Process symbols in batches to respect rate limit (5 calls/min)
+    for (const symbol of symbols) {
+      if (!checkRateLimit()) {
+        results.push({
+          symbol,
+          error: true,
+          message: "Rate limit reached. Please wait a moment.",
+        });
+        continue;
+      }
 
-          const close = pickFirstFiniteNumber(
-            quote.regularMarketPrice,
-            quote.regularMarketPreviousClose,
-            quote.regularMarketOpen,
-            quote.postMarketPrice,
-            quote.bid,
-            quote.ask,
-          );
-
-          const previousClose = pickFirstFiniteNumber(
-            quote.regularMarketPreviousClose,
-            quote.regularMarketOpen,
-            close,
-          );
-
-          if (close === null || previousClose === null) {
-            return {
-              symbol,
-              error: true,
-              message: "No valid quote fields were returned by Yahoo Finance",
-            };
-          }
-
-          return {
-            symbol,
-            data: {
-              close,
-              previousClose,
+      try {
+        // Alpha Vantage uses symbol format without exchange suffix for search
+        // For Indian stocks, we'll use the base symbol
+        const response = await axios.get(
+          `https://www.alphavantage.co/query`,
+          {
+            params: {
+              function: "GLOBAL_QUOTE",
+              symbol: `${symbol}.BSE`, // Try BSE format for Indian stocks
+              apikey: ALPHA_VANTAGE_API_KEY,
             },
-          };
-        } catch (err) {
-          console.error("Error fetching symbol:", symbol, err.message);
-          return { symbol, error: true, message: err.message };
+            timeout: 10000,
+          }
+        );
+
+        const quote = response.data["Global Quote"];
+
+        if (!quote || Object.keys(quote).length === 0) {
+          // If BSE fails, it might be that the symbol doesn't exist
+          results.push({
+            symbol,
+            error: true,
+            message: "No data available for this symbol",
+          });
+          continue;
         }
-      }),
-    );
+
+        const close = parseFloat(quote["05. price"]);
+        const previousClose = parseFloat(quote["08. previous close"]);
+
+        if (isNaN(close) || isNaN(previousClose)) {
+          results.push({
+            symbol,
+            error: true,
+            message: "Invalid price data received",
+          });
+          continue;
+        }
+
+        results.push({
+          symbol,
+          data: {
+            close,
+            previousClose,
+          },
+        });
+      } catch (err) {
+        console.error("Error fetching symbol:", symbol, err.message);
+        results.push({ 
+          symbol, 
+          error: true, 
+          message: err.response?.data?.["Error Message"] || err.message 
+        });
+      }
+
+      // Small delay between requests to be respectful to API
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+
     res.json(results);
   } catch (error) {
+    console.error("Error in indian-stocks endpoint:", error);
     res.status(500).json({ error: "Failed to fetch equity quotes" });
   }
 });
 
 app.get("/api/indices", async (req, res) => {
   try {
-    const [niftyQuote, sensexQuote] = await Promise.all([
-      yahooFinance.quote("^NSEI"),
-      yahooFinance.quote("^BSESN"),
+    // Alpha Vantage symbols for Indian indices
+    // NIFTY 50: ^NSEI or NIFTY
+    // SENSEX: ^BSESN or SENSEX
+    
+    if (!checkRateLimit()) {
+      return res.status(429).json({ 
+        error: "Rate limit reached. Please wait a moment." 
+      });
+    }
+
+    const [niftyResponse, sensexResponse] = await Promise.all([
+      axios.get("https://www.alphavantage.co/query", {
+        params: {
+          function: "GLOBAL_QUOTE",
+          symbol: "NIFTY",
+          apikey: ALPHA_VANTAGE_API_KEY,
+        },
+        timeout: 10000,
+      }).catch(err => ({ data: {} })),
+      axios.get("https://www.alphavantage.co/query", {
+        params: {
+          function: "GLOBAL_QUOTE",
+          symbol: "SENSEX",
+          apikey: ALPHA_VANTAGE_API_KEY,
+        },
+        timeout: 10000,
+      }).catch(err => ({ data: {} })),
     ]);
 
-    const mapIndexQuote = (quote, fallbackName) => {
-      const price = pickFirstFiniteNumber(
-        quote.regularMarketPrice,
-        quote.regularMarketPreviousClose,
-        quote.regularMarketOpen,
-        quote.postMarketPrice,
-      );
+    apiCallCount += 2; // Account for both calls
 
-      const previousClose = pickFirstFiniteNumber(
-        quote.regularMarketPreviousClose,
-        quote.regularMarketOpen,
-        price,
-      );
+    const mapIndexQuote = (response, fallbackName) => {
+      const quote = response.data["Global Quote"];
+      
+      if (!quote || Object.keys(quote).length === 0) {
+        return {
+          name: fallbackName,
+          symbol: fallbackName,
+          price: null,
+          previousClose: null,
+          percentChange: 0,
+          marketState: "UNKNOWN",
+        };
+      }
+
+      const price = parseFloat(quote["05. price"]);
+      const previousClose = parseFloat(quote["08. previous close"]);
 
       const percentChange =
-        price !== null && previousClose && previousClose > 0
+        !isNaN(price) && !isNaN(previousClose) && previousClose > 0
           ? Number((((price - previousClose) / previousClose) * 100).toFixed(2))
           : 0;
 
       return {
-        name: quote.shortName || fallbackName,
-        symbol: quote.symbol || fallbackName,
-        price,
-        previousClose,
+        name: fallbackName,
+        symbol: quote["01. symbol"] || fallbackName,
+        price: !isNaN(price) ? price : null,
+        previousClose: !isNaN(previousClose) ? previousClose : null,
         percentChange,
-        marketState: quote.marketState || "UNKNOWN",
+        marketState: "REGULAR",
       };
     };
 
     res.json({
-      nifty: mapIndexQuote(niftyQuote, "NIFTY 50"),
-      sensex: mapIndexQuote(sensexQuote, "SENSEX"),
+      nifty: mapIndexQuote(niftyResponse, "NIFTY 50"),
+      sensex: mapIndexQuote(sensexResponse, "SENSEX"),
       updatedAt: new Date().toISOString(),
     });
   } catch (error) {
-    console.error("Error fetching indices from Yahoo:", error.message);
+    console.error("Error fetching indices from Alpha Vantage:", error.message);
     res.status(500).json({ error: "Failed to fetch indices quotes" });
   }
 });
@@ -157,5 +224,7 @@ app.get("/api/market-status", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Indian Stocks Proxy Server running on port ${port}`);
+  console.log(`✅ Indian Stocks Proxy Server running on port ${port}`);
+  console.log(`📊 Using Alpha Vantage API for stock data`);
+  console.log(`⚡ Rate limit: 5 calls/minute (free tier)`);
 });
