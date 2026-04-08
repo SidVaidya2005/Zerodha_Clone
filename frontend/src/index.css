@@ -205,8 +205,14 @@ a:hover {
 }
 
 .app-team-avatar {
-  border-radius: 100%;
-  width: 50%;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 3px solid var(--app-border);
+  display: block;
+  margin: 0 auto;
 }
 
 .support-hero-section {

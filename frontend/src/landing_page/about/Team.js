@@ -7,14 +7,14 @@ function Team() {
         <h1 className="text-center ">People</h1>
       </div>
 
-      <div className="row p-3 text-muted app-rich-text">
+      <div className="row p-3 text-muted app-rich-text align-items-center">
         <div className="col-6 p-3 text-center">
           <img
             src="media/images/MyImage.jpg"
             className="app-team-avatar"
             alt="Siddarth Vaidya"
           />
-          <h4 className="mt-5">Siddarth Vaidya</h4>
+          <h4 className="mt-3">Siddarth Vaidya</h4>
           <h6>Student Developer</h6>
         </div>
         <div className="col-6 p-3">
