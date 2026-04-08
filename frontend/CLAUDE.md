@@ -38,7 +38,7 @@ All pages live under `src/landing_page/`. Each route has its own subdirectory ex
 ### API / Config
 
 `src/config.js` exports two values:
-- `BACKEND_URL` — defaults to `http://localhost:3002`; override via `REACT_APP_API_URL`
+- `BACKEND_URL` — defaults to `http://localhost:3002`; override via `REACT_APP_BACKEND_URL`
 - `DASHBOARD_URL` — defaults to the hardcoded Render deployment URL; override via `REACT_APP_DASHBOARD_URL`
 
 The frontend does not use axios — fetch or direct links are used for any backend interaction.

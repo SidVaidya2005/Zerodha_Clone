@@ -8,7 +8,7 @@ Zerodha-inspired trading platform clone with three independently-runnable apps s
 
 - [backend/CLAUDE.md](backend/CLAUDE.md) — Express REST API (port 3002)
 - [frontend/CLAUDE.md](frontend/CLAUDE.md) — Public/marketing React app (port 3000)
-- [dashboard/CLAUDE.md](dashboard/CLAUDE.md) — Trading dashboard React app (port 3001) + stock price proxy server (port 3001, same process)
+- [dashboard/CLAUDE.md](dashboard/CLAUDE.md) — Trading dashboard React app (port 3000) + stock price proxy server (port 3001, same process via `npm run dev`)
 
 ## Rules & Conventions
 
@@ -60,7 +60,7 @@ NODE_ENV=development
 
 ### `frontend/.env.local`
 ```
-REACT_APP_API_URL=http://localhost:3002/api
+REACT_APP_BACKEND_URL=http://localhost:3002
 REACT_APP_DASHBOARD_URL=http://localhost:3001
 ```
 
