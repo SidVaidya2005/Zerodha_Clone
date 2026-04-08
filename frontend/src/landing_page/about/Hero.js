@@ -11,8 +11,8 @@ function Hero() {
         </h1>
       </div>
 
-      <div className="row p-5 mt-5 border-top text-muted app-rich-text">
-        <div className="col-6 p-5">
+      <div className="row p-3 p-md-5 mt-5 border-top text-muted app-rich-text">
+        <div className="col-12 col-md-6 p-3 p-md-5">
           <p>
             I am Siddarth Vaidya, currently studying at IIIT Naya Raipur. I
             started this clone project to understand how modern fintech
@@ -30,7 +30,7 @@ function Hero() {
             software developer.
           </p>
         </div>
-        <div className="col-6 p-5">
+        <div className="col-12 col-md-6 p-3 p-md-5">
           <p>
             While building this, I paid attention to details like spacing,
             typography, reusable sections, and mobile-friendly behavior so the

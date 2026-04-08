@@ -568,6 +568,21 @@ a:hover {
   .app-gap-40 {
     gap: 20px;
   }
+
+  .app-team-avatar {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+@media (max-width: 576px) {
+  .app-universe-logo {
+    height: 40px;
+  }
+
+  .app-rich-text {
+    font-size: 1em;
+  }
 }
 
 .app-pricing-section {
@@ -582,6 +597,8 @@ a:hover {
   max-width: 100%;
   position: relative;
   width: 1100px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .app-pricing-table {

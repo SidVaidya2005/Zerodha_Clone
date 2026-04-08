@@ -8,7 +8,7 @@ function Team() {
       </div>
 
       <div className="row p-3 text-muted app-rich-text align-items-center">
-        <div className="col-6 p-3 text-center">
+        <div className="col-12 col-md-6 p-3 text-center">
           <img
             src="media/images/MyImage.jpg"
             className="app-team-avatar"
@@ -17,7 +17,7 @@ function Team() {
           <h4 className="mt-3">Siddarth Vaidya</h4>
           <h6>Student Developer</h6>
         </div>
-        <div className="col-6 p-3">
+        <div className="col-12 col-md-6 p-3">
           <p>
             I am Siddarth Vaidya, a student at IIIT Naya Raipur, and I created
             this Zerodha-inspired clone project to challenge myself with real
