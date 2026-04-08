@@ -42,3 +42,13 @@ All pages live under `src/landing_page/`. Each route has its own subdirectory ex
 - `DASHBOARD_URL` — defaults to the hardcoded Render deployment URL; override via `REACT_APP_DASHBOARD_URL`
 
 The frontend does not use axios — fetch or direct links are used for any backend interaction.
+
+### Styling
+
+All styles live in `src/index.css` — there are no per-component CSS files.
+
+**Bootstrap**: Loaded via CDN in `public/index.html` — it is NOT in `package.json`. Do not run `npm install bootstrap`.
+
+**Responsive grid**: Two-column sections use `col-12 col-md-6` (stacks on mobile at <768px). Breakpoints in use: 768px (md) and 576px (sm).
+
+**Dark mode images**: Add class `dark-invert` to images that are dark-on-transparent — CSS applies `filter: invert(1) hue-rotate(180deg)` automatically in dark mode.

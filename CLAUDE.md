@@ -10,6 +10,13 @@ Zerodha-inspired trading platform clone with three independently-runnable apps s
 - [frontend/CLAUDE.md](frontend/CLAUDE.md) — Public/marketing React app (port 3000)
 - [dashboard/CLAUDE.md](dashboard/CLAUDE.md) — Trading dashboard React app (port 3001) + stock price proxy server (port 3001, same process)
 
+## Rules & Conventions
+
+Three constraint files in `.claude/rules/` are auto-loaded into every session:
+- `architecture.md` — routing, schema/model split, no service layer, context rules
+- `codestyle.md` — CJS vs ESM, naming conventions, no TypeScript
+- `uistyle.md` — CSS variables, dark mode selectors, component patterns
+
 ## Running the Project
 
 Each app runs in a separate terminal from its own directory:
