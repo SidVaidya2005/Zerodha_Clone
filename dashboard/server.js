@@ -47,7 +47,7 @@ app.get("/api/indian-stocks", async (req, res) => {
 
   try {
     const results = [];
-    
+
     // Process symbols in batches to respect rate limit (5 calls/min)
     for (const symbol of symbols) {
       if (!checkRateLimit()) {
@@ -62,17 +62,14 @@ app.get("/api/indian-stocks", async (req, res) => {
       try {
         // Alpha Vantage uses symbol format without exchange suffix for search
         // For Indian stocks, we'll use the base symbol
-        const response = await axios.get(
-          `https://www.alphavantage.co/query`,
-          {
-            params: {
-              function: "GLOBAL_QUOTE",
-              symbol: `${symbol}.BSE`, // Try BSE format for Indian stocks
-              apikey: ALPHA_VANTAGE_API_KEY,
-            },
-            timeout: 10000,
-          }
-        );
+        const response = await axios.get(`https://www.alphavantage.co/query`, {
+          params: {
+            function: "GLOBAL_QUOTE",
+            symbol: `${symbol}.BSE`, // Try BSE format for Indian stocks
+            apikey: ALPHA_VANTAGE_API_KEY,
+          },
+          timeout: 10000,
+        });
 
         const quote = response.data["Global Quote"];
 
@@ -107,15 +104,15 @@ app.get("/api/indian-stocks", async (req, res) => {
         });
       } catch (err) {
         console.error("Error fetching symbol:", symbol, err.message);
-        results.push({ 
-          symbol, 
-          error: true, 
-          message: err.response?.data?.["Error Message"] || err.message 
+        results.push({
+          symbol,
+          error: true,
+          message: err.response?.data?.["Error Message"] || err.message,
         });
       }
 
       // Small delay between requests to be respectful to API
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
 
     res.json(results);
@@ -130,37 +127,41 @@ app.get("/api/indices", async (req, res) => {
     // Alpha Vantage symbols for Indian indices
     // NIFTY 50: ^NSEI or NIFTY
     // SENSEX: ^BSESN or SENSEX
-    
+
     if (!checkRateLimit()) {
-      return res.status(429).json({ 
-        error: "Rate limit reached. Please wait a moment." 
+      return res.status(429).json({
+        error: "Rate limit reached. Please wait a moment.",
       });
     }
 
     const [niftyResponse, sensexResponse] = await Promise.all([
-      axios.get("https://www.alphavantage.co/query", {
-        params: {
-          function: "GLOBAL_QUOTE",
-          symbol: "NIFTY",
-          apikey: ALPHA_VANTAGE_API_KEY,
-        },
-        timeout: 10000,
-      }).catch(err => ({ data: {} })),
-      axios.get("https://www.alphavantage.co/query", {
-        params: {
-          function: "GLOBAL_QUOTE",
-          symbol: "SENSEX",
-          apikey: ALPHA_VANTAGE_API_KEY,
-        },
-        timeout: 10000,
-      }).catch(err => ({ data: {} })),
+      axios
+        .get("https://www.alphavantage.co/query", {
+          params: {
+            function: "GLOBAL_QUOTE",
+            symbol: "NIFTY",
+            apikey: ALPHA_VANTAGE_API_KEY,
+          },
+          timeout: 10000,
+        })
+        .catch((err) => ({ data: {} })),
+      axios
+        .get("https://www.alphavantage.co/query", {
+          params: {
+            function: "GLOBAL_QUOTE",
+            symbol: "SENSEX",
+            apikey: ALPHA_VANTAGE_API_KEY,
+          },
+          timeout: 10000,
+        })
+        .catch((err) => ({ data: {} })),
     ]);
 
     apiCallCount += 2; // Account for both calls
 
     const mapIndexQuote = (response, fallbackName) => {
       const quote = response.data["Global Quote"];
-      
+
       if (!quote || Object.keys(quote).length === 0) {
         return {
           name: fallbackName,
