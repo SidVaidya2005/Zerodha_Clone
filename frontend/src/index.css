@@ -6,6 +6,7 @@
   --app-border: #dee2e6;
   --app-link: #387ed1;
   --app-link-hover: #2b63a6;
+  --app-sun-icon: #f59e0b;
 }
 
 [data-theme="dark"] {
@@ -172,7 +173,7 @@ a:hover {
 }
 
 .theme-pill-sun {
-  color: #f59e0b;
+  color: var(--app-sun-icon);
   opacity: 1;
   transform: scale(1);
 }
@@ -183,7 +184,7 @@ a:hover {
 }
 
 .theme-pill-moon {
-  color: #387ed1;
+  color: var(--app-link);
   opacity: 0;
   transform: scale(0.4) rotate(-90deg);
 }

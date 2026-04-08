@@ -1,18 +1,16 @@
 import React from "react";
+import PageHero from "./components/PageHero";
 import SignupCTAButton from "./components/SignupCTAButton";
 
 function OpenAccount() {
   return (
-    <div className="container p-3 p-md-5 mb-5">
-      <div className="row text-center">
-        <h1 className="mt-5">Open a Zerodha account</h1>
-        <p>
-          Modern platforms and apps, ₹0 investments, and flat ₹20 intraday and
-          F&amp;O trades.
-        </p>
-        <SignupCTAButton />
-      </div>
-    </div>
+    <PageHero title="Open a Zerodha account">
+      <p>
+        Modern platforms and apps, ₹0 investments, and flat ₹20 intraday and
+        F&amp;O trades.
+      </p>
+      <SignupCTAButton />
+    </PageHero>
   );
 }
 
