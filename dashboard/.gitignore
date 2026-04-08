@@ -4,6 +4,7 @@ node_modules/
 # Build output
 build/
 dist/
+.cache/
 
 # Logs
 npm-debug.log*
@@ -18,6 +19,9 @@ pnpm-debug.log*
 
 # Test and coverage
 coverage/
+
+# Tooling caches
+.eslintcache
 
 # OS and editor files
 .DS_Store
