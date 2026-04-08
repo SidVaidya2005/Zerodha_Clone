@@ -70,7 +70,7 @@ app.post("/newOrder", async (req, res) => {
         const newAvg = ((existing.avg * existing.qty) + (numPrice * numQty)) / totalQty;
         await HoldingsModel.updateOne(
           { name: safeName },
-          { qty: totalQty, avg: parseFloat(newAvg.toFixed(2)), price: numPrice || existing.price }
+          { qty: totalQty, avg: parseFloat(newAvg.toFixed(2)), price: Number.isFinite(numPrice) ? numPrice : existing.price }
         );
       } else {
         await HoldingsModel.create({
@@ -84,11 +84,15 @@ app.post("/newOrder", async (req, res) => {
       }
     } else if (mode === "SELL") {
 
-      const existingPos = await PositionsModel.findOne({ name: safeName });
+      const [existingPos, holding] = await Promise.all([
+        PositionsModel.findOne({ name: safeName }),
+        HoldingsModel.findOne({ name: safeName }),
+      ]);
+
       if (existingPos) {
         await PositionsModel.updateOne(
           { name: safeName },
-          { qty: existingPos.qty + numQty, price: numPrice || existingPos.price }
+          { qty: existingPos.qty + numQty, price: Number.isFinite(numPrice) ? numPrice : existingPos.price }
         );
       } else {
         await PositionsModel.create({
@@ -103,8 +107,6 @@ app.post("/newOrder", async (req, res) => {
         });
       }
 
-
-      const holding = await HoldingsModel.findOne({ name: safeName });
       if (holding) {
         const remainingQty = holding.qty - numQty;
         if (remainingQty <= 0) {
@@ -122,8 +124,14 @@ app.post("/newOrder", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log("App started!");
-  mongoose.connect(uri);
-  console.log("DB started!");
-});
+mongoose.connect(uri)
+  .then(() => {
+    console.log("DB connected!");
+    app.listen(PORT, () => {
+      console.log("App started on port", PORT);
+    });
+  })
+  .catch((err) => {
+    console.error("DB connection failed", err);
+    process.exit(1);
+  });
