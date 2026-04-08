@@ -1,37 +1,41 @@
-# dependencies
+# ─── Dependencies ────────────────────────────────────────────────────────────
 node_modules/
-/.pnp
+.pnp
 .pnp.js
 
-# testing
-/coverage
-
-# production
-/build
-/dist
-frontend/build/
-dashboard/build/
-
-# misc
-.DS_Store
+# ─── Environment Variables ───────────────────────────────────────────────────
+# Never commit secrets — use .env.example for templates
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*.local
 
-# logs
+# ─── Build Outputs ───────────────────────────────────────────────────────────
+build/
+dist/
+coverage/
+
+# ─── Logs ────────────────────────────────────────────────────────────────────
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
-.idea
+# ─── OS / Editor ─────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Allow shared VS Code config, block personal/generated files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# ─── Claude Code (keep committed) ────────────────────────────────────────────
+# .claude/ contains project-scoped rules — commit these
+# Ignore only personal local overrides
+.claude.local.md
