@@ -18,7 +18,7 @@ function Navbar({ theme, onToggleTheme }) {
         <Link className="navbar-brand" to="/">
           <img
             src="media/images/logo.svg"
-            className="app-navbar-logo"
+            className="app-navbar-logo dark-invert"
             alt="Logo"
           />
         </Link>

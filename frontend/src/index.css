@@ -42,12 +42,23 @@ code {
 }
 
 .app-navbar {
-  background-color: var(--app-surface);
-  border-bottom-color: var(--app-border) !important;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom-color: rgba(222, 226, 230, 0.7) !important;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+[data-theme="dark"] .app-navbar {
+  background-color: rgba(27, 27, 27, 0.85);
+  border-bottom-color: rgba(47, 47, 47, 0.7) !important;
 }
 
 .app-footer {
   background-color: var(--app-surface);
+  padding-bottom: 3rem;
 }
 
 .app-navbar .navbar-brand,
@@ -57,15 +68,18 @@ code {
 .app-footer h3,
 .app-footer h4,
 .app-footer h5,
-.app-footer h6,
-.app-footer a {
+.app-footer h6 {
   color: var(--app-text);
 }
 
 .app-navbar .navbar-nav .nav-link,
-.app-navbar .navbar-nav .nav-link.active,
 .app-navbar .navbar-nav .show > .nav-link {
   color: var(--app-text) !important;
+}
+
+.app-navbar .navbar-nav .nav-link.active {
+  color: var(--app-link) !important;
+  font-weight: 500;
 }
 
 .app-navbar .navbar-nav .nav-link:hover,
@@ -603,5 +617,113 @@ a:hover {
 
 .app-signup-btn:hover {
   background-color: var(--app-link-hover) !important;
+}
+
+/* ── Bootstrap Bridge ───────────────────────────── */
+/* Wire btn-primary to app theme tokens so all primary buttons
+   automatically respect light/dark mode without per-component overrides */
+
+.btn-primary {
+  background-color: var(--app-link) !important;
+  border-color: var(--app-link) !important;
+  color: #fff !important;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.active,
+.show > .btn-primary.dropdown-toggle {
+  background-color: var(--app-link-hover) !important;
+  border-color: var(--app-link-hover) !important;
+  color: #fff !important;
+}
+
+.btn-primary:focus-visible {
+  background-color: var(--app-link) !important;
+  border-color: var(--app-link) !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 0.25rem rgba(56, 126, 209, 0.25) !important;
+}
+
+[data-theme="dark"] .btn-primary:focus-visible {
+  box-shadow: 0 0 0 0.25rem rgba(110, 168, 255, 0.25) !important;
+}
+
+/* Wire Bootstrap border utilities to app border token in dark mode */
+[data-theme="dark"] .border,
+[data-theme="dark"] .border-top,
+[data-theme="dark"] .border-bottom,
+[data-theme="dark"] .border-start,
+[data-theme="dark"] .border-end {
+  border-color: var(--app-border) !important;
+}
+
+/* Dark mode navbar toggler */
+[data-theme="dark"] .navbar-toggler {
+  border-color: var(--app-border);
+  color: var(--app-text);
+}
+
+/* ── Footer ─────────────────────────────────────── */
+
+.app-footer-copyright {
+  font-size: 0.875rem;
+  color: var(--app-muted);
+  margin-top: 0.75rem;
+}
+
+.app-footer-col-heading {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--app-text);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 1rem;
+}
+
+.app-footer-link-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.app-footer-link-list li {
+  margin-bottom: 0.55rem;
+}
+
+.app-footer-link {
+  color: var(--app-muted) !important;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition:
+    color 0.2s ease,
+    padding-left 0.2s ease;
+}
+
+.app-footer-link:hover {
+  color: var(--app-text) !important;
+  padding-left: 4px;
+}
+
+.app-footer-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.app-footer-social-icon {
+  color: var(--app-muted);
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+  display: inline-flex;
+}
+
+.app-footer-social-icon:hover {
+  color: var(--app-link);
+  transform: translateY(-2px);
 }
 

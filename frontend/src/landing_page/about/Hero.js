@@ -37,7 +37,12 @@ function Hero() {
             experience feels polished and familiar.
           </p>
           <p>
-            <a href="" className="app-link-plain">
+            <a
+              href="https://github.com/SidVaidya2005"
+              className="app-link-plain"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               This clone project
             </a>{" "}
             helped me improve how I think about product design and frontend

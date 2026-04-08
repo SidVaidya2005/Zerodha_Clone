@@ -1,22 +1,22 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import PageHero from "../components/PageHero";
 
 function Hero() {
   return (
-    <div className="container border-bottom mb-5">
-      <div className="text-center mt-5 p-3">
-        <h1>Zerodha Clone</h1>
-        <h3 className="text-muted mt-3 fs-4">
-          Sleek, modern and intuitive trading platforms
-        </h3>
-        <p className="mt-3 mb-5">
-          Check out our{" "}
-          <a href="" className="app-link-plain">
-            investment offerings{" "}
-            <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
-          </a>
-        </p>
-      </div>
-    </div>
+    <PageHero
+      title="Zerodha Clone"
+      subtitle="Sleek, modern and intuitive trading platforms"
+      className="border-bottom"
+    >
+      <p className="mt-3 mb-5">
+        Check out our{" "}
+        <Link to="/product" className="app-link-plain">
+          investment offerings{" "}
+          <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
+        </Link>
+      </p>
+    </PageHero>
   );
 }
 

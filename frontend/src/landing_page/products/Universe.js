@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import SignupCTAButton from "../components/SignupCTAButton";
 
 const partnerCards = [
   {
@@ -49,17 +49,12 @@ function Universe() {
             <img
               src={partner.logo}
               alt="Partner platform"
-              className="app-universe-logo"
+              className="app-universe-logo dark-invert"
             />
             <p className="text-small text-muted mt-3">{partner.description}</p>
           </div>
         ))}
-        <Link
-          to="/signup"
-          className="p-2 btn btn-primary fs-5 mb-5 app-cta-button"
-        >
-          Signup Now
-        </Link>
+        <SignupCTAButton />
       </div>
     </div>
   );

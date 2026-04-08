@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import "./index.css";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 import HomePage from "./landing_page/home/HomePage";
 import Signup from "./landing_page/signup/Signup";
@@ -71,6 +79,7 @@ function AppLayout() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Navbar theme={activeTheme} onToggleTheme={handleToggleTheme} />
       <Routes>
         <Route path="/" element={<HomePage />} />

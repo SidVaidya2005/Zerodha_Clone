@@ -1,44 +1,22 @@
 import React from "react";
+import PricingTable from "../components/PricingTable";
+
+const headers = ["Type of account", "Charges"];
+
+const rows = [
+  ["Online account", <span className="badge bg-success">FREE</span>],
+  ["Offline account", <span className="badge bg-success">FREE</span>],
+  ["NRI account (offline only)", "₹ 500"],
+  ["Partnership, LLP, HUF, or Corporate accounts (offline only)", "₹ 500"],
+];
 
 function AccountOpeningCharges() {
   return (
-    <div className="mt-5 mb-5 app-pricing-section">
-      <h2 className="mb-4 app-pricing-heading">Charges for account opening</h2>
-      <div className="table-responsive">
-        <table className="table table-bordered app-pricing-table">
-          <thead>
-            <tr>
-              <th>Type of account</th>
-              <th>Charges</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Online account</td>
-              <td>
-                <span className="badge bg-success">FREE</span>
-              </td>
-            </tr>
-            <tr>
-              <td>Offline account</td>
-              <td>
-                <span className="badge bg-success">FREE</span>
-              </td>
-            </tr>
-            <tr>
-              <td>NRI account (offline only)</td>
-              <td>₹ 500</td>
-            </tr>
-            <tr>
-              <td>
-                Partnership, LLP, HUF, or Corporate accounts (offline only)
-              </td>
-              <td>₹ 500</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <PricingTable
+      title="Charges for account opening"
+      headers={headers}
+      rows={rows}
+    />
   );
 }
 
