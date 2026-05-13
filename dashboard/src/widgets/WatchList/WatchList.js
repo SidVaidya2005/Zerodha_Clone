@@ -13,7 +13,7 @@ import {
   MoreHoriz,
 } from "@mui/icons-material";
 
-import { DoughnutChart } from "../../charts/DoughnoutChart";
+import { DoughnutChart } from "../../charts/DoughnutChart";
 
 const initialWatchlist = [
   { name: "HDFCBANK", price: 0, percent: "0.00%", isDown: false, isIndian: true },
