@@ -226,7 +226,27 @@ One commit (small surface).
 
 ---
 
-# PHASE 4 — CSS Split (both apps)
+# PHASE 4 — CSS Split (both apps) ✅ COMPLETE
+
+**Status:** Done on 2026-05-13. Two commits on `main`:
+- `24a2809` — frontend split (793-LOC `frontend/src/index.css` → `src/styles/{tokens,layout,components,utilities,dark-mode}.css` + `index.css`). Line count preserved at exactly 793 across the 5 files.
+- `b3bb9c3` — dashboard split (1189-LOC `dashboard/src/index.css` + 136-LOC `modals/BuyActionWindow.css` → `src/styles/` 5-file split). BuyActionWindow.css absorbed into `components.css` verbatim and its `import "./BuyActionWindow.css"` removed from `BuyActionWindow.js`. Both source files deleted. Total within 2 lines of the original 1325 (whitespace between absorbed section headers).
+
+`styles/index.css` imports the 5 files in `tokens → layout → components → utilities → dark-mode` order so `[data-theme="dark"]` selectors win specificity ties.
+
+**Cascade-order gotcha caught and fixed:** `.app-rich-text` has a base rule and a 576px override in the original frontend CSS. If I had placed the base in `utilities.css` and the @media in `components.css`, the base would have overridden the responsive rule at narrow viewports (utilities.css loads after components.css). Moved `.app-rich-text` to `components.css` so the @media block still wins cascade. No analogous issue in the dashboard split — every other media-query selector overrides a base in an earlier-loading file.
+
+**Verification status:**
+- ✅ Frontend lint: 0 errors, 7 pre-existing alt-text warnings. Dashboard lint: 0 errors, 1 pre-existing useApiData warning.
+- ✅ Both apps `npm run build` produce valid CSS bundles (frontend `main.3e1eb2d4.css` 11.4 KB; dashboard `main.52791ebb.css` 16.8 KB).
+- ✅ Both apps `npm start` dev servers report `webpack compiled successfully`.
+- ✅ All 7 frontend routes return HTTP 200 (`/`, `/about`, `/product`, `/pricing`, `/signup`, `/support`, `/xyz`).
+- ✅ All 5 dashboard routes return HTTP 200 (`/`, `/orders`, `/holdings`, `/positions`, `/funds`).
+- ✅ Spot-check confirmed all key dashboard selectors including absorbed `BuyActionWindow` rules (`.baw-stock-info`, `.btn-grey`, `.btn-red`, `.order-toast`, `.analytics-modal`, `.watchlist-container`, `.dashboard-container`, `.topbar-container`) present in the built CSS.
+- ⚠️ Visual diff on every route in light + dark mode not performed — no Chrome binary in session.
+- ⚠️ BuyActionWindow modal styling pre/post not visually verified — same reason.
+
+Code-level verification is complete. Visual diff (both themes, every route) and BuyActionWindow modal regression check need the user to run with a browser.
 
 **Goal:** Split the two monolithic `index.css` files into the 5-file themed structure. Absorb `BuyActionWindow.css` into the dashboard split.
 
