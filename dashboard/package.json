@@ -29,12 +29,21 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "node server.js",
-    "dev": "concurrently \"npm run server\" \"npm start\""
+    "dev": "concurrently \"npm run server\" \"npm start\"",
+    "lint": "eslint src server.js --ext .js,.jsx",
+    "lint:fix": "eslint src server.js --ext .js,.jsx --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,css,json,md}\" \"server.js\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,css,json,md}\" \"server.js\""
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^9.1.2",
+    "prettier": "^3.8.3"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "prettier"
     ]
   },
   "browserslist": {
