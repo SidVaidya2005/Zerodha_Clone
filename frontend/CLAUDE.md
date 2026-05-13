@@ -11,6 +11,8 @@ npm start        # dev server (CRA, port 3000)
 npm run build    # production build
 npm test         # run tests (Jest + React Testing Library)
 npm test -- --testPathPattern=MyComponent   # run a single test file
+npm run lint     # eslint over src
+npm run format   # prettier --write over src
 ```
 
 ## Architecture

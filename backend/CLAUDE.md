@@ -11,6 +11,8 @@ npm run dev            # start with nodemon (auto-restarts on change)
 npm start              # start without nodemon
 npm run seed:holdings  # wipe + reseed the holdings collection
 npm run seed:positions # wipe + reseed the positions collection
+npm run lint           # eslint over the backend
+npm run format         # prettier --write
 ```
 
 ## Architecture

@@ -13,6 +13,8 @@ npm run server   # proxy server only (port 3001)
 npm run build    # production build
 npm test         # run tests
 npm test -- --testPathPattern=MyComponent   # run a single test file
+npm run lint     # eslint over src and server.js
+npm run format   # prettier --write over src and server.js
 ```
 
 ## Architecture
