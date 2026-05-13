@@ -97,7 +97,9 @@ shared/tokens.css         # canonical design-tokens reference (mirrored into eac
 
 ---
 
-# PHASE 1 — Backend Restructure
+# PHASE 1 — Backend Restructure ✅ COMPLETE
+
+**Status:** Done on 2026-05-13. Commits `9760058`, `92fa4ef`, `dafba60` on `main`. `index.js` is now 31 LOC. Lint clean; all layered modules `require()` cleanly. End-to-end DB verification (seed scripts, `curl /allHoldings|/allPositions|/allOrders`, BUY/SELL flow, 400 on bad name) deferred to the user since MongoDB wasn't available in the session.
 
 **Goal:** Replace the 137-LOC monolithic `backend/index.js` with a layered `routes/` → `controllers/` → `services/` structure. Behavior unchanged.
 
@@ -135,7 +137,20 @@ One per step (3 commits total) so a broken endpoint is bisectable.
 
 ---
 
-# PHASE 2 — Dashboard File Moves & Typo Fix
+# PHASE 2 — Dashboard File Moves & Typo Fix ✅ COMPLETE
+
+**Status:** Done on 2026-05-13. Commits `5945c9b` (moves + import rewires) and `8b6649c` (DoughnutChart rename) on `main`. `dashboard/src/components/` is gone; 17 files redistributed across `layout/`, `pages/`, `widgets/WatchList/`, `modals/`, `charts/`, `context/`, `utils/`.
+
+**Verification status:**
+- ✅ `npm run lint` clean (only the pre-existing `useApiData` warning).
+- ✅ `npm run build` compiles end-to-end — every import in the module graph resolves.
+- ✅ `npm run dev` starts cleanly: proxy on 3001 boots (after `ALPHA_VANTAGE_API_KEY` was supplied — see commit `733b514` which adds it to `.env.example`), React on 3000 compiles successfully.
+- ✅ All five routes return HTTP 200 from the dev server.
+- ⚠️ Browser-rendered DOM not verified — no Chrome binary in the session.
+- ⚠️ Live TopBar indices / WatchList polling not visually verified — Alpha Vantage free tier returns no data for the queried Indian symbols. Proxy endpoint shape is valid; pre-existing data-availability gap, not a Phase 2 regression.
+- ⚠️ BuyActionWindow flow not verified — needs backend (3002) + MongoDB, neither running in the session.
+
+Code-level verification is complete. Behavioral verification of TopBar/WatchList/BuyActionWindow needs the user to run with live infra.
 
 **Goal:** Flat 14-file `dashboard/src/components/` becomes role-grouped folders. Fix the `DoughnoutChart` typo. No code edits beyond import paths.
 
