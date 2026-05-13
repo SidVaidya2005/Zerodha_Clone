@@ -1,6 +1,6 @@
 import React from "react";
-import PageHero from "./components/PageHero";
-import SignupCTAButton from "./components/SignupCTAButton";
+import PageHero from "../components/PageHero";
+import SignupCTAButton from "../components/SignupCTAButton";
 
 function OpenAccount() {
   return (
