@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "seed:holdings": "node seedHoldings.js",
-    "seed:positions": "node seedPositions.js",
+    "seed:holdings": "node seed/seedHoldings.js",
+    "seed:positions": "node seed/seedPositions.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
