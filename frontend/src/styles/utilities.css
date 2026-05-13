@@ -1,0 +1,20 @@
+.app-footer .text-muted,
+.text-muted {
+  color: var(--app-muted) !important;
+}
+
+.app-link-plain {
+  text-decoration: none;
+}
+
+.app-w-90 {
+  width: 90%;
+}
+
+.app-w-70 {
+  width: 70%;
+}
+
+.app-footnote-text {
+  font-size: 12px;
+}

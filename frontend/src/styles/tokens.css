@@ -1,0 +1,20 @@
+:root {
+  --app-bg: #ffffff;
+  --app-text: #202124;
+  --app-muted: #6c757d;
+  --app-surface: #fafafa;
+  --app-border: #dee2e6;
+  --app-link: #387ed1;
+  --app-link-hover: #2b63a6;
+  --app-sun-icon: #f59e0b;
+}
+
+[data-theme="dark"] {
+  --app-bg: #121212;
+  --app-text: #e6e6e6;
+  --app-muted: #a0a4ab;
+  --app-surface: #1b1b1b;
+  --app-border: #2f2f2f;
+  --app-link: #6ea8ff;
+  --app-link-hover: #9bc0ff;
+}

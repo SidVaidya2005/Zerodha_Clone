@@ -1,38 +1,3 @@
-:root {
-  --app-bg: #ffffff;
-  --app-text: #202124;
-  --app-muted: #6c757d;
-  --app-surface: #fafafa;
-  --app-border: #dee2e6;
-  --app-link: #387ed1;
-  --app-link-hover: #2b63a6;
-  --app-sun-icon: #f59e0b;
-}
-
-[data-theme="dark"] {
-  --app-bg: #121212;
-  --app-text: #e6e6e6;
-  --app-muted: #a0a4ab;
-  --app-surface: #1b1b1b;
-  --app-border: #2f2f2f;
-  --app-link: #6ea8ff;
-  --app-link-hover: #9bc0ff;
-}
-
-body {
-  margin: 0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
-    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--app-bg);
-  color: var(--app-text);
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
-}
-
 code {
   font-family:
     source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
@@ -40,26 +5,6 @@ code {
 
 .nav-link {
   margin-left: 40px;
-}
-
-.app-navbar {
-  background-color: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom-color: rgba(222, 226, 230, 0.7) !important;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
-}
-
-[data-theme="dark"] .app-navbar {
-  background-color: rgba(27, 27, 27, 0.85);
-  border-bottom-color: rgba(47, 47, 47, 0.7) !important;
-}
-
-.app-footer {
-  background-color: var(--app-surface);
-  padding-bottom: 3rem;
 }
 
 .app-navbar .navbar-brand,
@@ -86,11 +31,6 @@ code {
 .app-navbar .navbar-nav .nav-link:hover,
 .app-navbar .navbar-nav .nav-link:focus {
   color: var(--app-link) !important;
-}
-
-.app-footer .text-muted,
-.text-muted {
-  color: var(--app-muted) !important;
 }
 
 a {
@@ -194,45 +134,9 @@ a:hover {
   transform: scale(1) rotate(0deg);
 }
 
-.app-link-plain {
-  text-decoration: none;
-}
-
-.app-w-90 {
-  width: 90%;
-}
-
-.app-w-70 {
-  width: 70%;
-}
-
-.app-navbar-logo {
-  width: 25%;
-}
-
-.app-footer-logo {
-  width: 50%;
-}
-
-.app-footnote-text {
-  font-size: 12px;
-}
-
 .app-cta-button {
   width: 20%;
   margin: 0 auto;
-}
-
-.app-gap-80 {
-  gap: 80px;
-}
-
-.app-gap-40 {
-  gap: 40px;
-}
-
-.app-universe-container {
-  max-width: 1200px;
 }
 
 .app-universe-logo {
@@ -256,27 +160,10 @@ a:hover {
   margin: 0 auto;
 }
 
-.support-hero-section {
-  background-color: var(--app-bg);
-  border-bottom: 1px solid var(--app-border);
-}
-
-.support-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .support-title {
   font-size: 1.75rem;
   font-weight: 500;
   color: var(--app-text);
-}
-
-.support-search-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
 }
 
 .search-icon {
@@ -310,15 +197,6 @@ a:hover {
   color: #999;
 }
 
-.support-main-container {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-}
-
-.accordion-wrapper {
-  width: 100%;
-}
-
 .accordion-item {
   background-color: var(--app-surface);
   border: 1px solid var(--app-border);
@@ -343,10 +221,6 @@ a:hover {
 
 .accordion-header:hover {
   background-color: rgba(0, 0, 0, 0.02);
-}
-
-[data-theme="dark"] .accordion-header:hover {
-  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .accordion-title {
@@ -410,11 +284,6 @@ a:hover {
   border-left: 4px solid #ff9933;
   border-radius: 6px;
   padding: 24px;
-}
-
-[data-theme="dark"] .featured-box {
-  background: linear-gradient(135deg, #2d2416 0%, #3d2e1a 100%);
-  border-left-color: #ff9933;
 }
 
 .featured-list {
@@ -586,22 +455,6 @@ a:hover {
   }
 }
 
-.app-pricing-section {
-  -webkit-text-size-adjust: 100%;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-  color: var(--app-text);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.7;
-  margin: 0 auto;
-  max-width: 100%;
-  position: relative;
-  width: 1100px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
 .app-pricing-table {
   margin-bottom: 0;
   border-color: var(--app-border);
@@ -617,14 +470,6 @@ a:hover {
   background-color: var(--app-bg);
   color: var(--app-text);
   border-color: var(--app-border);
-}
-
-[data-theme="dark"] .app-pricing-table thead th {
-  background-color: #202225;
-}
-
-[data-theme="dark"] .app-pricing-table tbody td {
-  background-color: #16181a;
 }
 
 /* Signup Form Dark Mode Fixes */
@@ -666,12 +511,6 @@ a:hover {
   box-shadow: 0 0 0 0.25rem rgba(244, 67, 54, 0.25) !important;
 }
 
-/* Dark mode image inversion */
-[data-theme="dark"] .dark-invert {
-  filter: invert(1) hue-rotate(180deg);
-  opacity: 0.9;
-}
-
 /* SIGNUP BUTTON */
 
 .app-signup-btn {
@@ -709,25 +548,6 @@ a:hover {
   box-shadow: 0 0 0 0.25rem rgba(56, 126, 209, 0.25) !important;
 }
 
-[data-theme="dark"] .btn-primary:focus-visible {
-  box-shadow: 0 0 0 0.25rem rgba(110, 168, 255, 0.25) !important;
-}
-
-/* Wire Bootstrap border utilities to app border token in dark mode */
-[data-theme="dark"] .border,
-[data-theme="dark"] .border-top,
-[data-theme="dark"] .border-bottom,
-[data-theme="dark"] .border-start,
-[data-theme="dark"] .border-end {
-  border-color: var(--app-border) !important;
-}
-
-/* Dark mode navbar toggler */
-[data-theme="dark"] .navbar-toggler {
-  border-color: var(--app-border);
-  color: var(--app-text);
-}
-
 /* ── Footer ─────────────────────────────────────── */
 
 .app-footer-copyright {
@@ -745,16 +565,6 @@ a:hover {
   margin-bottom: 1rem;
 }
 
-.app-footer-link-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.app-footer-link-list li {
-  margin-bottom: 0.55rem;
-}
-
 .app-footer-link {
   color: var(--app-muted) !important;
   text-decoration: none;
@@ -767,13 +577,6 @@ a:hover {
 .app-footer-link:hover {
   color: var(--app-text) !important;
   padding-left: 4px;
-}
-
-.app-footer-social {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 1rem;
 }
 
 .app-footer-social-icon {
@@ -790,4 +593,3 @@ a:hover {
   color: var(--app-link);
   transform: translateY(-2px);
 }
-
