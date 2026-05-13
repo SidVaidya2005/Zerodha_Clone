@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect, useMemo } from "react";
 
-import GeneralContext from "./GeneralContext";
-import { PROXY_URL } from "../config";
-import { parseNumericPrice, formatPrice, formatPercent } from "./portfolioUtils";
+import GeneralContext from "../../context/GeneralContext";
+import { PROXY_URL } from "../../config";
+import { parseNumericPrice, formatPrice, formatPercent } from "../../utils/portfolioUtils";
 
 import { Tooltip, Grow } from "@mui/material";
 
@@ -13,7 +13,7 @@ import {
   MoreHoriz,
 } from "@mui/icons-material";
 
-import { DoughnutChart } from "./DoughnoutChart";
+import { DoughnutChart } from "../../charts/DoughnoutChart";
 
 const initialWatchlist = [
   { name: "HDFCBANK", price: 0, percent: "0.00%", isDown: false, isIndian: true },

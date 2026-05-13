@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 
 import axios from "axios";
 
-import GeneralContext from "./GeneralContext";
+import GeneralContext from "../context/GeneralContext";
 import { BACKEND_URL } from "../config";
-import { parseNumericPrice, formatPrice } from "./portfolioUtils";
+import { parseNumericPrice, formatPrice } from "../utils/portfolioUtils";
 import "./BuyActionWindow.css";
 
 const BuyActionWindow = ({ uid, price }) => {

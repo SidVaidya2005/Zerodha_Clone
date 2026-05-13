@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
-import { VerticalGraph } from "./VerticalGraph";
+import { VerticalGraph } from "../charts/VerticalGraph";
 import {
   getCurrentValue,
   getPnL,
   getProfitClass,
   getDayClass,
-} from "./portfolioUtils";
+} from "../utils/portfolioUtils";
 import { useApiData } from "../hooks/useApiData";
 import { BACKEND_URL } from "../config";
 

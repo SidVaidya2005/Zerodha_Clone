@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Menu from "./Menu";
 import { PROXY_URL } from "../config";
-import { formatPercent } from "./portfolioUtils";
+import { formatPercent } from "../utils/portfolioUtils";
 
 const TopBar = () => {
   const [indices, setIndices] = useState({

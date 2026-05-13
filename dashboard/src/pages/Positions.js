@@ -1,5 +1,5 @@
 import React from "react";
-import { getPnL, getProfitClass, getDayClass } from "./portfolioUtils";
+import { getPnL, getProfitClass, getDayClass } from "../utils/portfolioUtils";
 import { useApiData } from "../hooks/useApiData";
 import { BACKEND_URL } from "../config";
 
