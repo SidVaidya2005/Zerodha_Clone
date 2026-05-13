@@ -189,7 +189,20 @@ One commit for the moves + import updates. Keep `DoughnutChart` rename as a sepa
 
 ---
 
-# PHASE 3 — Frontend File Moves
+# PHASE 3 — Frontend File Moves ✅ COMPLETE
+
+**Status:** Done on 2026-05-13. Commit `4ec5fa8` on `main`. `Navbar.js`, `Footer.js`, `NotFound.js`, `OpenAccount.js` moved from `frontend/src/landing_page/` into `frontend/src/landing_page/shared/` via `git mv` (all four rename-detected). Three import sites updated: `src/index.js` (Navbar/Footer/NotFound) and `home/HomePage.js` + `pricing/PricingPage.js` (OpenAccount). `OpenAccount.js`'s own internal `./components/...` imports fixed up to `../components/...` since it moved one level deeper.
+
+**Verification status:**
+- ✅ `npm run lint` — 0 errors, 7 pre-existing `jsx-a11y/alt-text` warnings (none in moved files).
+- ✅ `npm run build` — webpack compiles end-to-end; every import in the module graph resolves.
+- ✅ `npm start` (on port 3010 since 3000 was occupied by a leftover server) — dev server compiled with only the pre-existing warning.
+- ✅ All 7 routes return HTTP 200 from the dev server: `/`, `/about`, `/product`, `/pricing`, `/signup`, `/support`, `/xyz` (NotFound).
+- ✅ `OpenAccount` confirmed not orphaned — imported by both `HomePage.js` and `PricingPage.js`.
+- ⚠️ Browser-rendered DOM not verified — no Chrome binary in the session.
+- ⚠️ Dark-mode toggle per route not visually verified — same reason.
+
+Code-level verification is complete. Behavioral verification (visual DOM + dark mode on each route) needs the user to run with a browser.
 
 **Goal:** Move shared layout pieces into `landing_page/shared/`. No code edits beyond import paths.
 
