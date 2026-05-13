@@ -1,0 +1,114 @@
+body {
+  margin: 0;
+  background-color: var(--app-bg);
+  color: var(--app-text);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.dashboard-container {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+}
+
+.content {
+  flex: 0 0 68%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding: 2.5% 2.2%;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5%;
+}
+
+.col {
+  flex-basis: 33%;
+  text-align: left;
+}
+
+/* TOPBAR & MENU */
+
+.topbar-container {
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  background-color: var(--app-bg);
+  border-bottom: 1px solid var(--app-border);
+  box-sizing: border-box;
+  z-index: 9;
+}
+
+.menu-container {
+  flex: 0 0 68%;
+  height: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.indices-container {
+  flex: 0 0 32%;
+  height: 100%;
+  padding: 10px 20px;
+  border-left: 1px solid var(--app-border);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.orders {
+  width: 100%;
+  height: 90vh;
+}
+
+.no-orders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+}
+
+/* WATCHLIST */
+
+.watchlist-container {
+  flex: 0 0 32%;
+  height: 100%;
+  box-sizing: border-box;
+  border-left: 1px solid var(--app-border);
+  background-color: var(--app-surface);
+  overflow-y: auto;
+  position: relative;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  position: relative;
+  background-color: var(--app-surface);
+  border-bottom: 1px solid var(--app-border);
+}
+
+.list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}

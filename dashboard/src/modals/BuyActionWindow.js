@@ -5,7 +5,6 @@ import axios from "axios";
 import GeneralContext from "../context/GeneralContext";
 import { BACKEND_URL } from "../config";
 import { parseNumericPrice, formatPrice } from "../utils/portfolioUtils";
-import "./BuyActionWindow.css";
 
 const BuyActionWindow = ({ uid, price }) => {
   const generalContext = useContext(GeneralContext);
