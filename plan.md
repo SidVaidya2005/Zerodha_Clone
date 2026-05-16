@@ -365,7 +365,19 @@ Order matters — start with the easy ones (data extraction only) so the harder 
 
 ---
 
-# PHASE 6 — Shared Tokens
+# PHASE 6 — Shared Tokens ✅ COMPLETE
+
+**Status:** Done on 2026-05-16. Commit `1fbc192` on `main`. `shared/tokens.css` now exists at repo root with the header comment documenting the same-commit policy and the diff sanity check. Both `frontend/src/styles/tokens.css` and `dashboard/src/styles/tokens.css` are byte-identical copies — `diff` exits 0 against the canonical file for both.
+
+**Token-value conflict resolution:** The two existing app copies disagreed on `--app-surface` (`#fafafa` vs `#ffffff`) and `--app-border` (`#dee2e6` vs `#e6ebf2`). Per user direction, frontend's values became canonical. Dashboard picked up the new values at ~12 `var(--app-surface)` sites and ~5 `var(--app-border)` sites in `layout.css` + `components.css`: light-mode dashboard surfaces shift from pure white to off-white and borders pick up a slightly less blue tint. Frontend visually unchanged.
+
+The canonical set also takes the union of app-specific tokens: frontend's `--app-sun-icon` (theme toggle) and dashboard's `--app-profit` / `--app-loss` are now present in all three files. Per the plan, frontend carrying unused profit/loss tokens is harmless.
+
+**Verification status:**
+- ✅ `diff shared/tokens.css frontend/src/styles/tokens.css` → exit 0.
+- ✅ `diff shared/tokens.css dashboard/src/styles/tokens.css` → exit 0.
+- ✅ Both apps `npm run build` succeed end-to-end.
+- ⚠️ Visual verification of dashboard surface/border change (intentional, single-pass change) not performed — no Chrome binary in session.
 
 **Goal:** Establish `/shared/tokens.css` as the canonical reference for the token block that both apps mirror.
 
