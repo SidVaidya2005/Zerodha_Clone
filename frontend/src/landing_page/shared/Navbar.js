@@ -1,13 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-
-const navItems = [
-  { to: "/signup", label: "Signup" },
-  { to: "/about", label: "About" },
-  { to: "/product", label: "Product" },
-  { to: "/pricing", label: "Pricing" },
-  { to: "/support", label: "Support" },
-];
+import { NAV_ITEMS } from "../../data/navItems";
 
 function Navbar({ theme, onToggleTheme }) {
   const { pathname } = useLocation();
@@ -36,7 +29,7 @@ function Navbar({ theme, onToggleTheme }) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <form className="d-flex align-items-center ms-auto" role="search">
             <ul className="navbar-nav mb-lg-0">
-              {navItems.map((item) => {
+              {NAV_ITEMS.map((item) => {
                 const isActive = pathname === item.to;
 
                 return (
