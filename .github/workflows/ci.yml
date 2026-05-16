@@ -79,6 +79,24 @@ jobs:
         run: npm run format:check
         working-directory: dashboard
 
+      # Backend uses Jest + supertest + mongodb-memory-server. The Mongo
+      # binary is downloaded on first run (~80 MB) — the testTimeout in
+      # jest.config.js covers cold-start.
+      - name: Test backend
+        run: npm test
+        working-directory: backend
+
+      # CRA's `react-scripts test` enters watch mode by default. GH Actions
+      # sets CI=true automatically (forcing single-run), but --watchAll=false
+      # is the belt-and-suspenders guard.
+      - name: Test frontend
+        run: CI=true npm test -- --watchAll=false
+        working-directory: frontend
+
+      - name: Test dashboard
+        run: CI=true npm test -- --watchAll=false
+        working-directory: dashboard
+
       # CRA's webpack ESLint plugin is disabled via DISABLE_ESLINT_PLUGIN=true
       # in the start/build scripts of both apps, so `npm run build` is a pure
       # webpack compile — the lint gate above is what enforces ESLint.
