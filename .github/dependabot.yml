@@ -1,0 +1,72 @@
+version: 2
+
+# Dependabot configuration for a three-app monorepo + a root package.json
+# that holds only the shared ESLint devDependencies. Each npm package.json
+# gets its own ecosystem block; updates are grouped to avoid PR noise.
+#
+# Cadence is weekly. open-pull-requests-limit caps the simultaneous PR
+# count per ecosystem so a quiet week of updates doesn't flood the queue.
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "scope:root"
+    groups:
+      root-dev-deps:
+        dependency-type: "development"
+
+  - package-ecosystem: "npm"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "scope:backend"
+    groups:
+      backend-dev-deps:
+        dependency-type: "development"
+      backend-prod-deps:
+        dependency-type: "production"
+
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "scope:frontend"
+    groups:
+      frontend-dev-deps:
+        dependency-type: "development"
+      frontend-prod-deps:
+        dependency-type: "production"
+
+  - package-ecosystem: "npm"
+    directory: "/dashboard"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "scope:dashboard"
+    groups:
+      dashboard-dev-deps:
+        dependency-type: "development"
+      dashboard-prod-deps:
+        dependency-type: "production"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "scope:ci"
