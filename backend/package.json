@@ -14,7 +14,7 @@
     "format:check": "prettier --check ."
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.2",
