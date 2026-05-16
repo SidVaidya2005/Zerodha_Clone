@@ -540,3 +540,77 @@ No automated test suite exists today — zero Jest/spec/test files across backen
 - TopBar indices update every 5s.
 - `npm run lint` + `npm run format:check` clean in each app.
 - `git log --follow` works for renamed files (`DoughnutChart.js` etc.) thanks to `git mv`.
+
+---
+
+# 🏁 RESTRUCTURE LANDED — Outstanding Items
+
+The eight-phase plan is fully committed on `main`. Code-level verification (lint, build, file structure, byte-identical tokens, grep checks) ran cleanly throughout. The items below could not be confirmed from within the session and need a follow-up pass with the right infra.
+
+## ✅ What I confirmed automatically (final check)
+
+- `git log --follow dashboard/src/charts/DoughnutChart.js` traces back through `8b6649c` (rename) and `5945c9b` (folder split) to the original `ab7314d` first commit. Rename history preserved.
+- `cd backend && npm run lint` → clean. `cd frontend && npm run lint` → 0 errors, 7 pre-existing alt-text warnings. `cd dashboard && npm run lint` → 0 errors, 3 warnings (1 pre-existing useApiData + 2 newly-surfaced `err` in server.js).
+- Both CRA apps `npm run build` succeed; backend layer-module `require()` graph resolves; `shared/tokens.css` byte-identical to both app copies.
+
+## ⚠️ Code-level item discovered during final sweep
+
+**`npm run format:check` is NOT clean in any of the three apps.** Prettier was never the gate during the restructure; the new files (Phase 4 CSS splits, Phase 5 extractions, Phase 8 CLAUDE.md rewrites) drifted from the project's prettier config.
+
+- `backend` → 2 files (`CLAUDE.md`, `schemas/OrdersSchema.js`).
+- `frontend` → 31 files (Phase 4 styles + Phase 5 components + Phase 8 CLAUDE.md).
+- `dashboard` → 20 files (Phase 4 styles + Phase 5 widgets/hooks + Phase 8 CLAUDE.md).
+
+Fix is one command per app: `npm run format`. Should be done as a single "format pass" commit per app (3 commits) so the diff is auditable. **Not done during Phase 7** because Phase 7 was scoped to ESLint consolidation only; touching prettier output across 53 files would have blown past the one-commit budget and obscured the lint changes in `git diff`.
+
+## ⚠️ Behavioral verification requiring live infrastructure
+
+Each item below is a checkbox to walk through manually with the right stack running.
+
+### Backend (needs MongoDB running + `backend/.env` populated)
+- [ ] `cd backend && npm run seed:holdings` succeeds.
+- [ ] `cd backend && npm run seed:positions` succeeds.
+- [ ] `curl localhost:3002/allHoldings` returns expected shape; same for `/allPositions` and `/allOrders`.
+- [ ] `curl -X POST localhost:3002/newOrder -H 'Content-Type: application/json' -d '{"name":"TCS","qty":5,"price":3500,"mode":"BUY"}'` → re-query holdings → qty increased, weighted-avg correct.
+- [ ] SELL on the same name → qty decrements; exact-qty SELL deletes the holding; position upserted.
+- [ ] `curl -X POST localhost:3002/newOrder -H 'Content-Type: application/json' -d '{"name":123,"qty":5,"price":3500,"mode":"BUY"}'` → 400.
+
+### Dashboard runtime (needs backend + Mongo + Alpha Vantage key + browser)
+- [ ] `cd dashboard && npm run dev` starts both proxy (3001) and React (3000) cleanly.
+- [ ] Visit `/`, `/orders`, `/holdings`, `/positions`, `/funds` — every page renders without console errors.
+- [ ] **TopBar indices** update every 5 seconds (Nifty 50 + Sensex via the proxy's `/api/indices`).
+- [ ] **WatchList polling** — leave the tab open 30 seconds, confirm `/api/indian-stocks` fires at t≈0, 15s, 30s in DevTools → Network. Phase 5 extracted this into `useWatchlistPolling`; verifying the cadence didn't regress is the key smoke test.
+- [ ] **BuyActionWindow flow** — click Buy/Sell from the WatchList, place a BUY order, confirm:
+  - toast shows "BUY order placed!"
+  - modal auto-closes ~900ms after success
+  - `/allHoldings` reflects the mutation
+- [ ] Repeat with a SELL — confirm `/allPositions` mutation + holdings decrement.
+- [ ] **AnalyticsModal** — click the chart icon on a WatchList item, confirm the modal shows price/percent/market and dismisses on overlay click or ✕ button.
+- [ ] **Dashboard color shift from Phase 6** is acceptable: light-mode surfaces now off-white (`#fafafa`) instead of pure white; borders are neutral gray (`#dee2e6`) instead of blue-tinted (`#e6ebf2`).
+
+### Frontend runtime (needs browser; backend not required)
+- [ ] `cd frontend && npm start` compiles cleanly.
+- [ ] Visit `/`, `/about`, `/product`, `/pricing`, `/signup`, `/support`, `/xyz` (NotFound) — all routes render.
+- [ ] **Dark-mode toggle** flips correctly on every route. The theme pill in the navbar should animate between sun and moon icons and the entire surface should re-color.
+- [ ] **Signup form** — empty submit shows all required errors; invalid email shows the email-specific error; mismatched passwords show the confirm-password error; valid submission redirects to the dashboard URL with `?name=` in the query string. Phase 5 extracted `validation.js` and `FormField.js`; this is the smoke test that the extraction didn't drop a case.
+- [ ] **Footer/Navbar/CreateTicket/Team/Universe** — every page that consumes the new `src/data/*` modules renders the right number of items in the right order.
+
+### Visual diff (light + dark, every route)
+Pre-Phase 4 vs post-restructure side-by-side. This is the biggest untested surface — the 5-file CSS split + the absorbed `BuyActionWindow.css` could introduce subtle regressions that lint and build can't catch.
+
+- [ ] Frontend: 7 routes × 2 themes = 14 screenshots.
+- [ ] Dashboard: 5 routes × 2 themes = 10 screenshots, plus BuyActionWindow modal open vs closed.
+
+## ⚠️ Optional sanity check — Phase 8
+
+- [ ] Boot a fresh Claude Code session and ask "where do new dashboard pages go?" — the answer should be `dashboard/src/pages/`. Confirms the rewritten `CLAUDE.md` + `.claude/rules/` files are actually loaded and clearly worded.
+
+## Suggested order for the cleanup pass
+
+1. `npm run format` in each app + one commit per app (`chore(backend|frontend|dashboard): prettier pass`). Smallest blast radius, no behavior change.
+2. Stand up backend + Mongo. Run the backend curl checks. If anything fails, you have a clean bisect target.
+3. Bring up `dashboard` with full proxy + backend. Run the runtime checklist top-to-bottom.
+4. Bring up `frontend` independently (different terminal, ideally `PORT=3010`). Walk the frontend checklist.
+5. Visual diff pass last — accept the deliberate Phase 6 color shift, flag anything else.
+
+If any step fails, the relevant phase commit is in `git log --oneline` with a clear scope, so bisection is straightforward.
