@@ -11,4 +11,3 @@ const OrdersSchema = new Schema(
 );
 
 module.exports = { OrdersSchema };
-

@@ -32,20 +32,20 @@ seed/          seedHoldings.js, seedPositions.js
 
 ### Data models
 
-| Model | Key fields |
-|---|---|
-| `HoldingsModel` | `name`, `qty`, `avg`, `price`, `net` (string %), `day` (string %) |
-| `PositionsModel` | `product`, `name`, `qty`, `avg`, `price`, `net`, `day`, `isLoss` |
-| `OrdersModel` | `name`, `qty`, `price`, `mode` (`"BUY"` or `"SELL"`), `createdAt` (auto via timestamps) |
+| Model            | Key fields                                                                              |
+| ---------------- | --------------------------------------------------------------------------------------- |
+| `HoldingsModel`  | `name`, `qty`, `avg`, `price`, `net` (string %), `day` (string %)                       |
+| `PositionsModel` | `product`, `name`, `qty`, `avg`, `price`, `net`, `day`, `isLoss`                        |
+| `OrdersModel`    | `name`, `qty`, `price`, `mode` (`"BUY"` or `"SELL"`), `createdAt` (auto via timestamps) |
 
 ### API endpoints
 
-| Method | Path | Controller |
-|---|---|---|
-| GET | `/allHoldings` | `holdingsController.getAllHoldings` |
-| GET | `/allPositions` | `positionsController.getAllPositions` |
-| GET | `/allOrders` | `ordersController.getAllOrders` (sorted newest-first) |
-| POST | `/newOrder` | `ordersController.createOrder` → `orderService.placeOrder` |
+| Method | Path            | Controller                                                 |
+| ------ | --------------- | ---------------------------------------------------------- |
+| GET    | `/allHoldings`  | `holdingsController.getAllHoldings`                        |
+| GET    | `/allPositions` | `positionsController.getAllPositions`                      |
+| GET    | `/allOrders`    | `ordersController.getAllOrders` (sorted newest-first)      |
+| POST   | `/newOrder`     | `ordersController.createOrder` → `orderService.placeOrder` |
 
 ### Cross-collection mutation lives in `orderService`
 
