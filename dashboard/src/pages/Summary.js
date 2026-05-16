@@ -1,23 +1,24 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useApiData } from "../hooks/useApiData";
-import { BACKEND_URL } from "../config";
+import React, { useEffect, useState } from "react";
+import { usePortfolioSummary } from "../hooks/usePortfolioSummary";
+
+const formatCompact = (value) =>
+  new Intl.NumberFormat("en-IN", {
+    notation: "compact",
+    maximumFractionDigits: 2,
+  }).format(value);
 
 const Summary = () => {
   const [userName, setUserName] = useState("User");
   const {
-    data: holdings,
+    investment,
+    currentValue,
+    pnl,
+    pnlPercent,
+    marginsUsed,
+    holdingsCount,
     isLoading,
-    error: holdingsError,
-  } = useApiData(
-    `${BACKEND_URL}/allHoldings`,
-    "Unable to fetch summary data.",
-    15000,
-  );
-  const { data: positions, error: positionsError } = useApiData(
-    `${BACKEND_URL}/allPositions`,
-    "Unable to fetch summary data.",
-    15000,
-  );
+    hasError,
+  } = usePortfolioSummary();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -27,44 +28,8 @@ const Summary = () => {
     }
   }, []);
 
-  const formatCompact = (value) =>
-    new Intl.NumberFormat("en-IN", {
-      notation: "compact",
-      maximumFractionDigits: 2,
-    }).format(value);
-
-  const summary = useMemo(() => {
-    const investment = holdings.reduce(
-      (total, item) => total + (item.avg || 0) * (item.qty || 0),
-      0,
-    );
-
-    const currentValue = holdings.reduce(
-      (total, item) => total + (item.price || 0) * (item.qty || 0),
-      0,
-    );
-
-    const pnl = currentValue - investment;
-    const pnlPercent = investment > 0 ? (pnl / investment) * 100 : 0;
-
-    const marginsUsed = positions.reduce(
-      (total, item) => total + Math.abs((item.price || 0) * (item.qty || 0)),
-      0,
-    );
-
-    return {
-      investment,
-      currentValue,
-      pnl,
-      pnlPercent,
-      marginsUsed,
-      holdingsCount: holdings.length,
-    };
-  }, [holdings, positions]);
-
-  const hasError = Boolean(holdingsError || positionsError);
-  const pnlClassName = summary.pnl >= 0 ? "profit" : "loss";
-  const pnlSign = summary.pnl >= 0 ? "+" : "";
+  const pnlClassName = pnl >= 0 ? "profit" : "loss";
+  const pnlSign = pnl >= 0 ? "+" : "";
 
   return (
     <>
@@ -87,19 +52,17 @@ const Summary = () => {
 
         <div className="data">
           <div className="first">
-            <h3>{formatCompact(summary.currentValue)}</h3>
+            <h3>{formatCompact(currentValue)}</h3>
             <p>Margin available</p>
           </div>
           <hr />
 
           <div className="second">
             <p>
-              Margins used{" "}
-              <span>{formatCompact(summary.marginsUsed)}</span>{" "}
+              Margins used <span>{formatCompact(marginsUsed)}</span>{" "}
             </p>
             <p>
-              Opening balance{" "}
-              <span>{formatCompact(summary.investment)}</span>{" "}
+              Opening balance <span>{formatCompact(investment)}</span>{" "}
             </p>
           </div>
         </div>
@@ -108,14 +71,14 @@ const Summary = () => {
 
       <div className="section">
         <span>
-          <p>Holdings ({summary.holdingsCount})</p>
+          <p>Holdings ({holdingsCount})</p>
         </span>
 
         <div className="data">
           <div className="first">
             <h3 className={pnlClassName}>
-              {formatCompact(summary.pnl)}{" "}
-              <small>{`${pnlSign}${summary.pnlPercent.toFixed(2)}%`}</small>{" "}
+              {formatCompact(pnl)}{" "}
+              <small>{`${pnlSign}${pnlPercent.toFixed(2)}%`}</small>{" "}
             </h3>
             <p>P&L</p>
           </div>
@@ -123,11 +86,10 @@ const Summary = () => {
 
           <div className="second">
             <p>
-              Current Value{" "}
-              <span>{formatCompact(summary.currentValue)}</span>{" "}
+              Current Value <span>{formatCompact(currentValue)}</span>{" "}
             </p>
             <p>
-              Investment <span>{formatCompact(summary.investment)}</span>{" "}
+              Investment <span>{formatCompact(investment)}</span>{" "}
             </p>
           </div>
         </div>
