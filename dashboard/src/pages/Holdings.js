@@ -1,50 +1,21 @@
 import React, { useMemo } from "react";
 import { VerticalGraph } from "../charts/VerticalGraph";
-import {
-  getCurrentValue,
-  getPnL,
-  getProfitClass,
-  getDayClass,
-} from "../utils/portfolioUtils";
-import { useApiData } from "../hooks/useApiData";
-import { BACKEND_URL } from "../config";
+import { getProfitClass } from "../utils/portfolioUtils";
+import { useHoldingsSummary } from "../hooks/useHoldingsSummary";
+import HoldingsRow from "./HoldingsRow";
 
 const Holdings = () => {
-  const { data: allHoldings, isLoading, error: errorMessage } = useApiData(
-    `${BACKEND_URL}/allHoldings`,
-    "Unable to load holdings right now. Please try again."
-  );
-
-  const holdingsWithPnL = useMemo(
-    () =>
-      allHoldings.map((stock) => ({
-        ...stock,
-        pnl: getPnL(stock),
-      })),
-    [allHoldings],
-  );
-
-  const { totalPnL, bestPerformer, worstPerformer, totalInvestment, totalCurrentValue } = useMemo(() => {
-    if (holdingsWithPnL.length === 0) {
-      return { totalPnL: 0, bestPerformer: null, worstPerformer: null, totalInvestment: 0, totalCurrentValue: 0 };
-    }
-
-    let total = 0;
-    let investment = 0;
-    let currentValue = 0;
-    let best = holdingsWithPnL[0];
-    let worst = holdingsWithPnL[0];
-
-    holdingsWithPnL.forEach((stock) => {
-      total += stock.pnl;
-      investment += stock.avg * stock.qty;
-      currentValue += getCurrentValue(stock);
-      if (stock.pnl > best.pnl) best = stock;
-      if (stock.pnl < worst.pnl) worst = stock;
-    });
-
-    return { totalPnL: total, bestPerformer: best, worstPerformer: worst, totalInvestment: investment, totalCurrentValue: currentValue };
-  }, [holdingsWithPnL]);
+  const {
+    holdingsWithPnL,
+    holdingsCount,
+    isLoading,
+    errorMessage,
+    totalPnL,
+    bestPerformer,
+    worstPerformer,
+    totalInvestment,
+    totalCurrentValue,
+  } = useHoldingsSummary();
 
   const data = useMemo(
     () => ({
@@ -62,7 +33,7 @@ const Holdings = () => {
 
   return (
     <>
-      <h3 className="title">Holdings ({allHoldings.length})</h3>
+      <h3 className="title">Holdings ({holdingsCount})</h3>
 
       {isLoading && (
         <div className="holdings-feedback">
@@ -77,7 +48,7 @@ const Holdings = () => {
       <div className="quick-stats-grid">
         <div className="quick-stat-card">
           <p className="quick-stat-label">Total holdings</p>
-          <h5 className="quick-stat-value">{allHoldings.length}</h5>
+          <h5 className="quick-stat-value">{holdingsCount}</h5>
         </div>
         <div className="quick-stat-card">
           <p className="quick-stat-label">Total P&amp;L</p>
@@ -116,41 +87,33 @@ const Holdings = () => {
             <th>Day chg.</th>
           </tr>
 
-          {holdingsWithPnL.map((stock) => {
-            const currentValue = getCurrentValue(stock);
-            const profitClass = getProfitClass(stock.pnl);
-            const dayClass = getDayClass(stock.isLoss);
-
-            return (
-              <tr key={stock.name}>
-                <td>{stock.name}</td>
-                <td>{stock.qty}</td>
-                <td>{stock.avg.toFixed(2)}</td>
-                <td>{stock.price.toFixed(2)}</td>
-                <td>{currentValue.toFixed(2)}</td>
-                <td className={profitClass}>{stock.pnl.toFixed(2)}</td>
-                <td className={profitClass}>{stock.net}</td>
-                <td className={dayClass}>{stock.day}</td>
-              </tr>
-            );
-          })}
+          {holdingsWithPnL.map((stock) => (
+            <HoldingsRow key={stock.name} stock={stock} />
+          ))}
         </table>
       </div>
 
       <div className="row">
         <div className="col">
-          <h5>{totalInvestment.toLocaleString("en-IN", { maximumFractionDigits: 2 })}</h5>
+          <h5>
+            {totalInvestment.toLocaleString("en-IN", { maximumFractionDigits: 2 })}
+          </h5>
           <p>Total investment</p>
         </div>
         <div className="col">
-          <h5>{totalCurrentValue.toLocaleString("en-IN", { maximumFractionDigits: 2 })}</h5>
+          <h5>
+            {totalCurrentValue.toLocaleString("en-IN", { maximumFractionDigits: 2 })}
+          </h5>
           <p>Current value</p>
         </div>
         <div className="col">
           <h5 className={getProfitClass(totalPnL)}>
             {totalPnL.toLocaleString("en-IN", { maximumFractionDigits: 2 })}{" "}
             {totalInvestment > 0 && (
-              <small>({totalPnL >= 0 ? "+" : ""}{((totalPnL / totalInvestment) * 100).toFixed(2)}%)</small>
+              <small>
+                ({totalPnL >= 0 ? "+" : ""}
+                {((totalPnL / totalInvestment) * 100).toFixed(2)}%)
+              </small>
             )}
           </h5>
           <p>P&L</p>
