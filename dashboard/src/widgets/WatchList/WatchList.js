@@ -3,6 +3,8 @@ import React, { useState, useContext, useEffect, useMemo } from "react";
 import GeneralContext from "../../context/GeneralContext";
 import { PROXY_URL } from "../../config";
 import { parseNumericPrice, formatPrice, formatPercent } from "../../utils/portfolioUtils";
+import { INITIAL_WATCHLIST } from "../../data/watchlistSymbols";
+import { BACKGROUND_COLORS, BORDER_COLORS } from "../../data/chartPalette";
 
 import { Tooltip, Grow } from "@mui/material";
 
@@ -15,26 +17,13 @@ import {
 
 import { DoughnutChart } from "../../charts/DoughnutChart";
 
-const initialWatchlist = [
-  { name: "HDFCBANK", price: 0, percent: "0.00%", isDown: false, isIndian: true },
-  { name: "RELIANCE", price: 0, percent: "0.00%", isDown: false, isIndian: true },
-  { name: "ICICIBANK", price: 0, percent: "0.00%", isDown: false, isIndian: true },
-  { name: "INFY", price: 0, percent: "0.00%", isDown: false, isIndian: true },
-  { name: "ITC", price: 0, percent: "0.00%", isDown: false, isIndian: true },
-  { name: "TCS", price: 0, percent: "0.00%", isDown: false, isIndian: true },
-  { name: "LT", price: 0, percent: "0.00%", isDown: false, isIndian: true },
-  { name: "BHARTIARTL", price: 0, percent: "0.00%", isDown: false, isIndian: true },
-  { name: "AXISBANK", price: 0, percent: "0.00%", isDown: false, isIndian: true },
-  { name: "SBIN", price: 0, percent: "0.00%", isDown: false, isIndian: true },
-];
-
 const WatchList = () => {
-  const [liveWatchlist, setLiveWatchlist] = useState(initialWatchlist);
+  const [liveWatchlist, setLiveWatchlist] = useState(INITIAL_WATCHLIST);
   const [analyticsStock, setAnalyticsStock] = useState(null);
 
   useEffect(() => {
     const fetchIndianStocks = async () => {
-      const indianSymbols = initialWatchlist.map((s) => s.name);
+      const indianSymbols = INITIAL_WATCHLIST.map((s) => s.name);
       if (indianSymbols.length === 0) return;
 
       try {
@@ -125,50 +114,8 @@ const WatchList = () => {
         {
           label: "Price",
           data: dataPoints,
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.5)",
-            "rgba(54, 162, 235, 0.5)",
-            "rgba(255, 206, 86, 0.5)",
-            "rgba(75, 192, 192, 0.5)",
-            "rgba(153, 102, 255, 0.5)",
-            "rgba(255, 159, 64, 0.5)",
-            "rgba(199, 199, 199, 0.5)",
-            "rgba(83, 102, 255, 0.5)",
-            "rgba(40, 159, 64, 0.5)",
-            "rgba(210, 199, 199, 0.5)",
-            "rgba(78, 52, 199, 0.5)",
-            "rgba(155, 99, 132, 0.5)",
-            "rgba(54, 162, 135, 0.5)",
-            "rgba(255, 206, 186, 0.5)",
-            "rgba(255, 120, 120, 0.5)",
-            "rgba(120, 255, 120, 0.5)",
-            "rgba(120, 120, 255, 0.5)",
-            "rgba(255, 255, 120, 0.5)",
-            "rgba(255, 120, 255, 0.5)",
-            "rgba(120, 255, 255, 0.5)",
-          ],
-          borderColor: [
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-            "rgba(153, 102, 255, 1)",
-            "rgba(255, 159, 64, 1)",
-            "rgba(199, 199, 199, 1)",
-            "rgba(83, 102, 255, 1)",
-            "rgba(40, 159, 64, 1)",
-            "rgba(210, 199, 199, 1)",
-            "rgba(78, 52, 199, 1)",
-            "rgba(155, 99, 132, 1)",
-            "rgba(54, 162, 135, 1)",
-            "rgba(255, 206, 186, 1)",
-            "rgba(255, 120, 120, 1)",
-            "rgba(120, 255, 120, 1)",
-            "rgba(120, 120, 255, 1)",
-            "rgba(255, 255, 120, 1)",
-            "rgba(255, 120, 255, 1)",
-            "rgba(120, 255, 255, 1)",
-          ],
+          backgroundColor: BACKGROUND_COLORS,
+          borderColor: BORDER_COLORS,
           borderWidth: 1,
         },
       ],
