@@ -18,6 +18,8 @@ npm run format   # prettier --write
 
 CRA's webpack ESLint pass is disabled via `DISABLE_ESLINT_PLUGIN=true` in the `start`/`build` scripts. Run `npm run lint` explicitly before committing.
 
+**Known lint warnings (don't "fix" without ask):** 1 `react-hooks/exhaustive-deps` in `hooks/useApiData.js` (intentional) + 2 unused `err` at `server.js:147,157`. Pre-existing and tolerated.
+
 ## Architecture
 
 Two processes:
@@ -82,7 +84,7 @@ All styles in `src/styles/` as the 5-file split (same shape as frontend). The da
 
 ### Proxy server (`server.js`)
 
-Express on port 3001. Uses `yahoo-finance2` (v3+, requires explicit instantiation). For Indian stocks, tries `.NS` (NSE) first, falls back to `.BO` (BSE).
+Express on port 3001. Uses `yahoo-finance2` (v3+, requires explicit instantiation). For Indian stocks, tries `.NS` (NSE) first, falls back to `.BO` (BSE). **Requires `ALPHA_VANTAGE_API_KEY` — server calls `process.exit(1)` on missing key.**
 
 | Endpoint | Description |
 |---|---|

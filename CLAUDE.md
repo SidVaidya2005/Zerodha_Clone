@@ -79,7 +79,7 @@ REACT_APP_DASHBOARD_URL=http://localhost:3001
 ```
 REACT_APP_BACKEND_URL=http://localhost:3002
 REACT_APP_PROXY_URL=http://localhost:3001
-ALPHA_VANTAGE_API_KEY=<key>   # for the proxy server only
+ALPHA_VANTAGE_API_KEY=<key>   # REQUIRED — proxy server exits 1 without it
 ```
 
 In production, both `REACT_APP_BACKEND_URL` and `REACT_APP_PROXY_URL` must be set explicitly — the dashboard falls back to same-origin (empty string) and logs a warning if they are missing.

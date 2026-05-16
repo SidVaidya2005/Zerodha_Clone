@@ -17,6 +17,8 @@ npm run format   # prettier --write
 
 CRA's webpack ESLint pass is disabled via `DISABLE_ESLINT_PLUGIN=true` in the `start`/`build` scripts. Run `npm run lint` explicitly before committing.
 
+**Known lint warnings (don't "fix" without ask):** 7 `jsx-a11y/alt-text` in `landing_page/home/{Awards,Education,Stats}.js` + `landing_page/pricing/Hero.js`. Pre-existing and tolerated.
+
 ## Architecture
 
 Standard Create React App. `src/index.js` mounts `AppLayout` — a `BrowserRouter` wrapping shared `Navbar` + `Footer` with page routes between them.
