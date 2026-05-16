@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: lint + format:check + build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          # All four package-lock.json files feed into a single cache key.
+          # Any lockfile change invalidates the cache — acceptable trade-off
+          # for a small monorepo; keeps the job simple.
+          cache-dependency-path: |
+            package-lock.json
+            backend/package-lock.json
+            frontend/package-lock.json
+            dashboard/package-lock.json
+
+      # The root package.json holds only devDependencies (ESLint + plugins).
+      # The root .eslintrc.json resolves `extends` from /node_modules, so
+      # `npm ci` at the root must run before any per-app `npm run lint`.
+      - name: Install root devDependencies
+        run: npm ci
+
+      - name: Install backend
+        run: npm ci
+        working-directory: backend
+
+      - name: Install frontend
+        run: npm ci
+        working-directory: frontend
+
+      - name: Install dashboard
+        run: npm ci
+        working-directory: dashboard
+
+      - name: Lint backend
+        run: npm run lint
+        working-directory: backend
+
+      - name: Lint frontend
+        run: npm run lint
+        working-directory: frontend
+
+      - name: Lint dashboard
+        run: npm run lint
+        working-directory: dashboard
+
+      - name: Format check backend
+        run: npm run format:check
+        working-directory: backend
+
+      - name: Format check frontend
+        run: npm run format:check
+        working-directory: frontend
+
+      - name: Format check dashboard
+        run: npm run format:check
+        working-directory: dashboard
+
+      # CRA's webpack ESLint plugin is disabled via DISABLE_ESLINT_PLUGIN=true
+      # in the start/build scripts of both apps, so `npm run build` is a pure
+      # webpack compile — the lint gate above is what enforces ESLint.
+      - name: Build frontend
+        run: npm run build
+        working-directory: frontend
+
+      - name: Build dashboard
+        run: npm run build
+        working-directory: dashboard

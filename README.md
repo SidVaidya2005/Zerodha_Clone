@@ -1,5 +1,9 @@
 # Zerodha Clone
 
+[![CI](https://github.com/SidVaidya2005/Zerodha_Clone/actions/workflows/ci.yml/badge.svg)](https://github.com/SidVaidya2005/Zerodha_Clone/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/SidVaidya2005/Zerodha_Clone/actions/workflows/codeql.yml/badge.svg)](https://github.com/SidVaidya2005/Zerodha_Clone/actions/workflows/codeql.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A Zerodha-inspired trading platform clone built as a full-stack learning project. Three independently-runnable apps share one MongoDB database.
 
 ## Screenshots
