@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { DASHBOARD_URL } from "../../config";
+import FormField from "../components/FormField";
+import { validateSignupForm } from "./validation";
 
 function SignupForm() {
   const [formData, setFormData] = useState({
@@ -21,29 +23,11 @@ function SignupForm() {
     }));
   };
 
-  const validate = () => {
-    let formErrors = {};
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!formData.fullName.trim()) formErrors.fullName = "Full name is required";
-    if (!formData.email) {
-      formErrors.email = "Email is required";
-    } else if (!emailRegex.test(formData.email)) {
-      formErrors.email = "Invalid email format";
-    }
-    if (!formData.phoneNumber.trim()) formErrors.phoneNumber = "Phone number is required";
-    if (!formData.password) formErrors.password = "Password is required";
-    if (formData.password !== formData.confirmPassword) {
-      formErrors.confirmPassword = "Passwords do not match";
-    }
-
-    setErrors(formErrors);
-    return Object.keys(formErrors).length === 0;
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validate()) {
+    const { errors: formErrors, isValid } = validateSignupForm(formData);
+    setErrors(formErrors);
+    if (isValid) {
       setSuccessMsg("Signup successful! Redirecting to dashboard...");
       setTimeout(() => {
         window.location.href = `${DASHBOARD_URL}/?name=${encodeURIComponent(
@@ -60,95 +44,54 @@ function SignupForm() {
       )}
 
       <form onSubmit={handleSubmit} noValidate>
-        <div className="mb-3">
-          <label className="form-label" htmlFor="fullName">
-            Full Name
-          </label>
-          <input
-            type="text"
-            className={`form-control ${errors.fullName ? "is-invalid" : ""}`}
-            id="fullName"
-            name="fullName"
-            value={formData.fullName}
-            onChange={handleChange}
-            placeholder="eg. John Doe"
-          />
-          {errors.fullName && (
-            <div className="invalid-feedback">{errors.fullName}</div>
-          )}
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label" htmlFor="email">
-            Email
-          </label>
-          <input
-            type="email"
-            className={`form-control ${errors.email ? "is-invalid" : ""}`}
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="eg. user@example.com"
-          />
-          {errors.email && (
-            <div className="invalid-feedback">{errors.email}</div>
-          )}
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label" htmlFor="phoneNumber">
-            Phone Number
-          </label>
-          <input
-            type="tel"
-            className={`form-control ${errors.phoneNumber ? "is-invalid" : ""}`}
-            id="phoneNumber"
-            name="phoneNumber"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-            placeholder="eg. 9876543210"
-          />
-          {errors.phoneNumber && (
-            <div className="invalid-feedback">{errors.phoneNumber}</div>
-          )}
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label" htmlFor="password">
-            Password
-          </label>
-          <input
-            type="password"
-            className={`form-control ${errors.password ? "is-invalid" : ""}`}
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          {errors.password && (
-            <div className="invalid-feedback">{errors.password}</div>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <label className="form-label" htmlFor="confirmPassword">
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            className={`form-control ${
-              errors.confirmPassword ? "is-invalid" : ""
-            }`}
-            id="confirmPassword"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-          {errors.confirmPassword && (
-            <div className="invalid-feedback">{errors.confirmPassword}</div>
-          )}
-        </div>
+        <FormField
+          id="fullName"
+          name="fullName"
+          label="Full Name"
+          value={formData.fullName}
+          onChange={handleChange}
+          placeholder="eg. John Doe"
+          error={errors.fullName}
+        />
+        <FormField
+          id="email"
+          name="email"
+          type="email"
+          label="Email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="eg. user@example.com"
+          error={errors.email}
+        />
+        <FormField
+          id="phoneNumber"
+          name="phoneNumber"
+          type="tel"
+          label="Phone Number"
+          value={formData.phoneNumber}
+          onChange={handleChange}
+          placeholder="eg. 9876543210"
+          error={errors.phoneNumber}
+        />
+        <FormField
+          id="password"
+          name="password"
+          type="password"
+          label="Password"
+          value={formData.password}
+          onChange={handleChange}
+          error={errors.password}
+        />
+        <FormField
+          id="confirmPassword"
+          name="confirmPassword"
+          type="password"
+          label="Confirm Password"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          error={errors.confirmPassword}
+          wrapperClassName="mb-4"
+        />
 
         <button
           type="submit"
