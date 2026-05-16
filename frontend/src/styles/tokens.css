@@ -1,3 +1,16 @@
+/*
+ * Canonical design tokens.
+ *
+ * CRA cannot @import this file (it's outside src/), so each app keeps a
+ * byte-identical copy at <app>/src/styles/tokens.css. Token changes must
+ * update all three files (this one + both app copies) in the same commit.
+ *
+ * Sanity check after any edit:
+ *   diff shared/tokens.css frontend/src/styles/tokens.css
+ *   diff shared/tokens.css dashboard/src/styles/tokens.css
+ * Both must exit 0.
+ */
+
 :root {
   --app-bg: #ffffff;
   --app-text: #202124;
@@ -7,6 +20,8 @@
   --app-link: #387ed1;
   --app-link-hover: #2b63a6;
   --app-sun-icon: #f59e0b;
+  --app-profit: #4caf50;
+  --app-loss: #f44336;
 }
 
 [data-theme="dark"] {
@@ -17,4 +32,6 @@
   --app-border: #2f2f2f;
   --app-link: #6ea8ff;
   --app-link-hover: #9bc0ff;
+  --app-profit: #4caf50;
+  --app-loss: #f44336;
 }
