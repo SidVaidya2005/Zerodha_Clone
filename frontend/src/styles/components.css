@@ -1,6 +1,5 @@
 code {
-  font-family:
-    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .nav-link {
@@ -482,7 +481,9 @@ a:hover {
   background-color: var(--app-bg) !important;
   border: 1px solid var(--app-border) !important;
   color: var(--app-text) !important;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
 }
 
 .form-control:focus {

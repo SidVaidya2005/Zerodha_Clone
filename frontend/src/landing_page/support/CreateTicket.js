@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import FAQLinkColumn from "../components/FAQLinkColumn";
-import {
-  FAQ_GROUPS,
-  FAQ_QUICK_LINKS,
-  FAQ_FEATURED_LINKS,
-} from "../../data/faqLinks";
+import { FAQ_GROUPS, FAQ_QUICK_LINKS, FAQ_FEATURED_LINKS } from "../../data/faqLinks";
 
 function CreateTicket() {
   const [openSection, setOpenSection] = useState(null);

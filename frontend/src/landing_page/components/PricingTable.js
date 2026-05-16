@@ -24,11 +24,7 @@ function PricingTable({ title, headers, rows, footnote }) {
           </tbody>
         </table>
       </div>
-      {footnote && (
-        <p className="text-muted app-pricing-footnote app-footnote-text">
-          {footnote}
-        </p>
-      )}
+      {footnote && <p className="text-muted app-pricing-footnote app-footnote-text">{footnote}</p>}
     </div>
   );
 }

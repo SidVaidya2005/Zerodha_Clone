@@ -5,10 +5,7 @@ import SignupCTAButton from "../components/SignupCTAButton";
 function OpenAccount() {
   return (
     <PageHero title="Open a Zerodha account">
-      <p>
-        Modern platforms and apps, ₹0 investments, and flat ₹20 intraday and
-        F&amp;O trades.
-      </p>
+      <p>Modern platforms and apps, ₹0 investments, and flat ₹20 intraday and F&amp;O trades.</p>
       <SignupCTAButton />
     </PageHero>
   );

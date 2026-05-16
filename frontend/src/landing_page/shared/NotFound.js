@@ -22,11 +22,7 @@ function NotFound() {
         <p className="text-muted mb-2">You can also explore:</p>
         <div className="d-flex justify-content-center gap-3 flex-wrap">
           {suggestedLinks.map((linkItem) => (
-            <Link
-              key={linkItem.to}
-              to={linkItem.to}
-              className="text-decoration-none"
-            >
+            <Link key={linkItem.to} to={linkItem.to} className="text-decoration-none">
               {linkItem.label}
             </Link>
           ))}

@@ -11,11 +11,7 @@ const rows = [
 
 function ValueAddedServices() {
   return (
-    <PricingTable
-      title="Charges for optional value added services"
-      headers={headers}
-      rows={rows}
-    />
+    <PricingTable title="Charges for optional value added services" headers={headers} rows={rows} />
   );
 }
 

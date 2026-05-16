@@ -25,19 +25,13 @@ function ScrollToTop() {
 }
 
 function getSystemTheme() {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
 function AppLayout() {
   const [themeMode, setThemeMode] = useState(() => {
     const savedMode = localStorage.getItem(THEME_MODE_KEY);
-    if (
-      savedMode === "light" ||
-      savedMode === "dark" ||
-      savedMode === "system"
-    ) {
+    if (savedMode === "light" || savedMode === "dark" || savedMode === "system") {
       return savedMode;
     }
 
@@ -45,7 +39,7 @@ function AppLayout() {
   });
 
   const [activeTheme, setActiveTheme] = useState(() =>
-    themeMode === "system" ? getSystemTheme() : themeMode,
+    themeMode === "system" ? getSystemTheme() : themeMode
   );
 
   useEffect(() => {

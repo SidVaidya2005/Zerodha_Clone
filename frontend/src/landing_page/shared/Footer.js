@@ -39,11 +39,7 @@ function Footer() {
           </div>
 
           {FOOTER_COLUMNS.map((column) => (
-            <FooterColumn
-              key={column.heading}
-              heading={column.heading}
-              links={column.links}
-            />
+            <FooterColumn key={column.heading} heading={column.heading} links={column.links} />
           ))}
         </div>
 

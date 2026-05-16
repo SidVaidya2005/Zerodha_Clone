@@ -9,11 +9,7 @@ function Navbar({ theme, onToggleTheme }) {
     <nav className="navbar navbar-expand-lg border-bottom app-navbar sticky-top">
       <div className="container p-2">
         <Link className="navbar-brand" to="/">
-          <img
-            src="media/images/logo.svg"
-            className="app-navbar-logo dark-invert"
-            alt="Logo"
-          />
+          <img src="media/images/logo.svg" className="app-navbar-logo dark-invert" alt="Logo" />
         </Link>
         <button
           className="navbar-toggler"

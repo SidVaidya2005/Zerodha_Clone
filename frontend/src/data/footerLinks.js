@@ -32,7 +32,11 @@ export const FOOTER_COLUMNS = [
       { label: "Upcoming IPOs", href: "https://zerodha.com/ipo/", internal: false },
       { label: "Brokerage charges", href: "/pricing", internal: true },
       { label: "Market holidays", href: "https://zerodha.com/marketholidays/", internal: false },
-      { label: "Economic calendar", href: "https://zerodha.com/economicCalendar/", internal: false },
+      {
+        label: "Economic calendar",
+        href: "https://zerodha.com/economicCalendar/",
+        internal: false,
+      },
     ],
   },
 ];
@@ -40,10 +44,26 @@ export const FOOTER_COLUMNS = [
 export const FOOTER_SOCIAL_LINKS = [
   { icon: "fa-brands fa-x-twitter", href: "https://x.com/zerodha", label: "X (Twitter)" },
   { icon: "fa-brands fa-facebook", href: "https://facebook.com/zerodha.social", label: "Facebook" },
-  { icon: "fa-brands fa-instagram", href: "https://instagram.com/zerodhaonline/", label: "Instagram" },
-  { icon: "fa-brands fa-linkedin", href: "https://linkedin.com/company/zerodha", label: "LinkedIn" },
-  { icon: "fa-brands fa-youtube", href: "https://www.youtube.com/@zerodhaonline", label: "YouTube" },
-  { icon: "fa-brands fa-whatsapp", href: "https://whatsapp.com/channel/0029Va8tzF0EquiIIb9j791g", label: "WhatsApp" },
+  {
+    icon: "fa-brands fa-instagram",
+    href: "https://instagram.com/zerodhaonline/",
+    label: "Instagram",
+  },
+  {
+    icon: "fa-brands fa-linkedin",
+    href: "https://linkedin.com/company/zerodha",
+    label: "LinkedIn",
+  },
+  {
+    icon: "fa-brands fa-youtube",
+    href: "https://www.youtube.com/@zerodhaonline",
+    label: "YouTube",
+  },
+  {
+    icon: "fa-brands fa-whatsapp",
+    href: "https://whatsapp.com/channel/0029Va8tzF0EquiIIb9j791g",
+    label: "WhatsApp",
+  },
   { icon: "fa-brands fa-telegram", href: "https://t.me/zerodhain", label: "Telegram" },
 ];
 

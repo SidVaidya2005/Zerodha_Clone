@@ -11,13 +11,7 @@ const rows = [
 ];
 
 function AccountOpeningCharges() {
-  return (
-    <PricingTable
-      title="Charges for account opening"
-      headers={headers}
-      rows={rows}
-    />
-  );
+  return <PricingTable title="Charges for account opening" headers={headers} rows={rows} />;
 }
 
 export default AccountOpeningCharges;

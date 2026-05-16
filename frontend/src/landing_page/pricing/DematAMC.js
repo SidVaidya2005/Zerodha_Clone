@@ -11,9 +11,8 @@ const rows = [
 
 const footnote = (
   <>
-    * Lower AMC is applicable only if the account qualifies as a Basic Services
-    Demat Account (BSDA). BSDA account holders cannot hold more than one demat
-    account. To learn more about BSDA,{" "}
+    * Lower AMC is applicable only if the account qualifies as a Basic Services Demat Account
+    (BSDA). BSDA account holders cannot hold more than one demat account. To learn more about BSDA,{" "}
     <a
       href="https://zerodha.com/charges/"
       className="text-decoration-none app-pricing-link"

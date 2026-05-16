@@ -8,12 +8,11 @@ function Pricing() {
         <div className="col-12 col-md-4">
           <h1 className="mb-3 fs-2">Unbeatable pricing</h1>
           <p>
-            We pioneered the concept of discount broking and price transparency
-            in India. Flat fees and no hidden charges.
+            We pioneered the concept of discount broking and price transparency in India. Flat fees
+            and no hidden charges.
           </p>
           <Link to="/pricing" className="app-link-plain">
-            See Pricing{" "}
-            <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
+            See Pricing <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
           </Link>
         </div>
         <div className="d-none d-md-block col-md-2"></div>

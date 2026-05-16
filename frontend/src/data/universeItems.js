@@ -26,7 +26,6 @@ export const UNIVERSE_ITEMS = [
   },
   {
     logo: "media/images/dittoLogo.png",
-    description:
-      "Personalized advice on life and health insurance. No spam and no mis-selling.",
+    description: "Personalized advice on life and health insurance. No spam and no mis-selling.",
   },
 ];

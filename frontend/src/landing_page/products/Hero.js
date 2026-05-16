@@ -12,8 +12,7 @@ function Hero() {
       <p className="mt-3 mb-5">
         Check out our{" "}
         <Link to="/product" className="app-link-plain">
-          investment offerings{" "}
-          <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
+          investment offerings <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
         </Link>
       </p>
     </PageHero>

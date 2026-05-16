@@ -5,9 +5,7 @@ function SignupHeader() {
   return (
     <>
       <h2 className="text-center mb-4">Sign up now</h2>
-      <p className="text-center text-muted mb-4">
-        Or track your existing application.
-      </p>
+      <p className="text-center text-muted mb-4">Or track your existing application.</p>
     </>
   );
 }

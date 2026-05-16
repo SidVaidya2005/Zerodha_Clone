@@ -30,18 +30,14 @@ function SignupForm() {
     if (isValid) {
       setSuccessMsg("Signup successful! Redirecting to dashboard...");
       setTimeout(() => {
-        window.location.href = `${DASHBOARD_URL}/?name=${encodeURIComponent(
-          formData.fullName
-        )}`;
+        window.location.href = `${DASHBOARD_URL}/?name=${encodeURIComponent(formData.fullName)}`;
       }, 2000);
     }
   };
 
   return (
     <>
-      {successMsg && (
-        <div className="alert alert-success text-center">{successMsg}</div>
-      )}
+      {successMsg && <div className="alert alert-success text-center">{successMsg}</div>}
 
       <form onSubmit={handleSubmit} noValidate>
         <FormField
@@ -93,10 +89,7 @@ function SignupForm() {
           wrapperClassName="mb-4"
         />
 
-        <button
-          type="submit"
-          className="btn btn-primary w-100 mb-3 fw-bold app-signup-btn"
-        >
+        <button type="submit" className="btn btn-primary w-100 mb-3 fw-bold app-signup-btn">
           Sign up
         </button>
       </form>
