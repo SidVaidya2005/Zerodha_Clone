@@ -1,0 +1,18 @@
+{
+  "root": true,
+  "overrides": [
+    {
+      "files": ["backend/**/*.js", "dashboard/server.js"],
+      "env": { "node": true, "commonjs": true, "es2022": true },
+      "extends": ["eslint:recommended", "prettier"],
+      "parserOptions": { "ecmaVersion": 2022 },
+      "rules": {
+        "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }]
+      }
+    },
+    {
+      "files": ["frontend/src/**/*.{js,jsx}", "dashboard/src/**/*.{js,jsx}"],
+      "extends": ["react-app", "react-app/jest", "prettier"]
+    }
+  ]
+}

@@ -41,5 +41,7 @@ Thumbs.db
 
 # ─── Claude Code (keep committed) ────────────────────────────────────────────
 # .claude/ contains project-scoped rules — commit these
-# Ignore only personal local overrides
+# Ignore only personal local overrides + session-local state
 .claude.local.md
+.claude/settings.local.json
+.claude/scheduled_tasks.lock

@@ -1,0 +1,10 @@
+{
+  "name": "zerodha-clone-monorepo",
+  "private": true,
+  "description": "Root devDependencies for the shared ESLint config. CRA + plain Node lint scripts in each app walk up to .eslintrc.json which extends configs resolved from this node_modules.",
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-config-react-app": "^7.0.1"
+  }
+}
