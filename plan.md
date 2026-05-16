@@ -398,7 +398,30 @@ One commit.
 
 ---
 
-# PHASE 7 — Tooling Consolidation
+# PHASE 7 — Tooling Consolidation ✅ COMPLETE
+
+**Status:** Done on 2026-05-16. Commit `284e2ad` on `main`. Root `.eslintrc.json` is now the single source of truth: `backend/.eslintrc.json` deleted, `eslintConfig` blocks removed from `frontend/package.json` and `dashboard/package.json`.
+
+**Two override blocks in the root config:**
+- `backend/**/*.js` + `dashboard/server.js` → Node CJS + `eslint:recommended` + `prettier`, `no-unused-vars` warn with `^_` ignore pattern.
+- `frontend/src/**/*.{js,jsx}` + `dashboard/src/**/*.{js,jsx}` → `react-app` + `react-app/jest` + `prettier`.
+
+**Two architectural workarounds the plan flagged were needed:**
+
+1. **Root `package.json` for dependency resolution.** The root `.eslintrc.json` cannot resolve `extends` from app-level `node_modules` (ESLint resolves extends relative to the config file's location). Added a minimal root `package.json` carrying `eslint`, `eslint-config-prettier`, and `eslint-config-react-app` as devDependencies. `npm install` at root populates `/node_modules` which is already gitignored.
+
+2. **`DISABLE_ESLINT_PLUGIN=true` in CRA scripts.** CRA's `eslint-webpack-plugin` injects its own `react-app` preset into BaseConfig and conflicts with the root override that also adds `react-app` (same plugin loaded from two different `node_modules`). Added the env var to the `start` and `build` scripts in both `frontend/package.json` and `dashboard/package.json`. **Trade-off:** CRA no longer lints inline during `npm start`/`npm run build`; users run `npm run lint` explicitly.
+
+**Per-source surfacing:** `dashboard/server.js` now picks up two warnings (`'err' is defined but never used` at lines 147/157) that the old `react-app` preset masked. The underlying code didn't change; deliberately left as warnings since Phase 7 is config-only.
+
+**`.gitignore` adjustment:** added `.claude/settings.local.json` and `.claude/scheduled_tasks.lock` (per-session Claude Code state) so the `.claude/` directory stays tracked for Phase 8's rule files.
+
+**Verification status:**
+- ✅ `cd backend && npm run lint` → 0 errors, 0 warnings.
+- ✅ `cd frontend && npm run lint` → 0 errors, 7 pre-existing alt-text warnings.
+- ✅ `cd dashboard && npm run lint` → 0 errors, 3 warnings (1 pre-existing useApiData + 2 newly-surfaced server.js unused-err).
+- ✅ `cd frontend && npm run build` and `cd dashboard && npm run build` both succeed end-to-end.
+- ⚠️ `npm run format:check` not run — Phase 7 didn't touch the prettier setup; prettier hasn't been the gate.
 
 **Goal:** One root ESLint config with per-app overrides. Keep root `.prettierrc` as already exists.
 
