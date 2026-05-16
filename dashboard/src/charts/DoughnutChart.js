@@ -27,9 +27,7 @@ export function DoughnutChart({ data }) {
       {hasData ? (
         <Doughnut data={data} options={options} />
       ) : (
-        <div className="doughnut-loading">
-          Loading price data...
-        </div>
+        <div className="doughnut-loading">Loading price data...</div>
       )}
     </div>
   );

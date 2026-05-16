@@ -15,7 +15,7 @@ export function useWatchlistPolling() {
 
       try {
         const response = await fetch(
-          `${PROXY_URL}/api/indian-stocks?symbols=${indianSymbols.join(",")}`,
+          `${PROXY_URL}/api/indian-stocks?symbols=${indianSymbols.join(",")}`
         );
         if (!response.ok) {
           throw new Error(`Proxy request failed with status ${response.status}`);
@@ -35,8 +35,7 @@ export function useWatchlistPolling() {
               const stockIndex = updatedList.findIndex((s) => s.name === item.symbol);
               if (stockIndex !== -1) {
                 const oldPrice = parseNumericPrice(updatedList[stockIndex].price);
-                const newPrice =
-                  typeof item.data.close === "number" ? item.data.close : oldPrice;
+                const newPrice = typeof item.data.close === "number" ? item.data.close : oldPrice;
 
                 if (newPrice === oldPrice) return;
 

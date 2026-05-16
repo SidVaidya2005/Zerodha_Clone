@@ -77,8 +77,7 @@ const Summary = () => {
         <div className="data">
           <div className="first">
             <h3 className={pnlClassName}>
-              {formatCompact(pnl)}{" "}
-              <small>{`${pnlSign}${pnlPercent.toFixed(2)}%`}</small>{" "}
+              {formatCompact(pnl)} <small>{`${pnlSign}${pnlPercent.toFixed(2)}%`}</small>{" "}
             </h3>
             <p>P&L</p>
           </div>

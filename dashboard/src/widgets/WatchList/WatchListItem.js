@@ -25,11 +25,7 @@ const WatchListItem = ({ stock, onAnalyticsClick }) => {
         </div>
       </div>
       {showWatchlistActions && (
-        <WatchListActions
-          uid={stock.name}
-          stock={stock}
-          onAnalyticsClick={onAnalyticsClick}
-        />
+        <WatchListActions uid={stock.name} stock={stock} onAnalyticsClick={onAnalyticsClick} />
       )}
     </li>
   );

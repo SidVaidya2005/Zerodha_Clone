@@ -16,19 +16,16 @@ const WatchList = () => {
   const data = useMemo(() => {
     const totalPrice = liveWatchlist.reduce(
       (acc, stock) => acc + parseNumericPrice(stock.price),
-      0,
+      0
     );
 
     const labels = liveWatchlist.map((stock) => {
       const price = parseNumericPrice(stock.price);
-      const percentage =
-        totalPrice > 0 ? ((price / totalPrice) * 100).toFixed(2) : 0;
+      const percentage = totalPrice > 0 ? ((price / totalPrice) * 100).toFixed(2) : 0;
       return `${stock.name}: ${percentage}%`;
     });
 
-    const dataPoints = liveWatchlist.map((stock) =>
-      parseNumericPrice(stock.price),
-    );
+    const dataPoints = liveWatchlist.map((stock) => parseNumericPrice(stock.price));
 
     return {
       labels,
@@ -48,21 +45,14 @@ const WatchList = () => {
     <div className="watchlist-container">
       <ul className="list">
         {liveWatchlist.map((stock) => (
-          <WatchListItem
-            stock={stock}
-            key={stock.name}
-            onAnalyticsClick={setAnalyticsStock}
-          />
+          <WatchListItem stock={stock} key={stock.name} onAnalyticsClick={setAnalyticsStock} />
         ))}
       </ul>
 
       <DoughnutChart data={data} />
 
       {analyticsStock && (
-        <AnalyticsModal
-          stock={analyticsStock}
-          onClose={() => setAnalyticsStock(null)}
-        />
+        <AnalyticsModal stock={analyticsStock} onClose={() => setAnalyticsStock(null)} />
       )}
     </div>
   );

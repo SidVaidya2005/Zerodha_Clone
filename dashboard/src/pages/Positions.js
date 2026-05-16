@@ -4,7 +4,11 @@ import { useApiData } from "../hooks/useApiData";
 import { BACKEND_URL } from "../config";
 
 const Positions = () => {
-  const { data: positions, isLoading, error: errorMessage } = useApiData(
+  const {
+    data: positions,
+    isLoading,
+    error: errorMessage,
+  } = useApiData(
     `${BACKEND_URL}/allPositions`,
     "Unable to load positions. Make sure the backend is running."
   );

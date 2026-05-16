@@ -12,18 +12,18 @@ export function usePortfolioSummary() {
   const { data: positions, error: positionsError } = useApiData(
     `${BACKEND_URL}/allPositions`,
     "Unable to fetch summary data.",
-    15000,
+    15000
   );
 
   const summary = useMemo(() => {
     const investment = holdings.reduce(
       (total, item) => total + (item.avg || 0) * (item.qty || 0),
-      0,
+      0
     );
 
     const currentValue = holdings.reduce(
       (total, item) => total + (item.price || 0) * (item.qty || 0),
-      0,
+      0
     );
 
     const pnl = currentValue - investment;
@@ -31,7 +31,7 @@ export function usePortfolioSummary() {
 
     const marginsUsed = positions.reduce(
       (total, item) => total + Math.abs((item.price || 0) * (item.qty || 0)),
-      0,
+      0
     );
 
     return {

@@ -77,9 +77,7 @@ const Funds = () => {
         <div className="col">
           <div className="commodity">
             <p>You don't have a commodity account</p>
-            <Link className="btn btn-blue commodity-action-btn">
-              Open Account
-            </Link>
+            <Link className="btn btn-blue commodity-action-btn">Open Account</Link>
           </div>
         </div>
       </div>

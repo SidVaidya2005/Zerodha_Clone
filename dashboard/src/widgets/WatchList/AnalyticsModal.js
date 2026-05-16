@@ -18,9 +18,7 @@ const AnalyticsModal = ({ stock, onClose }) => {
           </div>
           <div className="stat-row">
             <span>Day Change</span>
-            <strong className={stock.isDown ? "down" : "up"}>
-              {stock.percent}
-            </strong>
+            <strong className={stock.isDown ? "down" : "up"}>{stock.percent}</strong>
           </div>
           <div className="stat-row">
             <span>Market</span>

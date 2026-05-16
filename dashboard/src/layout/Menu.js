@@ -25,9 +25,7 @@ const Menu = () => {
             <li key={item.label}>
               <NavLink className="menu-link" to={item.to} end={item.to === "/"}>
                 {({ isActive }) => (
-                  <p className={isActive ? "menu selected" : "menu"}>
-                    {item.label}
-                  </p>
+                  <p className={isActive ? "menu selected" : "menu"}>{item.label}</p>
                 )}
               </NavLink>
             </li>

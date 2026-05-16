@@ -15,10 +15,14 @@ const WatchListActions = ({ uid, stock, onAnalyticsClick }) => {
   return (
     <span className="actions">
       <Tooltip title="Buy (B)" placement="top" arrow TransitionComponent={Grow}>
-        <button className="buy" onClick={openWindow}>Buy</button>
+        <button className="buy" onClick={openWindow}>
+          Buy
+        </button>
       </Tooltip>
       <Tooltip title="Sell (S)" placement="top" arrow TransitionComponent={Grow}>
-        <button className="sell" onClick={openWindow}>Sell</button>
+        <button className="sell" onClick={openWindow}>
+          Sell
+        </button>
       </Tooltip>
       <Tooltip title="Analytics (A)" placement="top" arrow TransitionComponent={Grow}>
         <button className="action" onClick={() => onAnalyticsClick(stock)}>

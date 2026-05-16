@@ -20,9 +20,7 @@ const BuyActionWindow = ({ uid, price }) => {
       <div className="regular-order">
         <p className="baw-stock-info">
           <strong className="baw-stock-name">{uid}</strong>
-          {stockPrice > 0 && (
-            <span className="baw-stock-price">@ ₹{formatPrice(stockPrice)}</span>
-          )}
+          {stockPrice > 0 && <span className="baw-stock-price">@ ₹{formatPrice(stockPrice)}</span>}
         </p>
         <div className="inputs">
           <fieldset>
@@ -42,9 +40,7 @@ const BuyActionWindow = ({ uid, price }) => {
       <div className="buttons">
         <span>
           Margin required ₹
-          {stockPrice > 0
-            ? formatPrice(parseNumericPrice(stockPrice) * stockQuantity)
-            : "--"}
+          {stockPrice > 0 ? formatPrice(parseNumericPrice(stockPrice) * stockQuantity) : "--"}
         </span>
         <div>
           <button type="button" className="btn btn-blue" onClick={() => placeOrder("BUY")}>
@@ -62,9 +58,7 @@ const BuyActionWindow = ({ uid, price }) => {
       {toast.visible && (
         <div
           className={`order-toast ${
-            toast.type === "success"
-              ? "order-toast-success"
-              : "order-toast-error"
+            toast.type === "success" ? "order-toast-success" : "order-toast-error"
           }`}
         >
           {toast.message}

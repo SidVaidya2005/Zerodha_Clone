@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  getCurrentValue,
-  getProfitClass,
-  getDayClass,
-} from "../utils/portfolioUtils";
+import { getCurrentValue, getProfitClass, getDayClass } from "../utils/portfolioUtils";
 
 const HoldingsRow = ({ stock }) => {
   const currentValue = getCurrentValue(stock);

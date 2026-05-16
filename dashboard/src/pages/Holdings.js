@@ -28,7 +28,7 @@ const Holdings = () => {
         },
       ],
     }),
-    [holdingsWithPnL],
+    [holdingsWithPnL]
   );
 
   return (
@@ -52,24 +52,18 @@ const Holdings = () => {
         </div>
         <div className="quick-stat-card">
           <p className="quick-stat-label">Total P&amp;L</p>
-          <h5 className={`quick-stat-value ${getProfitClass(totalPnL)}`}>
-            {totalPnL.toFixed(2)}
-          </h5>
+          <h5 className={`quick-stat-value ${getProfitClass(totalPnL)}`}>{totalPnL.toFixed(2)}</h5>
         </div>
         <div className="quick-stat-card">
           <p className="quick-stat-label">Best performer</p>
           <h5 className="quick-stat-value">
-            {bestPerformer
-              ? `${bestPerformer.name} (${bestPerformer.pnl.toFixed(2)})`
-              : "-"}
+            {bestPerformer ? `${bestPerformer.name} (${bestPerformer.pnl.toFixed(2)})` : "-"}
           </h5>
         </div>
         <div className="quick-stat-card">
           <p className="quick-stat-label">Worst performer</p>
           <h5 className="quick-stat-value">
-            {worstPerformer
-              ? `${worstPerformer.name} (${worstPerformer.pnl.toFixed(2)})`
-              : "-"}
+            {worstPerformer ? `${worstPerformer.name} (${worstPerformer.pnl.toFixed(2)})` : "-"}
           </h5>
         </div>
       </div>
@@ -95,15 +89,11 @@ const Holdings = () => {
 
       <div className="row">
         <div className="col">
-          <h5>
-            {totalInvestment.toLocaleString("en-IN", { maximumFractionDigits: 2 })}
-          </h5>
+          <h5>{totalInvestment.toLocaleString("en-IN", { maximumFractionDigits: 2 })}</h5>
           <p>Total investment</p>
         </div>
         <div className="col">
-          <h5>
-            {totalCurrentValue.toLocaleString("en-IN", { maximumFractionDigits: 2 })}
-          </h5>
+          <h5>{totalCurrentValue.toLocaleString("en-IN", { maximumFractionDigits: 2 })}</h5>
           <p>Current value</p>
         </div>
         <div className="col">

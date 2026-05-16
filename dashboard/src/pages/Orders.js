@@ -10,24 +10,38 @@ const OrdersShell = ({ children }) => (
 );
 
 const Orders = () => {
-  const { data: allOrders, isLoading, error: errorMessage } = useApiData(
+  const {
+    data: allOrders,
+    isLoading,
+    error: errorMessage,
+  } = useApiData(
     `${BACKEND_URL}/allOrders`,
     "Unable to load orders. Make sure the backend is running."
   );
 
   if (isLoading) {
-    return <OrdersShell><p>Loading orders...</p></OrdersShell>;
+    return (
+      <OrdersShell>
+        <p>Loading orders...</p>
+      </OrdersShell>
+    );
   }
 
   if (errorMessage) {
-    return <OrdersShell><p>{errorMessage}</p></OrdersShell>;
+    return (
+      <OrdersShell>
+        <p>{errorMessage}</p>
+      </OrdersShell>
+    );
   }
 
   if (allOrders.length === 0) {
     return (
       <OrdersShell>
         <p>You haven't placed any orders today</p>
-        <Link to="/" className="btn btn-blue">Get started</Link>
+        <Link to="/" className="btn btn-blue">
+          Get started
+        </Link>
       </OrdersShell>
     );
   }
@@ -50,7 +64,13 @@ const Orders = () => {
               <td>{order.qty}</td>
               <td>{order.price > 0 ? order.price.toFixed(2) : "Market"}</td>
               <td>
-                <span className={order.mode === "BUY" ? "order-mode-badge order-mode-buy" : "order-mode-badge order-mode-sell"}>
+                <span
+                  className={
+                    order.mode === "BUY"
+                      ? "order-mode-badge order-mode-buy"
+                      : "order-mode-badge order-mode-sell"
+                  }
+                >
                   {order.mode}
                 </span>
               </td>

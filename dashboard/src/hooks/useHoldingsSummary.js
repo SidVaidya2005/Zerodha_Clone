@@ -4,9 +4,13 @@ import { useApiData } from "./useApiData";
 import { BACKEND_URL } from "../config";
 
 export function useHoldingsSummary() {
-  const { data: allHoldings, isLoading, error: errorMessage } = useApiData(
+  const {
+    data: allHoldings,
+    isLoading,
+    error: errorMessage,
+  } = useApiData(
     `${BACKEND_URL}/allHoldings`,
-    "Unable to load holdings right now. Please try again.",
+    "Unable to load holdings right now. Please try again."
   );
 
   const holdingsWithPnL = useMemo(
@@ -15,7 +19,7 @@ export function useHoldingsSummary() {
         ...stock,
         pnl: getPnL(stock),
       })),
-    [allHoldings],
+    [allHoldings]
   );
 
   const totals = useMemo(() => {
