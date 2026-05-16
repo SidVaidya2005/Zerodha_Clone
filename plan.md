@@ -291,7 +291,30 @@ Two commits — one per app.
 
 ---
 
-# PHASE 5 — Big-File Splits
+# PHASE 5 — Big-File Splits ✅ COMPLETE
+
+**Status:** Done on 2026-05-16. Twelve commits on `main`, one per logical extraction:
+
+- `a3595e6` — Footer → `data/footerLinks.js` + `components/FooterColumn.js` (127 → 60 LOC).
+- `1203dc3` — Navbar → `data/navItems.js` (76 → 67 LOC).
+- `d6a6da7` — CreateTicket → `data/faqLinks.js` + `components/FAQLinkColumn.js` (173 → 63 LOC).
+- `8693012` — Team → `data/teamMembers.js` + `components/TeamMemberCard.js` (67 → 19 LOC).
+- `ed743a7` — Universe → `data/universeItems.js` + `components/UniverseTile.js` (63 → 29 LOC).
+- `9a5e95a` — SignupForm → `signup/validation.js` + `components/FormField.js` (164 → 107 LOC).
+- `6af2c4e` — Summary → `hooks/usePortfolioSummary.js` (140 → 102 LOC).
+- `de66f5f` — WatchList data constants → `data/watchlistSymbols.js` + `data/chartPalette.js`.
+- `fe2d5b6` — WatchList polling → `hooks/useWatchlistPolling.js`.
+- `eaa4415` — WatchList siblings → `WatchListItem.js`, `WatchListActions.js`, `AnalyticsModal.js` (final WatchList.js 71 LOC, well under the plan's 80 target).
+- `d50e013` — Holdings → `pages/HoldingsRow.js` + `hooks/useHoldingsSummary.js` (164 → 127 LOC).
+- `4ceba89` — BuyActionWindow → `hooks/useSubmitOrder.js` (113 → 77 LOC).
+
+**Verification status:**
+- ✅ Frontend lint: 0 errors, 7 pre-existing alt-text warnings.
+- ✅ Dashboard lint: 0 errors, 1 pre-existing `useApiData` warning.
+- ✅ `cd frontend && npm run build` and `cd dashboard && npm run build` both produced valid bundles end-to-end (every import in the module graph resolves).
+- ⚠️ Per-component smoke tests (WatchList 30s polling, BuyActionWindow BUY/SELL round-trip, signup empty/invalid/valid paths, dark-mode visual diff) need the user to run with live backend + Mongo + browser. The plan's per-commit smoke-test directive is deferred to that step.
+
+**Note on commit count:** Plan target was "~10 commits"; landed on 12 because WatchList was split into 3 logical commits (data, hook, sibling components) rather than one monolithic one. Each WatchList commit was lint-clean on its own, so bisection still works on `WatchList.js`.
 
 **Goal:** Bring oversized files under 150 LOC by extracting data, hooks, and subcomponents. Behavior identical.
 
