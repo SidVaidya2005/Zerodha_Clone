@@ -2,64 +2,92 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-See also: [root CLAUDE.md](../CLAUDE.md) for multi-app startup and environment variable setup.
+See also: [root CLAUDE.md](../CLAUDE.md) for multi-app startup and `.claude/rules/{architecture,codestyle,uistyle}.md` for the conventions summarized below.
 
 ## Commands
 
 ```bash
-npm run dev      # start both React app + proxy server concurrently (recommended)
-npm start        # React app only (no live stock prices without proxy)
+npm run dev      # start both React app + proxy server (recommended)
+npm start        # React app only (no live prices without proxy)
 npm run server   # proxy server only (port 3001)
-npm run build    # production build
-npm test         # run tests
-npm test -- --testPathPattern=MyComponent   # run a single test file
-npm run lint     # eslint over src and server.js
-npm run format   # prettier --write over src and server.js
+npm run build    # production build (ESLint plugin disabled)
+npm test         # Jest + React Testing Library
+npm run lint     # ESLint over src + server.js (uses the root .eslintrc.json)
+npm run format   # prettier --write
 ```
+
+CRA's webpack ESLint pass is disabled via `DISABLE_ESLINT_PLUGIN=true` in the `start`/`build` scripts. Run `npm run lint` explicitly before committing.
 
 ## Architecture
 
-This app has two processes:
+Two processes:
 
-1. **React app** (`src/`) — the trading dashboard UI
-2. **Proxy server** (`server.js`) — an Express server that wraps Yahoo Finance for live NSE/BSE prices
+1. **React app** (`src/`) — the trading dashboard UI.
+2. **Proxy server** (`server.js`) — Express on port 3001 wrapping Yahoo Finance for live NSE/BSE prices.
 
-Both are started together by `npm run dev` via `concurrently`.
+`npm run dev` starts both via `concurrently`.
 
-### Config (`src/config.js`)
+### Source tree (role-grouped, NOT a flat `components/` folder)
 
-Exports `BACKEND_URL` and `PROXY_URL`. In production, both fall back to `""` (same-origin) if env vars are missing, with a console warning. Always set `REACT_APP_BACKEND_URL` and `REACT_APP_PROXY_URL` in production deployments.
+```
+src/
+  index.js          imports ./styles/index.css
+  config.js         BACKEND_URL, PROXY_URL
+  styles/           5-file CSS split — see uistyle rule
+  layout/           Home, TopBar, Menu, Dashboard, Apps — frame chrome
+  pages/            Summary, Holdings, Positions, Orders, Funds + HoldingsRow
+  widgets/WatchList/  WatchList, WatchListItem, WatchListActions, AnalyticsModal
+  modals/           BuyActionWindow
+  charts/           DoughnutChart, VerticalGraph  (note: typo "DoughnoutChart" is gone)
+  hooks/            useApiData, useWatchlistPolling, usePortfolioSummary,
+                    useHoldingsSummary, useSubmitOrder
+  context/          GeneralContext (BuyActionWindow open/close + selected stock)
+  utils/            portfolioUtils (pure math)
+  data/             watchlistSymbols, chartPalette
+```
 
-### Component Structure (`src/components/`)
+**Adding a flat `components/` folder back is a regression** — files belong in the folder matching their role.
 
-The dashboard layout is split into a main content area and a persistent sidebar:
+### Hooks own side effects
 
-- **`Dashboard.js`** — top-level route container; renders content routes on the left, `<WatchList>` wrapped in `<GeneralContextProvider>` on the right
-- **`GeneralContext.js`** — React context that manages the `BuyActionWindow` modal state (open/close, selected stock name and price). Any component that needs to trigger a buy/sell order must consume this context.
-- **`BuyActionWindow.js`** — order form rendered inside `GeneralContext`. POSTs to `BACKEND_URL/newOrder` via axios. Closes automatically 900ms after a successful order.
-- **`WatchList.js`** — polls `PROXY_URL/api/indian-stocks` every 15 seconds for live prices. Passes stock name and price into `GeneralContext.openBuyWindow` when Buy/Sell is clicked.
+Per `.claude/rules/codestyle.md`, every `setInterval` / `fetch` / `axios.post` lives in a custom hook:
 
-### Shared Utilities
+| Hook | Owns |
+|---|---|
+| `useApiData` | generic axios GET + loading/error state + optional polling interval. Used by Holdings, Positions, Orders. |
+| `useWatchlistPolling` | 15s `setInterval` polling `PROXY_URL/api/indian-stocks`. Returns `{ liveWatchlist }`. |
+| `usePortfolioSummary` | Polls `/allHoldings` + `/allPositions`; returns totals (investment, currentValue, pnl, pnlPercent, marginsUsed, holdingsCount). |
+| `useHoldingsSummary` | Polls `/allHoldings`; returns enriched rows + totals + best/worst performer. |
+| `useSubmitOrder` | POSTs `/newOrder`; manages toast state + 900ms auto-close. |
 
-- **`src/hooks/useApiData.js`** — custom hook wrapping axios GET with loading/error state. Accepts an optional `refreshIntervalMs` for polling. Used by `Holdings`, `Positions`, `Orders` to fetch from the backend.
-- **`src/components/portfolioUtils.js`** — pure functions for portfolio math: `getCurrentValue`, `getPnL`, `getProfitClass`, `getDayClass`.
+A component that calls `setInterval`, `fetch`, or `axios.post` directly is the smell — push it into a hook.
 
-### Dashboard Routes
+### Dashboard routes
 
 | Path | Component |
 |---|---|
-| `/` | `Summary` |
-| `/orders` | `Orders` |
-| `/holdings` | `Holdings` |
-| `/positions` | `Positions` |
-| `/funds` | `Funds` |
+| `/` | `pages/Summary` |
+| `/orders` | `pages/Orders` |
+| `/holdings` | `pages/Holdings` |
+| `/positions` | `pages/Positions` |
+| `/funds` | `pages/Funds` |
 
-### Proxy Server (`server.js`)
+### Config (`src/config.js`)
 
-Express app on port 3001. Uses `yahoo-finance2` (v3+, requires explicit instantiation). For Indian stocks, tries the `.NS` (NSE) suffix first, then falls back to `.BO` (BSE).
+Exports `BACKEND_URL` and `PROXY_URL`. In production, both fall back to `""` (same-origin) with a console warning if the env vars are missing. Set `REACT_APP_BACKEND_URL` and `REACT_APP_PROXY_URL` explicitly in production.
+
+### Styling
+
+All styles in `src/styles/` as the 5-file split (same shape as frontend). The dashboard absorbed `modals/BuyActionWindow.css` into `styles/components.css` in Phase 4; per-component CSS files are not allowed. Routing rules and cascade order in `.claude/rules/uistyle.md`.
+
+### Proxy server (`server.js`)
+
+Express on port 3001. Uses `yahoo-finance2` (v3+, requires explicit instantiation). For Indian stocks, tries `.NS` (NSE) first, falls back to `.BO` (BSE).
 
 | Endpoint | Description |
 |---|---|
 | `GET /api/indian-stocks?symbols=TCS,INFY` | Batch quote fetch — returns `{ symbol, data: { close, previousClose } }` per symbol |
-| `GET /api/indices` | Returns Nifty 50 (`^NSEI`) and Sensex (`^BSESN`) quotes |
-| `GET /api/market-status` | Computes NSE open/closed status from IST time (weekdays 09:15–15:30) |
+| `GET /api/indices` | Nifty 50 (`^NSEI`) and Sensex (`^BSESN`) |
+| `GET /api/market-status` | NSE open/closed status from IST time (weekdays 09:15–15:30) |
+
+The proxy is CJS — `require()` / `module.exports`. It is linted by the backend ESLint override in the root `.eslintrc.json`, not the CRA preset.

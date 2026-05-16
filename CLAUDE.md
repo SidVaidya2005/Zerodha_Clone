@@ -6,18 +6,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Zerodha-inspired trading platform clone with three independently-runnable apps sharing one MongoDB database. Each app has its own `CLAUDE.md` with specific guidance:
 
-- [backend/CLAUDE.md](backend/CLAUDE.md) — Express REST API (port 3002)
-- [frontend/CLAUDE.md](frontend/CLAUDE.md) — Public/marketing React app (port 3000)
-- [dashboard/CLAUDE.md](dashboard/CLAUDE.md) — Trading dashboard React app (port 3000) + stock price proxy server (port 3001, same process via `npm run dev`)
+- [backend/CLAUDE.md](backend/CLAUDE.md) — Express REST API (port 3002), layered as `routes/` → `controllers/` → `services/`.
+- [frontend/CLAUDE.md](frontend/CLAUDE.md) — Public/marketing React app (port 3000).
+- [dashboard/CLAUDE.md](dashboard/CLAUDE.md) — Trading dashboard React app (port 3000) + Yahoo Finance proxy server (port 3001, same process via `npm run dev`).
 
 ## Rules & Conventions
 
-Three constraint files in `.claude/rules/` are auto-loaded into every session:
-- `architecture.md` — routing, schema/model split, no service layer, context rules
-- `codestyle.md` — CJS vs ESM, naming conventions, no TypeScript
-- `uistyle.md` — CSS variables, dark mode selectors, component patterns
+Three rule files in `.claude/rules/` are auto-loaded into every session — read them before making structural changes:
 
-## Running the Project
+- `architecture.md` — backend layer responsibilities, the 5-file CSS split, `src/data/` for hardcoded content, dashboard role-grouped folders, shared-token mirroring.
+- `codestyle.md` — 150-LOC component threshold, hooks own all side effects, named-function controller exports, backend CJS vs CRA ESM.
+- `uistyle.md` — CSS selector routing across the 5 files, the fixed `@import` cascade order, `[data-theme="dark"]` policy.
+
+## Running the project
 
 Each app runs in a separate terminal from its own directory:
 
@@ -32,11 +33,11 @@ cd frontend && npm start
 cd dashboard && npm run dev    # starts both React app + proxy server
 ```
 
-## System Architecture
+## System architecture
 
 ```
 frontend (React, port 3000)
-    └── calls backend directly via REACT_APP_API_URL
+    └── calls backend directly
 
 dashboard (React, port 3000 in dev)
     ├── calls backend (port 3002) for holdings, positions, orders
@@ -46,10 +47,20 @@ proxy server (Express, port 3001) — dashboard/server.js
     └── fetches from Yahoo Finance (yahoo-finance2) for NSE/BSE quotes
 
 backend (Express, port 3002)
-    └── MongoDB via Mongoose
+    └── routes → controllers → services → MongoDB (Mongoose)
 ```
 
-## Environment Variables
+## Tooling
+
+Lint configuration lives in a single root `.eslintrc.json` with two override blocks (Node CJS for `backend/**` + `dashboard/server.js`; CRA `react-app` for `frontend/src/**` + `dashboard/src/**`). The root `package.json` holds `eslint` + `eslint-config-prettier` + `eslint-config-react-app` as devDependencies — run `npm install` at the repo root once after cloning.
+
+CRA's build-time ESLint pass is disabled (`DISABLE_ESLINT_PLUGIN=true` in the `start`/`build` scripts) to avoid a `react-app` preset double-load. **`npm run lint` is the lint gate; `npm run build` no longer lints inline.** Run it explicitly in each app before committing.
+
+## Design tokens
+
+`shared/tokens.css` at the repo root is the canonical token reference. CRA can't `@import` outside `src/`, so each app keeps a byte-identical copy at `frontend/src/styles/tokens.css` and `dashboard/src/styles/tokens.css`. **Token changes update all three files in the same commit.** Sanity check: `diff shared/tokens.css <app>/src/styles/tokens.css` must exit 0.
+
+## Environment variables
 
 ### `backend/.env`
 ```
@@ -68,6 +79,7 @@ REACT_APP_DASHBOARD_URL=http://localhost:3001
 ```
 REACT_APP_BACKEND_URL=http://localhost:3002
 REACT_APP_PROXY_URL=http://localhost:3001
+ALPHA_VANTAGE_API_KEY=<key>   # for the proxy server only
 ```
 
 In production, both `REACT_APP_BACKEND_URL` and `REACT_APP_PROXY_URL` must be set explicitly — the dashboard falls back to same-origin (empty string) and logs a warning if they are missing.

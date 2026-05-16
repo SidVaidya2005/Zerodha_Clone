@@ -2,24 +2,35 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-See also: [root CLAUDE.md](../CLAUDE.md) for multi-app startup and environment variable setup.
+See also: [root CLAUDE.md](../CLAUDE.md) for multi-app startup and environment variable setup, and `.claude/rules/architecture.md` for the layer responsibilities summarized below.
 
 ## Commands
 
 ```bash
-npm run dev            # start with nodemon (auto-restarts on change)
-npm start              # start without nodemon
+npm run dev            # nodemon, auto-restarts on change
+npm start              # without nodemon
 npm run seed:holdings  # wipe + reseed the holdings collection
 npm run seed:positions # wipe + reseed the positions collection
-npm run lint           # eslint over the backend
+npm run lint           # eslint over the backend (uses the root .eslintrc.json)
 npm run format         # prettier --write
 ```
 
 ## Architecture
 
-All application logic lives in a single file: `index.js`. There is no router layer — routes are defined inline. The `model/` directory exports Mongoose models; `schemas/` contains the schema definitions they import.
+`index.js` is wiring only (target ≤35 LOC; currently 31): dotenv → express → cors → body-parser → mongoose connect → `app.use(require('./routes/X'))` → `app.listen`. Business logic lives in the three layers below:
 
-### Data Models
+```
+routes/        path → controller mapping (one file per resource)
+controllers/   parse input, call service, format response
+services/      multi-document / multi-collection mutations
+model/         mongoose.model('Name', schema)
+schemas/       schema definitions imported by model/
+seed/          seedHoldings.js, seedPositions.js
+```
+
+**Adding an inline route handler in `index.js` is a regression** — the entire point of the layering is that the bisectable history of `index.js` stays small and noise-free.
+
+### Data models
 
 | Model | Key fields |
 |---|---|
@@ -27,24 +38,30 @@ All application logic lives in a single file: `index.js`. There is no router lay
 | `PositionsModel` | `product`, `name`, `qty`, `avg`, `price`, `net`, `day`, `isLoss` |
 | `OrdersModel` | `name`, `qty`, `price`, `mode` (`"BUY"` or `"SELL"`), `createdAt` (auto via timestamps) |
 
-### API Endpoints
+### API endpoints
 
-| Method | Path | Description |
+| Method | Path | Controller |
 |---|---|---|
-| GET | `/allHoldings` | Returns all documents from `HoldingsModel` |
-| GET | `/allPositions` | Returns all documents from `PositionsModel` |
-| GET | `/allOrders` | Returns orders sorted newest-first |
-| POST | `/newOrder` | Places an order and mutates holdings/positions |
+| GET | `/allHoldings` | `holdingsController.getAllHoldings` |
+| GET | `/allPositions` | `positionsController.getAllPositions` |
+| GET | `/allOrders` | `ordersController.getAllOrders` (sorted newest-first) |
+| POST | `/newOrder` | `ordersController.createOrder` → `orderService.placeOrder` |
 
-### Order Logic (critical — spans three collections)
+### Cross-collection mutation lives in `orderService`
 
-`POST /newOrder` accepts `{ name, qty, price, mode }` and does the following after saving to `OrdersModel`:
+`POST /newOrder` saves to `OrdersModel` in the controller, then delegates to `orderService.placeOrder({ name, qty, price, mode })`. The service owns the three-collection side effects:
 
-- **BUY**: upserts `HoldingsModel`. If the stock exists, recalculates a weighted average price (`(oldAvg * oldQty + price * qty) / totalQty`). If not, creates a new record.
-- **SELL**: upserts `PositionsModel` (adds qty), then decrements `HoldingsModel` qty. If remaining qty ≤ 0, the holdings record is deleted.
+- **BUY** → `applyBuyEffects`: upserts `HoldingsModel`. If the stock exists, recalculates a weighted average: `(oldAvg * oldQty + price * qty) / totalQty`. Otherwise creates a new record.
+- **SELL** → `applySellEffects`: upserts `PositionsModel` (adds qty), then decrements `HoldingsModel.qty`. If remaining qty ≤ 0, the holdings record is deleted.
 
-`net` and `day` percentage strings on Holdings/Positions are static strings stored at creation time — they are not recalculated on subsequent updates.
+`net` and `day` percentage strings on Holdings/Positions are static — set at creation time, never recalculated on subsequent updates.
+
+**New cross-collection logic belongs in a service, not a controller.** Controllers that touch more than one collection are the smell.
+
+### Controller export shape
+
+Named function exports only: `module.exports = { getAllHoldings, ... }`. No class methods — `r.get('/x', controller.method)` would break `this` binding.
 
 ### Seeding
 
-Both seed scripts (`seedHoldings.js`, `seedPositions.js`) call `deleteMany({})` before inserting, so they reset the collection completely. Requires `MONGO_URL` in `.env`.
+Both seed scripts call `deleteMany({})` before inserting, so they reset the collection completely. Requires `MONGO_URL` in `.env`. Running them in production would be catastrophic — keep them out of any deploy pipeline.
