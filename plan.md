@@ -450,7 +450,22 @@ One commit.
 
 ---
 
-# PHASE 8 — Fresh Rules + CLAUDE.md Updates
+# PHASE 8 — Fresh Rules + CLAUDE.md Updates ✅ COMPLETE
+
+**Status:** Done on 2026-05-16. Four commits on `main`:
+- `9b16894` — `.claude/rules/architecture.md` (backend layers, 5-file CSS, src/data/, dashboard role-grouped folders, shared-token mirroring).
+- `85f4a7d` — `.claude/rules/codestyle.md` (150-LOC threshold, hooks-own-side-effects, named-function controllers, CJS vs ESM).
+- `2e1e52e` — `.claude/rules/uistyle.md` (selector routing, fixed cascade order, dark-mode policy, the `.app-rich-text` cascade gotcha).
+- `8018ba1` — all four `CLAUDE.md` files rewritten (root + backend + frontend + dashboard) for the end-state structure.
+
+**Verification status:**
+- ✅ `find dashboard/src/components -type f` → directory does not exist (flat folder is gone).
+- ✅ 9 backend layer files across `routes/` + `controllers/` + `services/` (3 each).
+- ✅ `wc -l backend/index.js` → 31 (≤35).
+- ✅ `ls frontend/src/styles/` and `ls dashboard/src/styles/` each list exactly: `tokens.css`, `layout.css`, `components.css`, `utilities.css`, `dark-mode.css`, `index.css`.
+- ✅ `grep -r "DoughnoutChart" backend/ frontend/src/ dashboard/src/` returns empty (typo fully cleaned).
+- ✅ Each rule file cross-referenced against the actual code state during authoring (file lists checked, hook names verified, selector ownership matched against the 5 split files).
+- ⚠️ "Fresh Claude session asked 'where do new dashboard pages go?'" — not run; would require a separate session boot.
 
 **Goal:** Document the new structure for future Claude sessions. Author the three rule files from scratch; rewrite all four `CLAUDE.md` files.
 
