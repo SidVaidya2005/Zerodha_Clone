@@ -3,7 +3,7 @@
   "overrides": [
     {
       "files": ["backend/**/*.js", "dashboard/server.js"],
-      "env": { "node": true, "commonjs": true, "es2022": true },
+      "env": { "node": true, "commonjs": true, "es2022": true, "jest": true },
       "extends": ["eslint:recommended", "prettier"],
       "parserOptions": { "ecmaVersion": 2022 },
       "rules": {
