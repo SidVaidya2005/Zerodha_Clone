@@ -1,8 +1,10 @@
+import { PlusCircle, User, Smile, Info, CircleDot, Circle } from "lucide-react";
+
 export const FAQ_GROUPS = [
   {
     id: 1,
     title: "Account Opening",
-    icon: "fa-plus-circle",
+    Icon: PlusCircle,
     links: [
       "Getting started",
       "Online",
@@ -15,7 +17,7 @@ export const FAQ_GROUPS = [
   {
     id: 2,
     title: "Your Zerodha Account",
-    icon: "fa-user",
+    Icon: User,
     links: [
       "Login credentials",
       "Your Profile",
@@ -28,25 +30,25 @@ export const FAQ_GROUPS = [
   {
     id: 3,
     title: "Kite",
-    icon: "fa-smile-o",
+    Icon: Smile,
     links: ["Kite features", "Orders", "Funds", "Holdings and Positions", "Dashboard", "Kite app"],
   },
   {
     id: 4,
     title: "Funds",
-    icon: "fa-info-circle",
+    Icon: Info,
     links: ["Fund withdrawal", "Adding funds", "Adding bank accounts", "eMandates"],
   },
   {
     id: 5,
     title: "Console",
-    icon: "fa-dot-circle-o",
+    Icon: CircleDot,
     links: ["IPO", "Portfolio", "Funds statement", "Profile", "Reports", "Referral program"],
   },
   {
     id: 6,
     title: "Coin",
-    icon: "fa-circle-o",
+    Icon: Circle,
     links: [
       "Understanding mutual funds and Coin",
       "Coin app",

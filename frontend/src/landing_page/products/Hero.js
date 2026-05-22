@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import PageHero from "../components/PageHero";
 
 function Hero() {
@@ -12,7 +13,7 @@ function Hero() {
       <p className="mt-3 mb-5">
         Check out our{" "}
         <Link to="/product" className="app-link-plain">
-          investment offerings <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
+          investment offerings <ArrowRight size={16} aria-hidden="true" />
         </Link>
       </p>
     </PageHero>

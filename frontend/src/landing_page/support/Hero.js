@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Search } from "lucide-react";
 
 function Hero() {
   return (
@@ -13,7 +14,7 @@ function Hero() {
         </div>
         <div className="support-search-container pb-5">
           <div className="support-search-wrapper">
-            <i className="fa fa-search search-icon" aria-hidden="true"></i>
+            <Search className="search-icon" size={18} aria-hidden="true" />
             <input
               type="text"
               className="support-search-input-new"

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 
 function Education() {
   return (
@@ -15,14 +16,14 @@ function Education() {
             from the basics to advanced trading.
           </p>
           <Link to="/product" className="app-link-plain">
-            Varsity <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Varsity <ArrowRight size={16} aria-hidden="true" />
           </Link>
           <p className="mt-5">
             TradingQ&A, the most active trading and investment community in India for all your
             market related queries.
           </p>
           <Link to="/support" className="app-link-plain">
-            Trading Q&A <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
+            Trading Q&A <ArrowRight size={16} aria-hidden="true" />
           </Link>
         </div>
       </div>
