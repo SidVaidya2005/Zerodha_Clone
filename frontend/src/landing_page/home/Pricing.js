@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 
 function Pricing() {
   return (
@@ -12,13 +13,13 @@ function Pricing() {
             and no hidden charges.
           </p>
           <Link to="/pricing" className="app-link-plain">
-            See Pricing <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
+            See Pricing <ArrowRight size={16} aria-hidden="true" />
           </Link>
         </div>
         <div className="d-none d-md-block col-md-2"></div>
         <div className="col-12 col-md-6 mb-5">
           <div className="row text-center">
-            <div className="col p-3 border">
+            <div className="col app-pricing-box">
               <h1 className="mb-3">₹0</h1>
               <p>
                 Free equity delivery and
@@ -26,7 +27,7 @@ function Pricing() {
                 direct mutual funds
               </p>
             </div>
-            <div className="col p-3 border">
+            <div className="col app-pricing-box">
               <h1 className="mb-3">₹20</h1>
               <p>Intraday and F&O</p>
             </div>

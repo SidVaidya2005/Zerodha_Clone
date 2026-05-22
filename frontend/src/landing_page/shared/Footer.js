@@ -14,7 +14,7 @@ function Footer() {
           <div className="col-lg-3 col-md-6 mb-4">
             <img
               src="media/images/logo.svg"
-              className="app-footer-logo dark-invert"
+              className="app-footer-logo"
               alt="Zerodha logo"
             />
             <p className="app-footer-copyright">
@@ -25,14 +25,23 @@ function Footer() {
             <div className="app-footer-social">
               {FOOTER_SOCIAL_LINKS.map((social) => (
                 <a
-                  key={social.icon}
+                  key={social.name}
                   href={social.href}
                   className="app-footer-social-icon"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
                 >
-                  <i className={social.icon}></i>
+                  <svg
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d={social.path} />
+                  </svg>
                 </a>
               ))}
             </div>
@@ -43,7 +52,7 @@ function Footer() {
           ))}
         </div>
 
-        <div className="mt-4 border-top pt-4 text-muted app-footnote-text">
+        <div className="mt-4 border-top pt-4 app-footnote-text">
           {FOOTER_LEGAL_PARAGRAPHS.map((paragraph, index) => (
             <p key={`legal-${index}`}>{paragraph}</p>
           ))}

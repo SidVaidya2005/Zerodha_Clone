@@ -16,5 +16,7 @@
 }
 
 .app-footnote-text {
-  font-size: 12px;
+  font-size: var(--type-fineprint);
+  color: var(--color-mute);
+  line-height: 1.7;
 }
