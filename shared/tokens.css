@@ -9,29 +9,86 @@
  *   diff shared/tokens.css frontend/src/styles/tokens.css
  *   diff shared/tokens.css dashboard/src/styles/tokens.css
  * Both must exit 0.
+ *
+ * Design system: Zerodha brand (light-only, no dark mode by design).
  */
 
 :root {
-  --app-bg: #ffffff;
-  --app-text: #202124;
-  --app-muted: #6c757d;
-  --app-surface: #fafafa;
-  --app-border: #dee2e6;
-  --app-link: #387ed1;
-  --app-link-hover: #2b63a6;
-  --app-sun-icon: #f59e0b;
-  --app-profit: #4caf50;
-  --app-loss: #f44336;
-}
+  /* Brand & accent */
+  --color-primary: #387ed1;
+  --color-primary-wash: rgba(142, 193, 255, 0.15);
 
-[data-theme="dark"] {
-  --app-bg: #121212;
-  --app-text: #e6e6e6;
-  --app-muted: #a0a4ab;
-  --app-surface: #1b1b1b;
-  --app-border: #2f2f2f;
-  --app-link: #6ea8ff;
-  --app-link-hover: #9bc0ff;
-  --app-profit: #4caf50;
-  --app-loss: #f44336;
+  /* Surface */
+  --color-canvas: #ffffff;
+  --color-canvas-soft: #fbfbfb;
+  --color-canvas-tint: #fafafb;
+  --color-hairline: #eeeeee;
+  --color-hairline-strong: #cccccc;
+
+  /* Text */
+  --color-ink: #424242;
+  --color-ink-strong: #222222;
+  --color-body: #666666;
+  --color-mute: #9b9b9b;
+  --color-link-hover: #444444;
+
+  /* Semantic */
+  --color-success: #4caf50;
+  --color-success-wash: #e5faed;
+  --color-error: #df514c;
+  --color-warning: #fcb040;
+  --color-warning-wash: rgba(218, 212, 27, 0.17);
+  --color-warning-border: #f7db78;
+  --color-info-wash: #eff6ff;
+
+  /* Spacing scale (5px base) */
+  --space-xs: 5px;
+  --space-sm: 10px;
+  --space-md: 15px;
+  --space-lg: 20px;
+  --space-xl: 25px;
+  --space-2xl: 32px;
+  --space-3xl: 40px;
+  --space-4xl: 60px;
+  --space-5xl: 80px;
+  --space-6xl: 120px;
+
+  /* Border radius */
+  --radius-none: 0;
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-pill: 9px;
+
+  /* Typography */
+  --type-h1: 1.75rem;
+  --type-h2: 1.5rem;
+  --type-h3: 1.25rem;
+  --type-h4: 1.125rem;
+  --type-subheading: 1.25rem;
+  --type-body: 1rem;
+  --type-body-sm: 0.875rem;
+  --type-caption: 0.75rem;
+  --type-fineprint: 0.65rem;
+  --type-nav: 0.9rem;
+  --type-button: 1.2em;
+  --line-height-body: 1.7;
+  --line-height-heading: 1.25;
+
+  /* Elevation */
+  --shadow-nav: 2px 1px 2px var(--color-hairline);
+  --shadow-card: 0 0 24px 0 rgba(213, 213, 213, 0.32);
+
+  /* Legacy --app-* aliases mapped to spec tokens for backward compatibility.
+     Dashboard CSS that still references --app-* continues to work. */
+  --app-bg: var(--color-canvas);
+  --app-text: var(--color-ink);
+  --app-muted: var(--color-body);
+  --app-surface: var(--color-canvas-soft);
+  --app-border: var(--color-hairline);
+  --app-link: var(--color-primary);
+  --app-link-hover: var(--color-link-hover);
+  --app-profit: var(--color-success);
+  --app-loss: var(--color-error);
 }
