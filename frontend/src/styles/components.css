@@ -2,6 +2,56 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-ink);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+h1 {
+  font-size: var(--type-h1);
+  line-height: var(--line-height-heading);
+}
+
+h2 {
+  font-size: var(--type-h2);
+  line-height: 1.5;
+}
+
+h3 {
+  font-size: var(--type-h3);
+  line-height: 1.6;
+}
+
+h4,
+h6 {
+  font-size: var(--type-h4);
+}
+
+h5 {
+  font-size: var(--type-h4);
+  font-weight: 400;
+}
+
+@media (max-width: 767.98px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+  }
+}
+
 .nav-link {
   margin-left: 40px;
 }
@@ -19,17 +69,19 @@ code {
 
 .app-navbar .navbar-nav .nav-link,
 .app-navbar .navbar-nav .show > .nav-link {
-  color: var(--app-text) !important;
+  color: var(--color-body) !important;
+  font-size: var(--type-nav);
+  transition: color 0.3s ease;
 }
 
 .app-navbar .navbar-nav .nav-link.active {
-  color: var(--app-link) !important;
+  color: var(--color-primary) !important;
   font-weight: 500;
 }
 
 .app-navbar .navbar-nav .nav-link:hover,
 .app-navbar .navbar-nav .nav-link:focus {
-  color: var(--app-link) !important;
+  color: var(--color-primary) !important;
 }
 
 a {
@@ -40,102 +92,96 @@ a:hover {
   color: var(--app-link-hover);
 }
 
-/* Theme toggle pill */
-.theme-toggle-pill {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
+.app-hero {
+  padding-top: 10vh;
+  padding-bottom: var(--space-6xl);
+  text-align: center;
 }
 
-.theme-toggle-pill:focus-visible .theme-pill-track {
-  outline: 2px solid var(--app-link);
-  outline-offset: 2px;
-  border-radius: 14px;
+.app-hero-image {
+  display: block;
+  max-height: 45vh;
+  max-width: 100%;
+  width: auto;
+  margin: 0 auto var(--space-4xl);
 }
 
-.theme-toggle-pill:active .theme-pill-knob {
-  transform: scale(0.92);
+.app-hero-title {
+  margin: 0;
 }
 
-.theme-toggle-pill.is-dark:active .theme-pill-knob {
-  transform: translateX(23px) scale(0.92);
-}
-
-.theme-pill-track {
-  position: relative;
-  width: 52px;
-  height: 28px;
-  border-radius: 14px;
-  background: var(--app-border);
-  border: 1.5px solid var(--app-border);
-  transition:
-    background 0.3s ease,
-    border-color 0.3s ease;
-  flex-shrink: 0;
-}
-
-.theme-toggle-pill.is-dark .theme-pill-track {
-  background: var(--app-link);
-  border-color: var(--app-link);
-}
-
-.theme-pill-knob {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.22);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-size: 10px;
-  overflow: hidden;
-}
-
-.theme-toggle-pill.is-dark .theme-pill-knob {
-  transform: translateX(23px);
-}
-
-.theme-pill-sun,
-.theme-pill-moon {
-  position: absolute;
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
-}
-
-.theme-pill-sun {
-  color: var(--app-sun-icon);
-  opacity: 1;
-  transform: scale(1);
-}
-
-.theme-toggle-pill.is-dark .theme-pill-sun {
-  opacity: 0;
-  transform: scale(0.4) rotate(90deg);
-}
-
-.theme-pill-moon {
-  color: var(--app-link);
-  opacity: 0;
-  transform: scale(0.4) rotate(-90deg);
-}
-
-.theme-toggle-pill.is-dark .theme-pill-moon {
-  opacity: 1;
-  transform: scale(1) rotate(0deg);
+.app-hero-subtitle {
+  font-size: var(--type-subheading);
+  font-weight: 400;
+  line-height: var(--line-height-body);
+  color: var(--color-body);
+  margin: var(--space-md) auto var(--space-xl);
+  max-width: 720px;
 }
 
 .app-cta-button {
   width: 20%;
-  margin: 0 auto;
+  margin: var(--space-xl) auto 0;
+}
+
+.app-trust-band {
+  padding-top: var(--space-5xl);
+  padding-bottom: var(--space-6xl);
+}
+
+.app-trust-heading {
+  margin-bottom: var(--space-3xl);
+}
+
+.app-trust-blurb {
+  margin-bottom: var(--space-2xl);
+}
+
+.app-trust-blurb:last-child {
+  margin-bottom: 0;
+}
+
+.app-trust-image {
+  width: 90%;
+  max-width: 100%;
+  display: block;
+  margin: 0 auto var(--space-lg);
+}
+
+.app-trust-explore {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3xl);
+}
+
+.app-trust-explore .app-link-plain {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.app-cta-band {
+  background-color: var(--color-canvas);
+  padding: var(--space-5xl) 0;
+}
+
+.app-cta-heading {
+  margin-bottom: var(--space-md);
+}
+
+.app-cta-lead {
+  color: var(--color-body);
+  margin-bottom: var(--space-xl);
+}
+
+.app-press-strip {
+  margin-top: var(--space-4xl);
+  transition: opacity 0.2s ease;
+}
+
+.app-press-strip:hover {
+  opacity: 0.8;
 }
 
 .app-universe-logo {
@@ -454,6 +500,29 @@ a:hover {
   }
 }
 
+.app-pricing-box {
+  background-color: var(--color-canvas);
+  border: 1px solid var(--color-hairline-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  min-height: 145px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.app-pricing-box + .app-pricing-box {
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.app-pricing-box:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 .app-pricing-table {
   margin-bottom: 0;
   border-color: var(--app-border);
@@ -471,80 +540,89 @@ a:hover {
   border-color: var(--app-border);
 }
 
-/* Signup Form Dark Mode Fixes */
 .signup-box {
-  background-color: var(--app-surface) !important;
-  border: 1px solid var(--app-border) !important;
+  background-color: var(--color-canvas) !important;
+  border: none !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-card) !important;
+  padding: var(--space-3xl) !important;
 }
 
 .form-control {
-  background-color: var(--app-bg) !important;
-  border: 1px solid var(--app-border) !important;
-  color: var(--app-text) !important;
+  background-color: var(--color-canvas) !important;
+  border: 1px solid var(--color-hairline-strong) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--color-ink) !important;
+  padding: var(--space-sm) !important;
   transition:
     border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
 }
 
 .form-control:focus {
-  background-color: var(--app-bg) !important;
-  color: var(--app-text) !important;
-  border-color: var(--app-link) !important;
-  box-shadow: 0 0 0 0.25rem rgba(56, 126, 209, 0.25) !important;
+  background-color: var(--color-canvas) !important;
+  color: var(--color-ink) !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 0.2rem rgba(56, 126, 209, 0.15) !important;
   outline: 0;
 }
 
 .form-control::placeholder {
-  color: var(--app-muted) !important;
+  color: var(--color-mute) !important;
   opacity: 1;
 }
 
 .form-label {
-  color: var(--app-text) !important;
+  color: var(--color-ink) !important;
   font-weight: 500;
 }
 
 .form-control.is-invalid {
-  border-color: #f44336 !important;
+  border-color: var(--color-error) !important;
 }
 .form-control.is-invalid:focus {
-  border-color: #f44336 !important;
-  box-shadow: 0 0 0 0.25rem rgba(244, 67, 54, 0.25) !important;
+  border-color: var(--color-error) !important;
+  box-shadow: 0 0 0 0.2rem rgba(223, 81, 76, 0.2) !important;
 }
 
-/* SIGNUP BUTTON */
-
 .app-signup-btn {
-  background-color: var(--app-link) !important;
+  background-color: var(--color-primary) !important;
   border: none !important;
 }
 
 .app-signup-btn:hover {
-  background-color: var(--app-link-hover) !important;
+  background-color: var(--color-ink-strong) !important;
 }
 
 /* ── Bootstrap Bridge ───────────────────────────── */
-/* Wire btn-primary to app theme tokens so all primary buttons
-   automatically respect light/dark mode without per-component overrides */
+/* Override Bootstrap .btn-primary to match the Zerodha CTA spec:
+   3px radius, Inter weight 500, hover resolves to ink-strong (#222). */
 
 .btn-primary {
-  background-color: var(--app-link) !important;
-  border-color: var(--app-link) !important;
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
   color: #fff !important;
+  font-weight: 500 !important;
+  border-radius: var(--radius-sm) !important;
+  padding: var(--space-sm) var(--space-3xl) !important;
+  line-height: 1.2 !important;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease !important;
 }
 
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary.active,
 .show > .btn-primary.dropdown-toggle {
-  background-color: var(--app-link-hover) !important;
-  border-color: var(--app-link-hover) !important;
+  background-color: var(--color-ink-strong) !important;
+  border-color: var(--color-ink-strong) !important;
   color: #fff !important;
 }
 
 .btn-primary:focus-visible {
-  background-color: var(--app-link) !important;
-  border-color: var(--app-link) !important;
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
   color: #fff !important;
   box-shadow: 0 0 0 0.25rem rgba(56, 126, 209, 0.25) !important;
 }
@@ -552,45 +630,38 @@ a:hover {
 /* ── Footer ─────────────────────────────────────── */
 
 .app-footer-copyright {
-  font-size: 0.875rem;
-  color: var(--app-muted);
+  font-size: var(--type-body-sm);
+  color: var(--color-mute);
   margin-top: 0.75rem;
 }
 
 .app-footer-col-heading {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--app-text);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  font-size: var(--type-h4);
+  font-weight: 500;
+  color: var(--color-ink);
+  letter-spacing: 0;
   margin-bottom: 1rem;
 }
 
 .app-footer-link {
-  color: var(--app-muted) !important;
+  color: var(--color-body) !important;
   text-decoration: none;
-  font-size: 0.9rem;
-  transition:
-    color 0.2s ease,
-    padding-left 0.2s ease;
+  font-size: var(--type-body-sm);
+  transition: color 0.2s ease;
 }
 
 .app-footer-link:hover {
-  color: var(--app-text) !important;
-  padding-left: 4px;
+  color: var(--color-primary) !important;
 }
 
 .app-footer-social-icon {
-  color: var(--app-muted);
-  font-size: 1.1rem;
+  color: var(--color-body);
   text-decoration: none;
-  transition:
-    color 0.2s ease,
-    transform 0.2s ease;
+  transition: color 0.2s ease;
   display: inline-flex;
+  align-items: center;
 }
 
 .app-footer-social-icon:hover {
-  color: var(--app-link);
-  transform: translateY(-2px);
+  color: var(--color-primary);
 }
