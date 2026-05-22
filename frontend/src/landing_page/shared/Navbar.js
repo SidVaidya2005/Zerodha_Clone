@@ -2,14 +2,14 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { NAV_ITEMS } from "../../data/navItems";
 
-function Navbar({ theme, onToggleTheme }) {
+function Navbar() {
   const { pathname } = useLocation();
 
   return (
     <nav className="navbar navbar-expand-lg border-bottom app-navbar sticky-top">
       <div className="container p-2">
         <Link className="navbar-brand" to="/">
-          <img src="media/images/logo.svg" className="app-navbar-logo dark-invert" alt="Logo" />
+          <img src="media/images/logo.svg" className="app-navbar-logo" alt="Logo" />
         </Link>
         <button
           className="navbar-toggler"
@@ -41,20 +41,6 @@ function Navbar({ theme, onToggleTheme }) {
                 );
               })}
             </ul>
-            <button
-              type="button"
-              className={`ms-3 theme-toggle-pill${theme === "dark" ? " is-dark" : ""}`}
-              onClick={onToggleTheme}
-              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-              title={theme === "dark" ? "Light mode" : "Dark mode"}
-            >
-              <span className="theme-pill-track">
-                <span className="theme-pill-knob">
-                  <i className="fa-regular fa-sun theme-pill-sun" aria-hidden="true"></i>
-                  <i className="fa-regular fa-moon theme-pill-moon" aria-hidden="true"></i>
-                </span>
-              </span>
-            </button>
           </form>
         </div>
       </div>

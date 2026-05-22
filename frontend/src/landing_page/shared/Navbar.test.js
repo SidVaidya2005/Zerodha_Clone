@@ -1,27 +1,28 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Navbar from "./Navbar";
+import { NAV_ITEMS } from "../../data/navItems";
 
 describe("Navbar", () => {
-  it("renders without crashing in light mode", () => {
+  it("renders the brand logo", () => {
     render(
       <MemoryRouter>
-        <Navbar theme="light" onToggleTheme={() => {}} />
+        <Navbar />
       </MemoryRouter>
     );
 
-    // Brand logo + theme toggle button are the structural anchors.
     expect(screen.getByAltText("Logo")).not.toBeNull();
-    expect(screen.getByLabelText("Switch to dark mode")).not.toBeNull();
   });
 
-  it("flips the theme-toggle aria-label when theme is dark", () => {
+  it("renders every nav item from NAV_ITEMS", () => {
     render(
       <MemoryRouter>
-        <Navbar theme="dark" onToggleTheme={() => {}} />
+        <Navbar />
       </MemoryRouter>
     );
 
-    expect(screen.getByLabelText("Switch to light mode")).not.toBeNull();
+    NAV_ITEMS.forEach((item) => {
+      expect(screen.getByText(item.label)).not.toBeNull();
+    });
   });
 });

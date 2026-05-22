@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import "./styles/index.css";
@@ -14,8 +14,6 @@ import NotFound from "./landing_page/shared/NotFound";
 import Navbar from "./landing_page/shared/Navbar";
 import Footer from "./landing_page/shared/Footer";
 
-const THEME_MODE_KEY = "zerodha-theme-mode";
-
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -24,57 +22,11 @@ function ScrollToTop() {
   return null;
 }
 
-function getSystemTheme() {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}
-
 function AppLayout() {
-  const [themeMode, setThemeMode] = useState(() => {
-    const savedMode = localStorage.getItem(THEME_MODE_KEY);
-    if (savedMode === "light" || savedMode === "dark" || savedMode === "system") {
-      return savedMode;
-    }
-
-    return "system";
-  });
-
-  const [activeTheme, setActiveTheme] = useState(() =>
-    themeMode === "system" ? getSystemTheme() : themeMode
-  );
-
-  useEffect(() => {
-    const resolvedTheme = themeMode === "system" ? getSystemTheme() : themeMode;
-    setActiveTheme(resolvedTheme);
-    document.documentElement.setAttribute("data-theme", resolvedTheme);
-    localStorage.setItem(THEME_MODE_KEY, themeMode);
-  }, [themeMode]);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-    const handleThemeChange = () => {
-      if (themeMode === "system") {
-        const resolvedTheme = getSystemTheme();
-        setActiveTheme(resolvedTheme);
-        document.documentElement.setAttribute("data-theme", resolvedTheme);
-      }
-    };
-
-    mediaQuery.addEventListener("change", handleThemeChange);
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleThemeChange);
-    };
-  }, [themeMode]);
-
-  const handleToggleTheme = () => {
-    setThemeMode(activeTheme === "dark" ? "light" : "dark");
-  };
-
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Navbar theme={activeTheme} onToggleTheme={handleToggleTheme} />
+      <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<Signup />} />

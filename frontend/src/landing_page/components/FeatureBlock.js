@@ -12,7 +12,7 @@ function FeatureBlock({
 }) {
   const imageEl = (
     <div className="col-12 col-md-6">
-      <img src={imageURL} alt={productName} className="dark-invert" />
+      <img src={imageURL} alt={productName} />
     </div>
   );
 
