@@ -120,12 +120,9 @@ a:hover {
 }
 
 .app-cta-button {
-  /* Remove the width: 20% rule and replace it with: */
-  white-space: nowrap; /* Forces text to remain on a single line */
-  min-width: max-content; /* Prevents the button from shrinking past the text size */
-  padding: 0.5rem 2.5rem; /* Adds padding to maintain a wide, button-like shape */
-
-  /* Keep the existing margin */
+  white-space: nowrap;
+  width: fit-content;
+  padding: 0.5rem 2.5rem;
   margin: var(--space-xl) auto 0;
 }
 
@@ -472,7 +469,8 @@ a:hover {
   }
 
   .app-cta-button {
-    width: min(260px, 100%);
+    width: fit-content;
+    padding: 0.5rem 2rem;
   }
 
   .app-navbar-logo {
