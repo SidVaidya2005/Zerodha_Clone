@@ -32,8 +32,8 @@ function Stats() {
           <div className="app-trust-blurb">
             <h3>Do better with money</h3>
             <p className="text-muted">
-              With initiatives like Nudge and Kill Switch, we don't just facilitate transactions, but
-              actively help you do better with your money.
+              With initiatives like Nudge and Kill Switch, we don't just facilitate transactions,
+              but actively help you do better with your money.
             </p>
           </div>
         </div>

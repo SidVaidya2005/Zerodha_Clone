@@ -39,9 +39,7 @@ app.get("/api/indian-stocks", async (req, res) => {
   try {
     const results = await Promise.all(
       symbols.map(async (symbol) => {
-        const quote =
-          (await safeQuote(`${symbol}.NS`)) ||
-          (await safeQuote(`${symbol}.BO`));
+        const quote = (await safeQuote(`${symbol}.NS`)) || (await safeQuote(`${symbol}.BO`));
 
         if (!quote || typeof quote.regularMarketPrice !== "number") {
           return {
@@ -78,10 +76,7 @@ app.get("/api/indices", async (req, res) => {
   }
 
   try {
-    const [nifty, sensex] = await Promise.all([
-      safeQuote("^NSEI"),
-      safeQuote("^BSESN"),
-    ]);
+    const [nifty, sensex] = await Promise.all([safeQuote("^NSEI"), safeQuote("^BSESN")]);
 
     const mapIndexQuote = (quote, fallbackName) => {
       if (!quote || typeof quote.regularMarketPrice !== "number") {

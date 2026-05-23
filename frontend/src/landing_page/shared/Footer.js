@@ -12,11 +12,7 @@ function Footer() {
       <div className="container border-top mt-5">
         <div className="row mt-5">
           <div className="col-lg-3 col-md-6 mb-4">
-            <img
-              src="media/images/logo.svg"
-              className="app-footer-logo"
-              alt="Zerodha logo"
-            />
+            <img src="media/images/logo.svg" className="app-footer-logo" alt="Zerodha logo" />
             <p className="app-footer-copyright">
               &copy; 2010 - 2026, Zerodha Broking Ltd.
               <br />
