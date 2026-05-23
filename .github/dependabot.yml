@@ -19,6 +19,11 @@ updates:
     groups:
       root-dev-deps:
         dependency-type: "development"
+    # Majors explicitly rejected in May 2026 (see #24). ESLint 9+
+    # requires a flat-config migration; revisit as a tracked initiative.
+    ignore:
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "npm"
     directory: "/backend"
@@ -33,6 +38,19 @@ updates:
         dependency-type: "development"
       backend-prod-deps:
         dependency-type: "production"
+    # Majors explicitly rejected in May 2026 (see #27, #30). Express 5 /
+    # Mongoose 9 / body-parser 2 / dotenv 17 each require code changes.
+    ignore:
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "express"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "mongoose"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "body-parser"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "dotenv"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "npm"
     directory: "/frontend"
@@ -47,6 +65,19 @@ updates:
         dependency-type: "development"
       frontend-prod-deps:
         dependency-type: "production"
+    # Majors explicitly rejected in May 2026 (see #31). CRA 5.0.1 does
+    # not support React 19; react-router 7 is a major rewrite.
+    ignore:
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-router-dom"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@testing-library/react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "web-vitals"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "npm"
     directory: "/dashboard"
@@ -61,6 +92,23 @@ updates:
         dependency-type: "development"
       dashboard-prod-deps:
         dependency-type: "production"
+    # Majors explicitly rejected in May 2026 (see #35, #52). MUI v5→v9
+    # is four major bumps; React 19 requires CRA replacement first.
+    ignore:
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-router-dom"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@mui/material"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@mui/icons-material"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@testing-library/react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "web-vitals"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
