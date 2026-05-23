@@ -19,6 +19,9 @@ if (!ALPHA_VANTAGE_API_KEY) {
 let apiCallCount = 0;
 let apiCallResetTime = Date.now() + 60000;
 
+const INDICES_CACHE_TTL_MS = 60_000;
+let indicesCache = { payload: null, expiresAt: 0 };
+
 const checkRateLimit = () => {
   if (Date.now() > apiCallResetTime) {
     apiCallCount = 0;
@@ -123,12 +126,16 @@ app.get("/api/indian-stocks", async (req, res) => {
 });
 
 app.get("/api/indices", async (req, res) => {
-  try {
-    // Alpha Vantage symbols for Indian indices
-    // NIFTY 50: ^NSEI or NIFTY
-    // SENSEX: ^BSESN or SENSEX
+  const now = Date.now();
+  if (indicesCache.payload && now < indicesCache.expiresAt) {
+    return res.json(indicesCache.payload);
+  }
 
+  try {
     if (!checkRateLimit()) {
+      if (indicesCache.payload) {
+        return res.json(indicesCache.payload);
+      }
       return res.status(429).json({
         error: "Rate limit reached. Please wait a moment.",
       });
@@ -191,13 +198,19 @@ app.get("/api/indices", async (req, res) => {
       };
     };
 
-    res.json({
+    const payload = {
       nifty: mapIndexQuote(niftyResponse, "NIFTY 50"),
       sensex: mapIndexQuote(sensexResponse, "SENSEX"),
       updatedAt: new Date().toISOString(),
-    });
+    };
+
+    indicesCache = { payload, expiresAt: Date.now() + INDICES_CACHE_TTL_MS };
+    res.json(payload);
   } catch (error) {
     console.error("Error fetching indices from Alpha Vantage:", error.message);
+    if (indicesCache.payload) {
+      return res.json(indicesCache.payload);
+    }
     res.status(500).json({ error: "Failed to fetch indices quotes" });
   }
 });
