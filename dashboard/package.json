@@ -37,7 +37,7 @@
     "format:check": "prettier --check \"src/**/*.{js,jsx,css,json,md}\" \"server.js\""
   },
   "devDependencies": {
-    "eslint-config-prettier": "^9.1.2",
+    "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.8.3"
   },
   "browserslist": {
