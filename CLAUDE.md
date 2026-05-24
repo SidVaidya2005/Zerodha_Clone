@@ -39,7 +39,7 @@ cd dashboard && npm run dev    # starts both React app + proxy server
 frontend (React, port 3000)
     └── calls backend directly
 
-dashboard (React, port 3000 in dev)
+dashboard (React, port 3004 in dev)
     ├── calls backend (port 3002) for holdings, positions, orders
     └── calls proxy server (port 3001) for live stock prices
 
@@ -72,7 +72,7 @@ NODE_ENV=development
 ### `frontend/.env.local`
 ```
 REACT_APP_BACKEND_URL=http://localhost:3002
-REACT_APP_DASHBOARD_URL=http://localhost:3001
+REACT_APP_DASHBOARD_URL=http://localhost:3004
 ```
 
 ### `dashboard/.env.local`
