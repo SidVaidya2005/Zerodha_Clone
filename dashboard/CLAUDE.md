@@ -33,17 +33,19 @@ Two processes:
 
 ```
 src/
-  index.js          imports ./styles/index.css
-  config.js         BACKEND_URL, PROXY_URL
+  index.js          imports ./styles/index.css, sets axios.defaults.withCredentials, wraps in UserProvider
+  config.js         BACKEND_URL, PROXY_URL, FRONTEND_URL
   styles/           5-file CSS split — see uistyle rule
   layout/           Home, TopBar, Menu, Dashboard, Apps — frame chrome
   pages/            Summary, Holdings, Positions, Orders, Funds + HoldingsRow
   widgets/WatchList/  WatchList, WatchListItem, WatchListActions, AnalyticsModal
   modals/           BuyActionWindow
   charts/           DoughnutChart, VerticalGraph  (note: typo "DoughnoutChart" is gone)
-  hooks/            useApiData, useWatchlistPolling, usePortfolioSummary,
-                    useHoldingsSummary, useSubmitOrder
-  context/          GeneralContext (BuyActionWindow open/close + selected stock)
+  hooks/            useApiData, useWatchlistPolling, useIndicesPolling,
+                    usePortfolioSummary, useHoldingsSummary, useSubmitOrder,
+                    useCurrentUser
+  context/          GeneralContext (BuyActionWindow open/close + selected stock),
+                    UserContext (UserProvider — auth gate; fetches /me)
   utils/            portfolioUtils (pure math)
   data/             watchlistSymbols, chartPalette
 ```
@@ -58,11 +60,21 @@ Per `.claude/rules/codestyle.md`, every `setInterval` / `fetch` / `axios.post` l
 |---|---|
 | `useApiData` | generic axios GET + loading/error state + optional polling interval. Used by Holdings, Positions, Orders. |
 | `useWatchlistPolling` | 15s `setInterval` polling `PROXY_URL/api/indian-stocks`. Returns `{ liveWatchlist }`. |
+| `useIndicesPolling` | 60s `setInterval` polling `PROXY_URL/api/indices`. Returns `{ nifty, sensex }` formatted for the TopBar tiles (falls back to a hardcoded snapshot + logs once if rate-limited). |
 | `usePortfolioSummary` | Polls `/allHoldings` + `/allPositions`; returns totals (investment, currentValue, pnl, pnlPercent, marginsUsed, holdingsCount). |
 | `useHoldingsSummary` | Polls `/allHoldings`; returns enriched rows + totals + best/worst performer. |
 | `useSubmitOrder` | POSTs `/newOrder`; manages toast state + 900ms auto-close. |
+| `useCurrentUser` | Reads `UserContext`; throws if used outside `<UserProvider>`. Returns `{ id, fullName, email }`. |
 
 A component that calls `setInterval`, `fetch`, or `axios.post` directly is the smell — push it into a hook.
+
+### Auth gate
+
+`UserProvider` (in `context/UserContext.js`) wraps every route in `index.js`. On mount it `GET`s `${BACKEND_URL}/me`; on success it provides the user via context, on any failure it `window.location`s to `${FRONTEND_URL}/login`. While the request is in flight it renders a `Loading…` placeholder — no route mounts until auth is resolved.
+
+Cookie-based auth requires every axios call to include credentials. `index.js` sets `axios.defaults.withCredentials = true` once at boot — do not pass it per-request, and do not introduce a `fetch` call that forgets `credentials: "include"`.
+
+`Menu.js` reads `user.fullName` via `useCurrentUser`, derives the avatar initials, and owns the Logout button — it POSTs `/logout`, then `window.location`s to `FRONTEND_URL` regardless of success (the user expects to leave the dashboard either way).
 
 ### Dashboard routes
 
@@ -76,7 +88,7 @@ A component that calls `setInterval`, `fetch`, or `axios.post` directly is the s
 
 ### Config (`src/config.js`)
 
-Exports `BACKEND_URL` and `PROXY_URL`. In production, both fall back to `""` (same-origin) with a console warning if the env vars are missing. Set `REACT_APP_BACKEND_URL` and `REACT_APP_PROXY_URL` explicitly in production.
+Exports `BACKEND_URL`, `PROXY_URL`, and `FRONTEND_URL`. The first two fall back to `""` (same-origin) in production; `FRONTEND_URL` does not — it's where unauthenticated users are sent, so an empty value would be silently broken. Set `REACT_APP_BACKEND_URL`, `REACT_APP_PROXY_URL`, and `REACT_APP_FRONTEND_URL` explicitly in production. Missing values trigger a console warning.
 
 ### Styling
 

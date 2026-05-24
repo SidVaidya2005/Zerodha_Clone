@@ -52,6 +52,7 @@ src/
 |---|---|
 | `/` | `home/HomePage` |
 | `/signup` | `signup/Signup` |
+| `/login` | `signup/Login` |
 | `/about` | `about/AboutPage` |
 | `/product` | `products/ProductsPage` |
 | `/pricing` | `pricing/PricingPage` |
@@ -64,7 +65,7 @@ src/
 - `BACKEND_URL` — defaults to `http://localhost:3002`; override via `REACT_APP_BACKEND_URL`
 - `DASHBOARD_URL` — defaults to the hardcoded Render deployment URL; override via `REACT_APP_DASHBOARD_URL`
 
-The frontend does not use axios — fetch and direct links handle any network calls (notably the signup form redirect to the dashboard).
+The frontend does not use axios — `fetch` handles network calls. The auth POSTs (`/signup`, `/login`) live in `SignupForm.js` and `LoginForm.js` and use `credentials: "include"` so the backend's httpOnly `auth` cookie comes back. On success they `window.location.href = DASHBOARD_URL` — the dashboard then reads the cookie via its own `/me` call.
 
 ### Styling
 

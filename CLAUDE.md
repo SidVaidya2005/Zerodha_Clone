@@ -67,7 +67,12 @@ CRA's build-time ESLint pass is disabled (`DISABLE_ESLINT_PLUGIN=true` in the `s
 PORT=3002
 MONGO_URL=<mongodb connection string>
 NODE_ENV=development
+JWT_SECRET=<random string — e.g. `openssl rand -hex 32`>
+FRONTEND_URL=http://localhost:3000
+DASHBOARD_URL=http://localhost:3004
 ```
+
+`JWT_SECRET` is **required** — `authService` throws if unset. `FRONTEND_URL` + `DASHBOARD_URL` form the CORS allowlist for credentialed requests (cookies); browsers reject wildcard origins for credentialed CORS.
 
 ### `frontend/.env.local`
 ```
@@ -79,7 +84,8 @@ REACT_APP_DASHBOARD_URL=http://localhost:3004
 ```
 REACT_APP_BACKEND_URL=http://localhost:3002
 REACT_APP_PROXY_URL=http://localhost:3001
+REACT_APP_FRONTEND_URL=http://localhost:3000
 ALPHA_VANTAGE_API_KEY=<key>   # REQUIRED — proxy server exits 1 without it
 ```
 
-In production, both `REACT_APP_BACKEND_URL` and `REACT_APP_PROXY_URL` must be set explicitly — the dashboard falls back to same-origin (empty string) and logs a warning if they are missing.
+In production, all three `REACT_APP_*_URL` values must be set explicitly. `BACKEND_URL` and `PROXY_URL` fall back to same-origin (empty string); `FRONTEND_URL` does not — it's where unauthenticated users get bounced to `/login`, and an empty value silently breaks the auth gate. All three log a warning if missing.
