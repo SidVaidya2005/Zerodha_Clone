@@ -37,6 +37,14 @@ describe("POST /signup", () => {
     expect(res.status).toBe(400);
   });
 
+  it("returns 400 when the password is shorter than 8 characters", async () => {
+    const res = await request(app)
+      .post("/signup")
+      .send({ ...VALID_USER, password: "short" });
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/8 characters/);
+  });
+
   it("returns 409 when the email is already registered", async () => {
     await request(app).post("/signup").send(VALID_USER);
     const res = await request(app).post("/signup").send(VALID_USER);

@@ -32,6 +32,9 @@ async function signup(req, res) {
     if (!fullName || !email || !phoneNumber || !password) {
       return res.status(400).json({ error: "Missing required fields" });
     }
+    if (password.length < 8) {
+      return res.status(400).json({ error: "Password must be at least 8 characters" });
+    }
 
     const existing = await UserModel.findOne({ email: email.toLowerCase() });
     if (existing) return res.status(409).json({ error: "Email already registered" });

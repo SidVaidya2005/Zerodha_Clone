@@ -15,7 +15,11 @@ export function validateSignupForm(values) {
   if (emailErr) errors.email = emailErr;
 
   if (!values.phoneNumber.trim()) errors.phoneNumber = "Phone number is required";
-  if (!values.password) errors.password = "Password is required";
+  if (!values.password) {
+    errors.password = "Password is required";
+  } else if (values.password.length < 8) {
+    errors.password = "Password must be at least 8 characters";
+  }
   if (values.password !== values.confirmPassword) {
     errors.confirmPassword = "Passwords do not match";
   }

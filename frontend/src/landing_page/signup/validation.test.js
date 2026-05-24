@@ -51,6 +51,17 @@ describe("validateSignupForm", () => {
     expect(errors.password).toBe("Password is required");
   });
 
+  it("flags passwords shorter than 8 characters", () => {
+    const { errors, isValid } = validateSignupForm({
+      ...validForm,
+      password: "short",
+      confirmPassword: "short",
+    });
+
+    expect(isValid).toBe(false);
+    expect(errors.password).toBe("Password must be at least 8 characters");
+  });
+
   it("flags password mismatch on confirmPassword", () => {
     const { errors, isValid } = validateSignupForm({
       ...validForm,
