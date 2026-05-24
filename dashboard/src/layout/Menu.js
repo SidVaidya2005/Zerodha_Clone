@@ -1,13 +1,39 @@
 import React, { useState } from "react";
 
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+
+import { useCurrentUser } from "../hooks/useCurrentUser";
+import { BACKEND_URL, FRONTEND_URL } from "../config";
+
+function initialsOf(fullName) {
+  return fullName
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0].toUpperCase())
+    .join("");
+}
 
 const Menu = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const user = useCurrentUser();
 
   const handleProfileClick = () => {
     setIsProfileDropdownOpen(!isProfileDropdownOpen);
   };
+
+  const handleLogout = async (e) => {
+    e.stopPropagation();
+    try {
+      await axios.post(`${BACKEND_URL}/logout`);
+    } catch {
+      // Even if the request fails the cookie may still be present client-side,
+      // but redirecting to the frontend is the right UX either way.
+    }
+    window.location.href = FRONTEND_URL;
+  };
+
   const menuItems = [
     { label: "Dashboard", to: "/" },
     { label: "Orders", to: "/orders" },
@@ -33,17 +59,11 @@ const Menu = () => {
         </ul>
         <hr />
         <div className="profile" onClick={handleProfileClick}>
-          <div className="avatar">ZU</div>
-          <p className="username">USERID</p>
+          <div className="avatar">{initialsOf(user.fullName)}</div>
+          <p className="username">{user.fullName}</p>
           {isProfileDropdownOpen && (
             <div className="profile-dropdown">
-              <button
-                className="logout-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  window.location.href = "http://localhost:3000/";
-                }}
-              >
+              <button className="logout-btn" onClick={handleLogout}>
                 Logout
               </button>
             </div>

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { usePortfolioSummary } from "../hooks/usePortfolioSummary";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 const formatCompact = (value) =>
   new Intl.NumberFormat("en-IN", {
@@ -8,7 +9,7 @@ const formatCompact = (value) =>
   }).format(value);
 
 const Summary = () => {
-  const [userName, setUserName] = useState("User");
+  const user = useCurrentUser();
   const {
     investment,
     currentValue,
@@ -20,21 +21,13 @@ const Summary = () => {
     hasError,
   } = usePortfolioSummary();
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const nameParam = params.get("name");
-    if (nameParam) {
-      setUserName(nameParam);
-    }
-  }, []);
-
   const pnlClassName = pnl >= 0 ? "profit" : "loss";
   const pnlSign = pnl >= 0 ? "+" : "";
 
   return (
     <>
       <div className="username">
-        <h6>Hi, {userName}!</h6>
+        <h6>Hi, {user.fullName}!</h6>
         <hr className="divider" />
       </div>
 

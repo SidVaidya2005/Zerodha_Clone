@@ -15,12 +15,16 @@ jest.mock("../hooks/usePortfolioSummary", () => ({
   }),
 }));
 
+// Bypass the auth context — Summary now reads user.fullName directly.
+jest.mock("../hooks/useCurrentUser", () => ({
+  useCurrentUser: () => ({ id: "u1", fullName: "Asha Rao", email: "asha@example.com" }),
+}));
+
 describe("Summary", () => {
-  it("renders Equity and Holdings sections with mocked portfolio data", () => {
+  it("renders Equity and Holdings sections with the current user's name", () => {
     render(<Summary />);
 
-    // Structural anchors — the two sections + the Hi, <user>! banner.
-    expect(screen.getByText(/Hi, /)).not.toBeNull();
+    expect(screen.getByText("Hi, Asha Rao!")).not.toBeNull();
     expect(screen.getByText("Equity")).not.toBeNull();
     expect(screen.getByText(/Holdings \(5\)/)).not.toBeNull();
   });
