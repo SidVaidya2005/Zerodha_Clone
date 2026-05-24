@@ -1,57 +1,42 @@
 import React, { useState } from "react";
 import BACKEND_URL, { DASHBOARD_URL } from "../../config";
 import FormField from "../components/FormField";
-import { validateSignupForm } from "./validation";
+import { validateLoginForm } from "./validation";
 
-function SignupForm() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phoneNumber: "",
-    password: "",
-    confirmPassword: "",
-  });
-
+function LoginForm() {
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitError("");
-    const { errors: formErrors, isValid } = validateSignupForm(formData);
+    const { errors: formErrors, isValid } = validateLoginForm(formData);
     setErrors(formErrors);
     if (!isValid) return;
 
     setIsSubmitting(true);
     try {
-      const res = await fetch(`${BACKEND_URL}/signup`, {
+      const res = await fetch(`${BACKEND_URL}/login`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName: formData.fullName,
-          email: formData.email,
-          phoneNumber: formData.phoneNumber,
-          password: formData.password,
-        }),
+        body: JSON.stringify(formData),
       });
 
-      if (res.status === 409) {
-        setErrors({ email: "An account with this email already exists" });
+      if (res.status === 401) {
+        setSubmitError("Invalid email or password.");
         return;
       }
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
-        setSubmitError(body.error || "Signup failed. Please try again.");
+        setSubmitError(body.error || "Login failed. Please try again.");
         return;
       }
 
@@ -69,15 +54,6 @@ function SignupForm() {
 
       <form onSubmit={handleSubmit} noValidate>
         <FormField
-          id="fullName"
-          name="fullName"
-          label="Full Name"
-          value={formData.fullName}
-          onChange={handleChange}
-          placeholder="eg. John Doe"
-          error={errors.fullName}
-        />
-        <FormField
           id="email"
           name="email"
           type="email"
@@ -88,16 +64,6 @@ function SignupForm() {
           error={errors.email}
         />
         <FormField
-          id="phoneNumber"
-          name="phoneNumber"
-          type="tel"
-          label="Phone Number"
-          value={formData.phoneNumber}
-          onChange={handleChange}
-          placeholder="eg. 9876543210"
-          error={errors.phoneNumber}
-        />
-        <FormField
           id="password"
           name="password"
           type="password"
@@ -105,15 +71,6 @@ function SignupForm() {
           value={formData.password}
           onChange={handleChange}
           error={errors.password}
-        />
-        <FormField
-          id="confirmPassword"
-          name="confirmPassword"
-          type="password"
-          label="Confirm Password"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          error={errors.confirmPassword}
           wrapperClassName="mb-4"
         />
 
@@ -122,11 +79,11 @@ function SignupForm() {
           className="btn btn-primary w-100 mb-3 fw-bold app-signup-btn"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Signing up…" : "Sign up"}
+          {isSubmitting ? "Logging in…" : "Log in"}
         </button>
       </form>
     </>
   );
 }
 
-export default SignupForm;
+export default LoginForm;
