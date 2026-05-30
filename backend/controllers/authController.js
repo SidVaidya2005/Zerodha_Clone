@@ -1,4 +1,4 @@
-const { UserModel } = require("../model/UserModel");
+const userService = require("../services/userService");
 const { hashPassword, verifyPassword, signToken } = require("../services/authService");
 
 const COOKIE_NAME = "auth";
@@ -36,11 +36,11 @@ async function signup(req, res) {
       return res.status(400).json({ error: "Password must be at least 8 characters" });
     }
 
-    const existing = await UserModel.findOne({ email: email.toLowerCase() });
+    const existing = await userService.findByEmail(email);
     if (existing) return res.status(409).json({ error: "Email already registered" });
 
     const passwordHash = await hashPassword(password);
-    const user = await UserModel.create({ fullName, email, phoneNumber, passwordHash });
+    const user = await userService.createUser({ fullName, email, phoneNumber, passwordHash });
 
     setAuthCookie(res, user);
     res.status(201).json(publicUser(user));
@@ -57,7 +57,7 @@ async function login(req, res) {
       return res.status(400).json({ error: "Missing email or password" });
     }
 
-    const user = await UserModel.findOne({ email: email.toLowerCase() });
+    const user = await userService.findByEmail(email);
     if (!user) return res.status(401).json({ error: "Invalid credentials" });
 
     const ok = await verifyPassword(password, user.passwordHash);
@@ -73,7 +73,7 @@ async function login(req, res) {
 
 async function me(req, res) {
   try {
-    const user = await UserModel.findById(req.user.id);
+    const user = await userService.findById(req.user.id);
     if (!user) return res.status(401).json({ error: "Not authenticated" });
     res.json(publicUser(user));
   } catch (error) {

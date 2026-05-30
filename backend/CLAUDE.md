@@ -71,7 +71,7 @@ Holdings / positions / orders endpoints are **not** behind `requireAuth` — the
 
 ### Auth
 
-JWT in an httpOnly cookie named `auth`. `authService` owns the four primitives — `hashPassword` / `verifyPassword` (bcryptjs, 10 rounds) and `signToken` / `verifyToken` (jsonwebtoken, 7-day expiry). Token payload is `{ sub: userId, name: fullName }`.
+JWT in an httpOnly cookie named `auth`. `authService` owns the four primitives — `hashPassword` / `verifyPassword` (bcryptjs, 10 rounds) and `signToken` / `verifyToken` (jsonwebtoken, 7-day expiry). Token payload is `{ sub: userId, name: fullName }`. User persistence goes through `userService` (`findByEmail` / `findById` / `createUser`) — `authController` never touches `UserModel` directly, matching the controller → service seam used by holdings/positions/orders.
 
 Cookie shape (set by `authController` via `res.cookie("auth", token, ...)`):
 
