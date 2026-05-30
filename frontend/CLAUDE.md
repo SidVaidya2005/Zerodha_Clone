@@ -39,7 +39,7 @@ src/
                     FooterColumn, FAQLinkColumn, TeamMemberCard,
                     UniverseTile
     home/  about/  products/  pricing/  support/
-    signup/         Signup.js, SignupForm.js, validation.js
+    auth/           Signup.js, SignupForm.js, Login.js, LoginForm.js, validation.js
 ```
 
 ### Theme system
@@ -51,8 +51,8 @@ src/
 | Path | Component |
 |---|---|
 | `/` | `home/HomePage` |
-| `/signup` | `signup/Signup` |
-| `/login` | `signup/Login` |
+| `/signup` | `auth/Signup` |
+| `/login` | `auth/Login` |
 | `/about` | `about/AboutPage` |
 | `/product` | `products/ProductsPage` |
 | `/pricing` | `pricing/PricingPage` |

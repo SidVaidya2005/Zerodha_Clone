@@ -25,7 +25,7 @@ A component that imports `axios` or calls `setInterval` directly is the smell. P
 
 ## Pure functions go in `utils/`
 
-Math without React or DOM dependencies: `portfolioUtils.js` (`getCurrentValue`, `getPnL`, `parseNumericPrice`, `formatPrice`). Validation helpers: `signup/validation.js` (`validateSignupForm`). Hooks consume utils; components consume hooks.
+Math without React or DOM dependencies: `portfolioUtils.js` (`getCurrentValue`, `getPnL`, `parseNumericPrice`, `formatPrice`). Validation helpers: `auth/validation.js` (`validateSignupForm`). Hooks consume utils; components consume hooks.
 
 ## Controllers as named function exports
 
