@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 
-import GeneralContext from "../context/GeneralContext";
+import BuyWindowContext from "../context/BuyWindowContext";
 import { useSubmitOrder } from "../hooks/useSubmitOrder";
 import { parseNumericPrice, formatPrice } from "../utils/portfolioUtils";
 
 const BuyActionWindow = ({ uid, price }) => {
-  const generalContext = useContext(GeneralContext);
+  const buyWindow = useContext(BuyWindowContext);
   const { submit, toast } = useSubmitOrder();
 
   const [stockQuantity, setStockQuantity] = useState(1);
@@ -49,7 +49,7 @@ const BuyActionWindow = ({ uid, price }) => {
           <button type="button" className="btn btn-red" onClick={() => placeOrder("SELL")}>
             Sell
           </button>
-          <button type="button" className="btn btn-grey" onClick={generalContext.closeBuyWindow}>
+          <button type="button" className="btn btn-grey" onClick={buyWindow.closeBuyWindow}>
             Cancel
           </button>
         </div>

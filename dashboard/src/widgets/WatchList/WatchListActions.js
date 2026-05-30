@@ -2,14 +2,14 @@ import React, { useContext } from "react";
 import { Tooltip, Grow } from "@mui/material";
 import { BarChartOutlined, MoreHoriz } from "@mui/icons-material";
 
-import GeneralContext from "../../context/GeneralContext";
+import BuyWindowContext from "../../context/BuyWindowContext";
 import { parseNumericPrice } from "../../utils/portfolioUtils";
 
 const WatchListActions = ({ uid, stock, onAnalyticsClick }) => {
-  const generalContext = useContext(GeneralContext);
+  const buyWindow = useContext(BuyWindowContext);
 
   const openWindow = () => {
-    generalContext.openBuyWindow(uid, parseNumericPrice(stock.price));
+    buyWindow.openBuyWindow(uid, parseNumericPrice(stock.price));
   };
 
   return (
