@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { VerticalGraph } from "../charts/VerticalGraph";
+import { BarChart } from "../charts/BarChart";
 import { getProfitClass } from "../utils/portfolioUtils";
 import { useHoldingsSummary } from "../hooks/useHoldingsSummary";
 import HoldingsRow from "./HoldingsRow";
@@ -109,7 +109,7 @@ const Holdings = () => {
           <p>P&L</p>
         </div>
       </div>
-      <VerticalGraph data={data} />
+      <BarChart data={data} />
     </>
   );
 };

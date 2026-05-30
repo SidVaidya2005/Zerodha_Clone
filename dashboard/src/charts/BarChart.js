@@ -12,7 +12,7 @@ import { Bar } from "react-chartjs-2";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-export const options = {
+const options = {
   responsive: true,
   plugins: {
     legend: {
@@ -25,6 +25,6 @@ export const options = {
   },
 };
 
-export function VerticalGraph({ data }) {
+export function BarChart({ data }) {
   return <Bar options={options} data={data} />;
 }
