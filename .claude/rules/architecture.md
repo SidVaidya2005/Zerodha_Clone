@@ -45,13 +45,13 @@ When a component renders an array of similar things, the row markup also gets ex
 
 | Folder | Contents |
 |---|---|
-| `layout/` | `Home`, `TopBar`, `Menu`, `Dashboard`, `Apps` — frame chrome. |
+| `layout/` | `Home`, `TopBar`, `Menu`, `Dashboard` — frame chrome. |
 | `pages/` | One per route (`Summary`, `Holdings`, `Positions`, `Orders`, `Funds`) plus row components (`HoldingsRow`). |
 | `widgets/<Name>/` | Self-contained widgets composed of multiple files. `widgets/WatchList/` holds `WatchList`, `WatchListItem`, `WatchListActions`, `AnalyticsModal`. |
 | `modals/` | Floating overlays (`BuyActionWindow`). |
-| `charts/` | Chart.js wrappers (`DoughnutChart`, `VerticalGraph`). |
+| `charts/` | Chart.js wrappers (`DoughnutChart`, `BarChart`). |
 | `hooks/` | Custom hooks. See [[codestyle]] for what belongs here. |
-| `context/` | React context providers (`GeneralContext`). |
+| `context/` | React context providers (`BuyWindowContext`). |
 | `utils/` | Pure functions (`portfolioUtils`). |
 | `data/` | Hardcoded arrays/palettes. |
 

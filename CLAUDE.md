@@ -8,7 +8,7 @@ Zerodha-inspired trading platform clone with three independently-runnable apps s
 
 - [backend/CLAUDE.md](backend/CLAUDE.md) — Express REST API (port 3002), layered as `routes/` → `controllers/` → `services/`.
 - [frontend/CLAUDE.md](frontend/CLAUDE.md) — Public/marketing React app (port 3000).
-- [dashboard/CLAUDE.md](dashboard/CLAUDE.md) — Trading dashboard React app (port 3000) + Yahoo Finance proxy server (port 3001, same process via `npm run dev`).
+- [dashboard/CLAUDE.md](dashboard/CLAUDE.md) — Trading dashboard React app (port 3004) + Yahoo Finance proxy server (port 3001, same process via `npm run dev`).
 
 ## Rules & Conventions
 
@@ -85,7 +85,6 @@ REACT_APP_DASHBOARD_URL=http://localhost:3004
 REACT_APP_BACKEND_URL=http://localhost:3002
 REACT_APP_PROXY_URL=http://localhost:3001
 REACT_APP_FRONTEND_URL=http://localhost:3000
-ALPHA_VANTAGE_API_KEY=<key>   # REQUIRED — proxy server exits 1 without it
 ```
 
 In production, all three `REACT_APP_*_URL` values must be set explicitly. `BACKEND_URL` and `PROXY_URL` fall back to same-origin (empty string); `FRONTEND_URL` does not — it's where unauthenticated users get bounced to `/login`, and an empty value silently breaks the auth gate. All three log a warning if missing.

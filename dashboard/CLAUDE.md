@@ -18,7 +18,7 @@ npm run format   # prettier --write
 
 CRA's webpack ESLint pass is disabled via `DISABLE_ESLINT_PLUGIN=true` in the `start`/`build` scripts. Run `npm run lint` explicitly before committing.
 
-**Known lint warnings (don't "fix" without ask):** 1 `react-hooks/exhaustive-deps` in `hooks/useApiData.js` (intentional) + 2 unused `err` at `server.js:147,157`. Pre-existing and tolerated.
+**Known lint warnings (don't "fix" without ask):** 1 `react-hooks/exhaustive-deps` in `hooks/useApiData.js` (intentional) + 1 unused `err` at `server.js:20`. Pre-existing and tolerated.
 
 ## Architecture
 
@@ -36,15 +36,15 @@ src/
   index.js          imports ./styles/index.css, sets axios.defaults.withCredentials, wraps in UserProvider
   config.js         BACKEND_URL, PROXY_URL, FRONTEND_URL
   styles/           5-file CSS split — see uistyle rule
-  layout/           Home, TopBar, Menu, Dashboard, Apps — frame chrome
+  layout/           Home, TopBar, Menu, Dashboard — frame chrome
   pages/            Summary, Holdings, Positions, Orders, Funds + HoldingsRow
   widgets/WatchList/  WatchList, WatchListItem, WatchListActions, AnalyticsModal
   modals/           BuyActionWindow
-  charts/           DoughnutChart, VerticalGraph  (note: typo "DoughnoutChart" is gone)
+  charts/           DoughnutChart, BarChart  (note: typo "DoughnoutChart" is gone)
   hooks/            useApiData, useWatchlistPolling, useIndicesPolling,
                     usePortfolioSummary, useHoldingsSummary, useSubmitOrder,
                     useCurrentUser
-  context/          GeneralContext (BuyActionWindow open/close + selected stock),
+  context/          BuyWindowContext (BuyActionWindow open/close + selected stock),
                     UserContext (UserProvider — auth gate; fetches /me)
   utils/            portfolioUtils (pure math)
   data/             watchlistSymbols, chartPalette
@@ -96,7 +96,7 @@ All styles in `src/styles/` as the 5-file split (same shape as frontend). The da
 
 ### Proxy server (`server.js`)
 
-Express on port 3001. Uses `yahoo-finance2` (v3+, requires explicit instantiation). For Indian stocks, tries `.NS` (NSE) first, falls back to `.BO` (BSE). **Requires `ALPHA_VANTAGE_API_KEY` — server calls `process.exit(1)` on missing key.**
+Express on port 3001. Uses `yahoo-finance2` (v3+, requires explicit instantiation). For Indian stocks, tries `.NS` (NSE) first, falls back to `.BO` (BSE). No API key required.
 
 | Endpoint | Description |
 |---|---|
