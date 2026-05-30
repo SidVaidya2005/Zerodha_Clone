@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import FAQLinkColumn from "../components/FAQLinkColumn";
 import { FAQ_GROUPS, FAQ_QUICK_LINKS, FAQ_FEATURED_LINKS } from "../../data/faqLinks";
 
-function CreateTicket() {
+function SupportFaq() {
   const [openSection, setOpenSection] = useState(null);
 
   const toggleSection = (id) => {
@@ -55,4 +55,4 @@ function CreateTicket() {
   );
 }
 
-export default CreateTicket;
+export default SupportFaq;
