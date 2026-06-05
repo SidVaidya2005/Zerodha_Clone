@@ -18,16 +18,15 @@ body {
 }
 
 .app-navbar {
-  background-color: var(--color-canvas);
-  border-bottom: none !important;
-  box-shadow: var(--shadow-nav);
+  /* Visual skin (background, border, shadow, scroll states) lives in
+     components.css; layout.css owns only structural spacing. */
   padding: 0 var(--space-lg);
 }
 
 .app-footer {
   background-color: var(--color-canvas-soft);
   border-top: 1px solid var(--color-hairline);
-  padding: 30px 0 5px;
+  padding: 16px 0 12px;
 }
 
 .app-navbar-logo {

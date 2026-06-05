@@ -4,14 +4,9 @@ export const TEAM_MEMBERS = [
     title: "Student Developer",
     avatar: "media/images/MyImage.jpg",
     bio: [
-      "I am Siddarth Vaidya, a student at IIIT Naya Raipur, and I created this Zerodha-inspired clone project to challenge myself with real world frontend development and product-style UI building.",
-      "I built this project from scratch to understand component-based architecture, responsive layouts, and how to maintain a clean and consistent user experience across pages.",
-      "I enjoy learning by building and continuously improving each project.",
-    ],
-    links: [
-      { label: "Email", href: "mailto:siddarthvaidya2005@gmail.com" },
-      { label: "GitHub", href: "https://github.com/SidVaidya2005" },
-      { label: "LinkedIn", href: "https://www.linkedin.com/in/siddarth-vaidya-885871239" },
+      "I'm Siddarth, a student at IIIT Naya Raipur. I like building things mostly to figure out how they work.",
+      "This Zerodha clone is one of those builds. I made it front to back to get comfortable with React and with keeping a component-driven UI consistent as it grew.",
+      "When something breaks, I'd rather pull it apart than copy a fix. That's basically how I learn.",
     ],
   },
 ];

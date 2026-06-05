@@ -52,8 +52,24 @@ h5 {
   }
 }
 
-.nav-link {
-  margin-left: 40px;
+/* ── Navbar (Modern SaaS) ───────────────────────── */
+/* Translucent at the top of the page; frosts to a solid bar with a soft
+   shadow once scrolled (.is-scrolled toggled from Navbar.js). */
+.app-navbar {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.app-navbar.is-scrolled {
+  background-color: rgba(255, 255, 255, 0.92);
+  border-bottom-color: var(--color-hairline);
+  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.05);
 }
 
 .app-navbar .navbar-brand,
@@ -67,21 +83,103 @@ h5 {
   color: var(--app-text);
 }
 
+/* gap-based spacing replaces the old blunt `.nav-link { margin-left: 40px }` */
+.app-navbar .navbar-nav {
+  gap: var(--space-2xl);
+}
+
 .app-navbar .navbar-nav .nav-link,
 .app-navbar .navbar-nav .show > .nav-link {
-  color: var(--color-body) !important;
+  position: relative;
+  color: var(--color-ink) !important;
   font-size: var(--type-nav);
-  transition: color 0.3s ease;
+  font-weight: 500;
+  padding-left: 0;
+  padding-right: 0;
+  transition: color 0.2s ease;
+}
+
+/* animated underline indicator (grows from center) */
+.app-navbar .navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-full);
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
 }
 
 .app-navbar .navbar-nav .nav-link.active {
   color: var(--color-primary) !important;
-  font-weight: 500;
+  font-weight: 600;
+}
+
+.app-navbar .navbar-nav .nav-link.active::after,
+.app-navbar .navbar-nav .nav-link:hover::after,
+.app-navbar .navbar-nav .nav-link:focus::after {
+  transform: scaleX(1);
 }
 
 .app-navbar .navbar-nav .nav-link:hover,
 .app-navbar .navbar-nav .nav-link:focus {
   color: var(--color-primary) !important;
+}
+
+/* Single pill CTA — full-page Google OAuth flow */
+.app-navbar-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background-color: var(--color-primary);
+  color: #fff;
+  font-size: var(--type-nav);
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: var(--radius-full);
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.app-navbar-cta:hover,
+.app-navbar-cta:focus {
+  background-color: var(--color-ink-strong);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(56, 126, 209, 0.3);
+}
+
+.app-navbar-cta:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 0.25rem rgba(56, 126, 209, 0.25);
+}
+
+.app-navbar-cta-arrow {
+  font-size: 1.1em;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.app-navbar-cta:hover .app-navbar-cta-arrow {
+  transform: translateX(3px);
+}
+
+/* On mobile the CTA sits in the collapsed menu — give it breathing room. */
+@media (max-width: 991.98px) {
+  .app-navbar .navbar-nav {
+    gap: var(--space-md);
+    padding-top: var(--space-sm);
+  }
+
+  .app-navbar-cta {
+    align-self: flex-start;
+  }
 }
 
 a {
@@ -311,19 +409,36 @@ a:hover {
   }
 }
 
-.accordion-link {
-  color: var(--app-link);
-  text-decoration: none;
-  font-size: 14px;
-  transition: all 0.2s ease;
+.faq-qa {
   padding: 4px 0;
-  display: block;
 }
 
-.accordion-link:hover {
+.faq-question {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--app-text);
+  margin: 0 0 4px;
+}
+
+.faq-answer {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--app-muted);
+  margin: 0;
+}
+
+.faq-answer-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--app-link);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.faq-answer-link:hover {
   color: var(--app-link-hover);
   text-decoration: underline;
-  padding-left: 8px;
 }
 
 .featured-box {
@@ -358,17 +473,10 @@ a:hover {
   font-weight: bold;
 }
 
-.featured-link {
-  color: var(--app-link);
-  text-decoration: none;
+.featured-notice {
+  color: var(--app-text);
   font-size: 14px;
   line-height: 1.5;
-  transition: color 0.2s ease;
-}
-
-.featured-link:hover {
-  color: var(--app-link-hover);
-  text-decoration: underline;
 }
 
 .quick-links-box {
@@ -631,6 +739,14 @@ a:hover {
 }
 
 /* ── Footer ─────────────────────────────────────── */
+
+.app-footer-tagline {
+  font-size: var(--type-body-sm);
+  color: var(--color-mute);
+  margin-top: 1rem;
+  max-width: 22rem;
+  line-height: 1.6;
+}
 
 .app-footer-copyright {
   font-size: var(--type-body-sm);

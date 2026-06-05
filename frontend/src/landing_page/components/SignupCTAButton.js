@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { GOOGLE_AUTH_URL } from "../../config";
 
 function SignupCTAButton() {
   return (
-    <Link to="/signup" className="p-2 btn btn-primary fs-5 mb-5 app-cta-button">
+    <a href={GOOGLE_AUTH_URL} className="p-2 btn btn-primary fs-5 mb-5 app-cta-button">
       Signup Now
-    </Link>
+    </a>
   );
 }
 

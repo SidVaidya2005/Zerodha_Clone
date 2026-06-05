@@ -5,50 +5,46 @@ function Hero() {
     <div className="container">
       <div className="row p-5 mt-5 mb-5">
         <h1 className="fs-2 text-center">
-          I built this Zerodha-inspired project from scratch
+          I rebuilt Zerodha from scratch
           <br />
-          To sharpen my frontend and full-stack development skills.
+          to learn how a product like this actually gets built.
         </h1>
       </div>
 
       <div className="row p-3 p-md-5 mt-5 border-top text-muted app-rich-text">
         <div className="col-12 col-md-6 p-3 p-md-5">
           <p>
-            I am Siddarth Vaidya, currently studying at IIIT Naya Raipur. I started this clone
-            project to understand how modern fintech platforms are designed and built with clean UI,
-            reusable components, and responsive layouts.
+            I'm Siddarth Vaidya, a student at IIIT Naya Raipur. I started this clone because I
+            wanted to know how fintech apps are actually built, not just how they look.
           </p>
           <p>
-            Instead of copying only the visuals, I focused on learning the full workflow:
-            structuring pages, organizing components, and keeping the design consistent across
-            sections.
+            So I didn't stop at the visuals. I rebuilt the whole thing: laying out pages, splitting
+            the UI into components I could reuse, and keeping it consistent as it grew.
           </p>
           <p>
-            This project reflects my hands-on practice with React and frontend engineering, and it
-            is one step in my journey to become a better software developer.
+            Honestly, most of what I know about React I picked up by getting this wrong a few times
+            and fixing it.
           </p>
         </div>
         <div className="col-12 col-md-6 p-3 p-md-5">
           <p>
-            While building this, I paid attention to details like spacing, typography, reusable
-            sections, and mobile-friendly behavior so the experience feels polished and familiar.
+            The small stuff took the most time. Spacing, typography, how things behave on a phone.
+            That's usually what separates a real product from a demo.
           </p>
           <p>
+            Building{" "}
             <a
               href="https://github.com/SidVaidya2005"
               className="app-link-plain"
               target="_blank"
               rel="noopener noreferrer"
             >
-              This clone project
+              this clone
             </a>{" "}
-            helped me improve how I think about product design and frontend architecture, not just
-            writing code that works.
+            taught me that getting the code to run is the easy part. The hard part is making all the
+            pieces fit together.
           </p>
-          <p>
-            I am continuously exploring new ideas and building more projects to strengthen my
-            skills. Thanks for visiting and checking out my work.
-          </p>
+          <p>I'm still building and breaking things. Thanks for stopping by.</p>
         </div>
       </div>
     </div>

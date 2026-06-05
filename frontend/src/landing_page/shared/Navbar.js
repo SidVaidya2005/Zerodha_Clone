@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { NAV_ITEMS } from "../../data/navItems";
-import BACKEND_URL from "../../config";
+import { GOOGLE_AUTH_URL } from "../../config";
 
 function Navbar() {
   const { pathname } = useLocation();
+  const [scrolled, setScrolled] = useState(false);
 
-  const handleGoogleSignIn = () => {
-    // Full-page navigation to the backend, which runs the Google OAuth flow.
-    window.location.href = `${BACKEND_URL}/auth/google`;
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const handleSignUp = () => {
+    // No dedicated /signup page exists; the single CTA starts the server-side
+    // Google OAuth flow, which sets the auth cookie and redirects to the dashboard.
+    window.location.href = GOOGLE_AUTH_URL;
   };
 
   return (
-    <nav className="navbar navbar-expand-lg border-bottom app-navbar sticky-top">
+    <nav
+      className={`navbar navbar-expand-lg app-navbar sticky-top ${
+        scrolled ? "is-scrolled" : ""
+      }`}
+    >
       <div className="container p-2">
         <Link className="navbar-brand" to="/">
           <img src="media/images/logo.svg" className="app-navbar-logo" alt="Logo" />
@@ -29,32 +42,35 @@ function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <form className="d-flex align-items-center ms-auto" role="search">
-            <ul className="navbar-nav mb-lg-0">
-              {NAV_ITEMS.map((item) => {
-                const isActive = pathname === item.to;
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+            {NAV_ITEMS.map((item) => {
+              const isActive = pathname === item.to;
 
-                return (
-                  <li className="nav-item" key={item.to}>
-                    <Link
-                      className={`nav-link ${isActive ? "active" : ""}`}
-                      aria-current={isActive ? "page" : undefined}
-                      to={item.to}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-            <button
-              type="button"
-              onClick={handleGoogleSignIn}
-              className="btn btn-primary ms-3 fw-bold"
-            >
-              Continue with Google
-            </button>
-          </form>
+              return (
+                <li className="nav-item" key={item.to}>
+                  <Link
+                    className={`nav-link ${isActive ? "active" : ""}`}
+                    aria-current={isActive ? "page" : undefined}
+                    to={item.to}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
+            <li className="nav-item">
+              <button
+                type="button"
+                onClick={handleSignUp}
+                className="btn app-navbar-cta"
+              >
+                Sign up
+                <span className="app-navbar-cta-arrow" aria-hidden="true">
+                  ›
+                </span>
+              </button>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>

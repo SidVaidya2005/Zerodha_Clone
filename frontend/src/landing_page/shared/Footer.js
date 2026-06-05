@@ -9,15 +9,14 @@ import {
 function Footer() {
   return (
     <footer className="app-footer">
-      <div className="container border-top mt-5">
-        <div className="row mt-5">
-          <div className="col-lg-3 col-md-6 mb-4">
+      <div className="container border-top mt-4">
+        <div className="row mt-3">
+          <div className="col-lg-4 col-md-6 mb-4">
             <img src="media/images/logo.svg" className="app-footer-logo" alt="Zerodha logo" />
-            <p className="app-footer-copyright">
-              &copy; 2010 - 2026, Zerodha Broking Ltd.
-              <br />
-              All rights reserved.
+            <p className="app-footer-tagline">
+              A full-stack Zerodha clone built with React, Express &amp; MongoDB.
             </p>
+            <p className="app-footer-copyright">&copy; 2026 Siddarth Vaidya</p>
             <div className="app-footer-social">
               {FOOTER_SOCIAL_LINKS.map((social) => (
                 <a
@@ -43,12 +42,17 @@ function Footer() {
             </div>
           </div>
 
-          {FOOTER_COLUMNS.map((column) => (
-            <FooterColumn key={column.heading} heading={column.heading} links={column.links} />
+          {FOOTER_COLUMNS.map((column, index) => (
+            <FooterColumn
+              key={column.heading}
+              heading={column.heading}
+              links={column.links}
+              className={index === 0 ? "ms-lg-auto" : ""}
+            />
           ))}
         </div>
 
-        <div className="mt-4 border-top pt-4 app-footnote-text">
+        <div className="mt-3 border-top pt-3 app-footnote-text">
           {FOOTER_LEGAL_PARAGRAPHS.map((paragraph, index) => (
             <p key={`legal-${index}`}>{paragraph}</p>
           ))}

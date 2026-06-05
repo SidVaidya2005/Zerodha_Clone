@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 function TeamMemberCard({ member }) {
   return (
@@ -12,21 +12,6 @@ function TeamMemberCard({ member }) {
         {member.bio.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}
-        <p>
-          Connect on{" "}
-          {member.links.map((link, index) => (
-            <Fragment key={link.label}>
-              <a
-                href={link.href}
-                target="_blank"
-                rel={link.href.startsWith("mailto:") ? "noreferrer" : "noopener noreferrer"}
-              >
-                {link.label}
-              </a>
-              {index < member.links.length - 1 ? " / " : null}
-            </Fragment>
-          ))}
-        </p>
       </div>
     </div>
   );

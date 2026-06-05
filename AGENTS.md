@@ -1,18 +1,18 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Codex (Codex.ai/code) when working with code in this repository.
 
 ## Project Overview
 
-Zerodha-inspired trading platform clone with three independently-runnable apps sharing one MongoDB database. Each app has its own `CLAUDE.md` with specific guidance:
+Zerodha-inspired trading platform clone with three independently-runnable apps sharing one MongoDB database. Each app has its own `AGENTS.md` with specific guidance:
 
-- [backend/CLAUDE.md](backend/CLAUDE.md) — Express REST API (port 3002), layered as `routes/` → `controllers/` → `services/`.
-- [frontend/CLAUDE.md](frontend/CLAUDE.md) — Public/marketing React app (port 3000).
-- [dashboard/CLAUDE.md](dashboard/CLAUDE.md) — Trading dashboard React app (port 3004) + Yahoo Finance proxy server (port 3001, same process via `npm run dev`).
+- [backend/AGENTS.md](backend/AGENTS.md) — Express REST API (port 3002), layered as `routes/` → `controllers/` → `services/`.
+- [frontend/AGENTS.md](frontend/AGENTS.md) — Public/marketing React app (port 3000).
+- [dashboard/AGENTS.md](dashboard/AGENTS.md) — Trading dashboard React app (port 3004) + Yahoo Finance proxy server (port 3001, same process via `npm run dev`).
 
 ## Conventions
 
-Key conventions across the apps (each app's `CLAUDE.md` has the specifics):
+Key conventions across the apps (each app's `AGENTS.md` has the specifics):
 
 - **Architecture** — backend layers (`routes/` → `controllers/` → `services/`), the 5-file CSS split, `src/data/` for hardcoded content, dashboard role-grouped folders, shared-token mirroring.
 - **Code style** — 150-LOC component threshold, hooks own all side effects, named-function controller exports, backend CJS vs CRA ESM.

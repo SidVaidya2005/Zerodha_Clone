@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-See also: [root CLAUDE.md](../CLAUDE.md) for multi-app startup and environment variable setup, and `.claude/rules/architecture.md` for the layer responsibilities summarized below.
+See also: [root CLAUDE.md](../CLAUDE.md) for multi-app startup and environment variable setup. The layer responsibilities are summarized below.
 
 ## Commands
 
@@ -76,7 +76,7 @@ Holdings / positions / orders endpoints are **not** behind `requireAuth` — the
 Flow:
 
 1. `GET /auth/google` (`googleStart`) generates a random `state`, stores it in a short-lived (`10m`) httpOnly `oauth_state` cookie, and 302s to Google's consent screen.
-2. `GET /auth/google/callback` (`googleCallback`) verifies `req.query.state === req.cookies.oauth_state` (CSRF — the OAuth endpoints are top-level navigations so CORS does **not** guard them), clears the state cookie, exchanges the code, finds-or-creates the user by `googleId`, sets the `auth` cookie, and 302s to the dashboard. Any failure 302s to `${FRONTEND_URL}/login?error=oauth|state` — only env-derived URLs are ever used as redirect targets (open-redirect safety).
+2. `GET /auth/google/callback` (`googleCallback`) verifies `req.query.state === req.cookies.oauth_state` (CSRF — the OAuth endpoints are top-level navigations so CORS does **not** guard them), clears the state cookie, exchanges the code, finds-or-creates the user by `googleId`, sets the `auth` cookie, and 302s to the dashboard. Any failure 302s to `${FRONTEND_URL}/login?error=oauth|state` — only env-derived URLs are ever used as redirect targets (open-redirect safety). The frontend has no login page: `/login` is a `<Navigate to="/" replace>`, so the `?error=` param is currently dropped (no error UI). That redirect route must be kept or these failures 404.
 
 `googleAuthService` wraps `OAuth2Client`: `getAuthUrl(state)` and `exchangeCodeForProfile(code)` (verifies the ID token, requires `email_verified`, returns `{ googleId, email, fullName, avatarUrl }`). `authService` now owns only the two JWT primitives — `signToken` / `verifyToken` (jsonwebtoken, 7-day expiry, payload `{ sub: userId, name: fullName }`). User persistence goes through `userService` (`findById` / `findByGoogleId` / `findOrCreateGoogleUser`) — `authController` never touches `UserModel` directly.
 

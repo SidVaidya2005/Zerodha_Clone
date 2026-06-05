@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { GOOGLE_AUTH_URL } from "../../config";
 
 function Stats() {
   return (
@@ -47,9 +48,9 @@ function Stats() {
             <Link to="/product" className="app-link-plain">
               Explore our products <ArrowRight size={16} aria-hidden="true" />
             </Link>
-            <Link to="/signup" className="app-link-plain">
+            <a href={GOOGLE_AUTH_URL} className="app-link-plain">
               Try Kite demo <ArrowRight size={16} aria-hidden="true" />
-            </Link>
+            </a>
           </div>
         </div>
       </div>

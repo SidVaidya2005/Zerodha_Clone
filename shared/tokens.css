@@ -60,6 +60,7 @@
   --radius-md: 4px;
   --radius-lg: 8px;
   --radius-pill: 9px;
+  --radius-full: 999px;
 
   /* Typography */
   --type-h1: 1.75rem;

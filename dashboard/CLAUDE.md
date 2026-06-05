@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-See also: [root CLAUDE.md](../CLAUDE.md) for multi-app startup and `.claude/rules/{architecture,codestyle,uistyle}.md` for the conventions summarized below.
+See also: [root CLAUDE.md](../CLAUDE.md) for multi-app startup and the shared conventions summarized below.
 
 ## Commands
 
@@ -54,7 +54,7 @@ src/
 
 ### Hooks own side effects
 
-Per `.claude/rules/codestyle.md`, every `setInterval` / `fetch` / `axios.post` lives in a custom hook:
+Every `setInterval` / `fetch` / `axios.post` lives in a custom hook:
 
 | Hook | Owns |
 |---|---|
@@ -70,7 +70,7 @@ A component that calls `setInterval`, `fetch`, or `axios.post` directly is the s
 
 ### Auth gate
 
-`UserProvider` (in `context/UserContext.js`) wraps every route in `index.js`. On mount it `GET`s `${BACKEND_URL}/me`; on success it provides the user via context, on any failure it `window.location`s to `${FRONTEND_URL}/login`. While the request is in flight it renders a `Loading…` placeholder — no route mounts until auth is resolved.
+`UserProvider` (in `context/UserContext.js`) wraps every route in `index.js`. On mount it `GET`s `${BACKEND_URL}/me`; on success it provides the user via context, on any failure it `window.location`s to `${FRONTEND_URL}/login` (which the frontend serves as a `<Navigate to="/" replace>` — the route must exist there or logged-out users 404). While the request is in flight it renders a `Loading…` placeholder — no route mounts until auth is resolved.
 
 Cookie-based auth requires every axios call to include credentials. `index.js` sets `axios.defaults.withCredentials = true` once at boot — do not pass it per-request, and do not introduce a `fetch` call that forgets `credentials: "include"`.
 
@@ -92,7 +92,7 @@ Exports `BACKEND_URL`, `PROXY_URL`, and `FRONTEND_URL`. The first two fall back 
 
 ### Styling
 
-All styles in `src/styles/` as the 5-file split (same shape as frontend). The dashboard absorbed `modals/BuyActionWindow.css` into `styles/components.css` in Phase 4; per-component CSS files are not allowed. Routing rules and cascade order in `.claude/rules/uistyle.md`.
+All styles in `src/styles/` as the 5-file split (same shape as frontend). The dashboard absorbed `modals/BuyActionWindow.css` into `styles/components.css` in Phase 4; per-component CSS files are not allowed. Match new selectors to the file that owns their role, and preserve the fixed `@import` cascade order.
 
 ### Proxy server (`server.js`)
 

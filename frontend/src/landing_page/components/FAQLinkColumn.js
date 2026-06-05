@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { ChevronUp, ChevronDown } from "lucide-react";
 
 function FAQLinkColumn({ section, isOpen, onToggle }) {
@@ -17,10 +16,21 @@ function FAQLinkColumn({ section, isOpen, onToggle }) {
       </div>
       {isOpen && (
         <div className="accordion-content">
-          {section.links.map((link, index) => (
-            <Link to="/support" key={index} className="accordion-link">
-              {link}
-            </Link>
+          {section.items.map((item, index) => (
+            <div className="faq-qa" key={index}>
+              <p className="faq-question">{item.q}</p>
+              <p className="faq-answer">{item.a}</p>
+              {item.link && (
+                <a
+                  href={item.link.href}
+                  className="faq-answer-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {item.link.label} →
+                </a>
+              )}
+            </div>
           ))}
         </div>
       )}
