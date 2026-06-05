@@ -1,9 +1,15 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { NAV_ITEMS } from "../../data/navItems";
+import BACKEND_URL from "../../config";
 
 function Navbar() {
   const { pathname } = useLocation();
+
+  const handleGoogleSignIn = () => {
+    // Full-page navigation to the backend, which runs the Google OAuth flow.
+    window.location.href = `${BACKEND_URL}/auth/google`;
+  };
 
   return (
     <nav className="navbar navbar-expand-lg border-bottom app-navbar sticky-top">
@@ -41,6 +47,13 @@ function Navbar() {
                 );
               })}
             </ul>
+            <button
+              type="button"
+              onClick={handleGoogleSignIn}
+              className="btn btn-primary ms-3 fw-bold"
+            >
+              Continue with Google
+            </button>
           </form>
         </div>
       </div>
