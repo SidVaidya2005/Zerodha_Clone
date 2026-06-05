@@ -80,7 +80,7 @@ h5 {
 .app-footer h4,
 .app-footer h5,
 .app-footer h6 {
-  color: var(--app-text);
+  color: var(--color-ink);
 }
 
 /* gap-based spacing replaces the old blunt `.nav-link { margin-left: 40px }` */
@@ -152,12 +152,12 @@ h5 {
   background-color: var(--color-ink-strong);
   color: #fff;
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(56, 126, 209, 0.3);
+  box-shadow: 0 6px 16px rgba(var(--color-primary-rgb), 0.3);
 }
 
 .app-navbar-cta:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 0.25rem rgba(56, 126, 209, 0.25);
+  box-shadow: 0 0 0 0.25rem rgba(var(--color-primary-rgb), 0.25);
 }
 
 .app-navbar-cta-arrow {
@@ -183,11 +183,11 @@ h5 {
 }
 
 a {
-  color: var(--app-link);
+  color: var(--color-primary);
 }
 
 a:hover {
-  color: var(--app-link-hover);
+  color: var(--color-link-hover);
 }
 
 .app-hero {
@@ -300,7 +300,7 @@ a:hover {
   border-radius: 50%;
   object-fit: cover;
   object-position: center top;
-  border: 3px solid var(--app-border);
+  border: 3px solid var(--color-hairline);
   display: block;
   margin: 0 auto;
 }
@@ -308,7 +308,7 @@ a:hover {
 .support-title {
   font-size: 1.75rem;
   font-weight: 500;
-  color: var(--app-text);
+  color: var(--color-ink);
 }
 
 .search-icon {
@@ -325,17 +325,17 @@ a:hover {
   width: 100%;
   padding: 18px 20px 18px 55px;
   font-size: 15px;
-  border: 1px solid var(--app-border);
+  border: 1px solid var(--color-hairline);
   border-radius: 6px;
-  background-color: var(--app-surface);
-  color: var(--app-text);
+  background-color: var(--color-canvas-soft);
+  color: var(--color-ink);
   outline: none;
   transition: all 0.2s ease;
 }
 
 .support-search-input-new:focus {
-  border-color: var(--app-link);
-  box-shadow: 0 0 0 3px rgba(56, 126, 209, 0.1);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
 }
 
 .support-search-input-new::placeholder {
@@ -343,8 +343,8 @@ a:hover {
 }
 
 .accordion-item {
-  background-color: var(--app-surface);
-  border: 1px solid var(--app-border);
+  background-color: var(--color-canvas-soft);
+  border: 1px solid var(--color-hairline);
   border-radius: 6px;
   overflow: hidden;
   transition: all 0.2s ease;
@@ -374,7 +374,7 @@ a:hover {
   gap: 12px;
   font-size: 16px;
   font-weight: 500;
-  color: var(--app-text);
+  color: var(--color-ink);
 }
 
 .accordion-icon {
@@ -385,7 +385,7 @@ a:hover {
 }
 
 .accordion-toggle {
-  color: var(--app-muted);
+  color: var(--color-body);
   font-size: 14px;
   transition: transform 0.2s ease;
 }
@@ -416,14 +416,14 @@ a:hover {
 .faq-question {
   font-size: 14px;
   font-weight: 600;
-  color: var(--app-text);
+  color: var(--color-ink);
   margin: 0 0 4px;
 }
 
 .faq-answer {
   font-size: 14px;
   line-height: 1.6;
-  color: var(--app-muted);
+  color: var(--color-body);
   margin: 0;
 }
 
@@ -431,13 +431,13 @@ a:hover {
   display: inline-block;
   margin-top: 6px;
   font-size: 14px;
-  color: var(--app-link);
+  color: var(--color-primary);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .faq-answer-link:hover {
-  color: var(--app-link-hover);
+  color: var(--color-link-hover);
   text-decoration: underline;
 }
 
@@ -474,14 +474,14 @@ a:hover {
 }
 
 .featured-notice {
-  color: var(--app-text);
+  color: var(--color-ink);
   font-size: 14px;
   line-height: 1.5;
 }
 
 .quick-links-box {
-  background-color: var(--app-surface);
-  border: 1px solid var(--app-border);
+  background-color: var(--color-canvas-soft);
+  border: 1px solid var(--color-hairline);
   border-radius: 6px;
   padding: 24px;
 }
@@ -489,7 +489,7 @@ a:hover {
 .quick-links-title {
   font-size: 16px;
   font-weight: 600;
-  color: var(--app-text);
+  color: var(--color-ink);
   margin-bottom: 20px;
 }
 
@@ -515,12 +515,12 @@ a:hover {
   content: counter(quick-counter) ".";
   position: absolute;
   left: 0;
-  color: var(--app-link);
+  color: var(--color-primary);
   font-weight: 500;
 }
 
 .quick-link {
-  color: var(--app-link);
+  color: var(--color-primary);
   text-decoration: none;
   font-size: 14px;
   line-height: 1.5;
@@ -528,7 +528,7 @@ a:hover {
 }
 
 .quick-link:hover {
-  color: var(--app-link-hover);
+  color: var(--color-link-hover);
   text-decoration: underline;
 }
 
@@ -636,19 +636,19 @@ a:hover {
 
 .app-pricing-table {
   margin-bottom: 0;
-  border-color: var(--app-border);
+  border-color: var(--color-hairline);
 }
 
 .app-pricing-table thead th {
-  background-color: var(--app-surface);
-  color: var(--app-text);
-  border-color: var(--app-border);
+  background-color: var(--color-canvas-soft);
+  color: var(--color-ink);
+  border-color: var(--color-hairline);
 }
 
 .app-pricing-table tbody td {
-  background-color: var(--app-bg);
-  color: var(--app-text);
-  border-color: var(--app-border);
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  border-color: var(--color-hairline);
 }
 
 .signup-box {
@@ -674,7 +674,7 @@ a:hover {
   background-color: var(--color-canvas) !important;
   color: var(--color-ink) !important;
   border-color: var(--color-primary) !important;
-  box-shadow: 0 0 0 0.2rem rgba(56, 126, 209, 0.15) !important;
+  box-shadow: 0 0 0 0.2rem rgba(var(--color-primary-rgb), 0.15) !important;
   outline: 0;
 }
 
@@ -735,7 +735,7 @@ a:hover {
   background-color: var(--color-primary) !important;
   border-color: var(--color-primary) !important;
   color: #fff !important;
-  box-shadow: 0 0 0 0.25rem rgba(56, 126, 209, 0.25) !important;
+  box-shadow: 0 0 0 0.25rem rgba(var(--color-primary-rgb), 0.25) !important;
 }
 
 /* ── Footer ─────────────────────────────────────── */

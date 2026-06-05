@@ -67,8 +67,8 @@ body {
 }
 
 .support-hero-section {
-  background-color: var(--app-bg);
-  border-bottom: 1px solid var(--app-border);
+  background-color: var(--color-canvas);
+  border-bottom: 1px solid var(--color-hairline);
 }
 
 .support-header {
@@ -96,7 +96,7 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
-  color: var(--app-text);
+  color: var(--color-ink);
   font-size: 16px;
   font-weight: 400;
   line-height: 1.7;

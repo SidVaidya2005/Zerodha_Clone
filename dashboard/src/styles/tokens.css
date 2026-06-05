@@ -16,6 +16,7 @@
 :root {
   /* Brand & accent */
   --color-primary: #387ed1;
+  --color-primary-rgb: 56, 126, 209;
   --color-primary-wash: rgba(142, 193, 255, 0.15);
 
   /* Surface */

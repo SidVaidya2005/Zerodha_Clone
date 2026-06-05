@@ -1,6 +1,6 @@
 .app-footer .text-muted,
 .text-muted {
-  color: var(--app-muted) !important;
+  color: var(--color-body) !important;
 }
 
 .app-link-plain {
