@@ -1,11 +1,11 @@
 import React from "react";
-import SignupForm from "./SignupForm";
+import GoogleSignInButton from "./GoogleSignInButton";
 
 function SignupHeader() {
   return (
     <>
       <h2 className="text-center mb-4">Sign up now</h2>
-      <p className="text-center text-muted mb-4">Or track your existing application.</p>
+      <p className="text-center text-muted mb-4">Create your Zerodha account with Google.</p>
     </>
   );
 }
@@ -26,7 +26,7 @@ function Signup() {
       <div className="row justify-content-center">
         <div className="col-12 col-md-8 col-lg-6 p-4 rounded shadow-sm signup-box">
           <SignupHeader />
-          <SignupForm />
+          <GoogleSignInButton />
           <SignupFooter />
         </div>
       </div>

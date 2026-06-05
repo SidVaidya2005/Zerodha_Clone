@@ -9,6 +9,11 @@ node_modules/
 .env.local
 .env.*.local
 
+# ─── Secrets / OAuth credentials ─────────────────────────────────────────────
+# Google Cloud Console OAuth client downloads — contain the client secret
+client_secret*.json
+*credentials*.json
+
 # ─── Build Outputs ───────────────────────────────────────────────────────────
 build/
 dist/

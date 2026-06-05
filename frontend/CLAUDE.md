@@ -28,18 +28,18 @@ Standard Create React App. `src/index.js` mounts `AppLayout` — a `BrowserRoute
 ```
 src/
   index.js          imports ./styles/index.css and mounts AppLayout
-  config.js         BACKEND_URL, DASHBOARD_URL (env-overridable)
+  config.js         BACKEND_URL (env-overridable)
   styles/           5-file CSS split — see uistyle rule
   data/             hardcoded UI content: footerLinks, navItems, faqLinks,
                     teamMembers, universeItems
   landing_page/
     shared/         Navbar, Footer, NotFound, OpenAccount
     components/     reusable subcomponents: PageHero, FeatureBlock,
-                    PricingTable, SignupCTAButton, FormField,
+                    PricingTable, SignupCTAButton,
                     FooterColumn, FAQLinkColumn, TeamMemberCard,
                     UniverseTile
     home/  about/  products/  pricing/  support/
-    auth/           Signup.js, SignupForm.js, Login.js, LoginForm.js, validation.js
+    auth/           Signup.js, Login.js, GoogleSignInButton.js
 ```
 
 ### Theme system
@@ -51,8 +51,8 @@ src/
 | Path | Component |
 |---|---|
 | `/` | `home/HomePage` |
-| `/signup` | `auth/Signup` |
-| `/login` | `auth/Login` |
+| `/signup` | `auth/Signup` (Google sign-in) |
+| `/login` | `auth/Login` (Google sign-in) |
 | `/about` | `about/AboutPage` |
 | `/product` | `products/ProductsPage` |
 | `/pricing` | `pricing/PricingPage` |
@@ -63,9 +63,8 @@ src/
 
 `src/config.js` exports:
 - `BACKEND_URL` — defaults to `http://localhost:3002`; override via `REACT_APP_BACKEND_URL`
-- `DASHBOARD_URL` — defaults to the hardcoded Render deployment URL; override via `REACT_APP_DASHBOARD_URL`
 
-The frontend does not use axios — `fetch` handles network calls. The auth POSTs (`/signup`, `/login`) live in `SignupForm.js` and `LoginForm.js` and use `credentials: "include"` so the backend's httpOnly `auth` cookie comes back. On success they `window.location.href = DASHBOARD_URL` — the dashboard then reads the cookie via its own `/me` call.
+Auth is **Google OAuth 2.0**, handled entirely server-side. Both `/login` and `/signup` render `GoogleSignInButton.js`, whose only action is `window.location.href = \`${BACKEND_URL}/auth/google\`` — the backend runs the OAuth flow, sets the httpOnly `auth` cookie, and redirects to the dashboard itself (the frontend no longer needs `DASHBOARD_URL`). On failure the backend bounces back to `/login?error=oauth|state`; the button reads that query param and shows an alert. There are no auth `fetch`/axios calls left in the frontend.
 
 ### Styling
 

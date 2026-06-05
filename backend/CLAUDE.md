@@ -41,7 +41,7 @@ tests/         supertest specs (holdings, orders, positions, auth) + setup.js (s
 | `HoldingsModel`  | `name`, `qty`, `avg`, `price`, `net` (string %), `day` (string %)                       |
 | `PositionsModel` | `product`, `name`, `qty`, `avg`, `price`, `net`, `day`, `isLoss`                        |
 | `OrdersModel`    | `name`, `qty`, `price`, `mode` (`"BUY"` or `"SELL"`), `createdAt` (auto via timestamps) |
-| `UserModel`      | `fullName`, `email` (lowercase, unique), `phoneNumber`, `passwordHash`, `createdAt`     |
+| `UserModel`      | `fullName`, `email` (lowercase, unique), `googleId` (unique), `avatarUrl`, `createdAt`  |
 
 ### API endpoints
 
@@ -50,11 +50,11 @@ tests/         supertest specs (holdings, orders, positions, auth) + setup.js (s
 | GET    | `/allHoldings`  | `holdingsController.getAllHoldings`                        |
 | GET    | `/allPositions` | `positionsController.getAllPositions`                      |
 | GET    | `/allOrders`    | `ordersController.getAllOrders` (sorted newest-first)      |
-| POST   | `/newOrder`     | `ordersController.createOrder` → `orderService.placeOrder` |
-| POST   | `/signup`       | `authController.signup` — 201 + cookie, 409 if email taken |
-| POST   | `/login`        | `authController.login` — 200 + cookie, 401 on bad creds    |
-| GET    | `/me`           | `authController.me` (behind `requireAuth`) — 200 / 401     |
-| POST   | `/logout`       | `authController.logout` — 204 + clears the cookie          |
+| POST   | `/newOrder`            | `ordersController.createOrder` → `orderService.placeOrder`        |
+| GET    | `/auth/google`         | `authController.googleStart` — sets state cookie, 302 to Google   |
+| GET    | `/auth/google/callback`| `authController.googleCallback` — sets auth cookie, 302 dashboard |
+| GET    | `/me`                  | `authController.me` (behind `requireAuth`) — 200 / 401            |
+| POST   | `/logout`              | `authController.logout` — 204 + clears the cookie                 |
 
 Holdings / positions / orders endpoints are **not** behind `requireAuth` — the dashboard gates access at the React layer, the backend serves global demo data. If those become user-scoped later, add `requireAuth` to their route registrations.
 
@@ -71,12 +71,19 @@ Holdings / positions / orders endpoints are **not** behind `requireAuth` — the
 
 ### Auth
 
-JWT in an httpOnly cookie named `auth`. `authService` owns the four primitives — `hashPassword` / `verifyPassword` (bcryptjs, 10 rounds) and `signToken` / `verifyToken` (jsonwebtoken, 7-day expiry). Token payload is `{ sub: userId, name: fullName }`. User persistence goes through `userService` (`findByEmail` / `findById` / `createUser`) — `authController` never touches `UserModel` directly, matching the controller → service seam used by holdings/positions/orders.
+**Google OAuth 2.0 only** — there is no password mechanism. Login is a server-side Authorization Code flow (`google-auth-library`), and the session is still carried in the same httpOnly JWT cookie named `auth` so `requireAuth` / `/me` / `/logout` are unchanged.
 
-Cookie shape (set by `authController` via `res.cookie("auth", token, ...)`):
+Flow:
 
-- Dev (`NODE_ENV!=="production"`): `httpOnly; sameSite=lax; secure=false; path=/; maxAge=7d`
-- Prod: `httpOnly; sameSite=none; secure=true; ...` — required for cross-site cookies on HTTPS
+1. `GET /auth/google` (`googleStart`) generates a random `state`, stores it in a short-lived (`10m`) httpOnly `oauth_state` cookie, and 302s to Google's consent screen.
+2. `GET /auth/google/callback` (`googleCallback`) verifies `req.query.state === req.cookies.oauth_state` (CSRF — the OAuth endpoints are top-level navigations so CORS does **not** guard them), clears the state cookie, exchanges the code, finds-or-creates the user by `googleId`, sets the `auth` cookie, and 302s to the dashboard. Any failure 302s to `${FRONTEND_URL}/login?error=oauth|state` — only env-derived URLs are ever used as redirect targets (open-redirect safety).
+
+`googleAuthService` wraps `OAuth2Client`: `getAuthUrl(state)` and `exchangeCodeForProfile(code)` (verifies the ID token, requires `email_verified`, returns `{ googleId, email, fullName, avatarUrl }`). `authService` now owns only the two JWT primitives — `signToken` / `verifyToken` (jsonwebtoken, 7-day expiry, payload `{ sub: userId, name: fullName }`). User persistence goes through `userService` (`findById` / `findByGoogleId` / `findOrCreateGoogleUser`) — `authController` never touches `UserModel` directly.
+
+Cookie shape (both `auth` and `oauth_state`, via `baseCookieOptions`):
+
+- Dev (`NODE_ENV!=="production"`): `httpOnly; sameSite=lax; secure=false; path=/` (`auth` adds `maxAge=7d`, `oauth_state` adds `maxAge=10m`)
+- Prod: `httpOnly; sameSite=none; secure=true; ...` — required for cross-site cookies on HTTPS. The callback **must** be served over HTTPS in prod or the `secure` cookies are silently dropped and every login fails the state check.
 
 No domain is set, so the cookie is host-scoped. On localhost that means all three apps share it across ports (cookies ignore port). In prod the frontend, dashboard, and backend must share an apex domain OR all live behind one reverse proxy for the cookie to be sent.
 
@@ -86,7 +93,7 @@ No domain is set, so the cookie is host-scoped. On localhost that means all thre
 
 CORS in `app.js` builds an explicit allowlist from `FRONTEND_URL` + `DASHBOARD_URL` env vars (falls back to `localhost:3000` + `localhost:3004` in dev) with `credentials: true`. Wildcard origins are not allowed by browsers when cookies are involved.
 
-`JWT_SECRET` is **required** at runtime — `authService` throws if it's unset. Tests in `tests/auth.test.js` set it inline.
+`JWT_SECRET` is **required** at runtime — `authService` throws if it's unset; `googleAuthService` likewise throws if `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `GOOGLE_REDIRECT_URI` are unset. Tests in `tests/auth.test.js` set all of these inline and mock `googleAuthService.exchangeCodeForProfile` (the one network seam).
 
 ### Controller export shape
 

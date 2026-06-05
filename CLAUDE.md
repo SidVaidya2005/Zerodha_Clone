@@ -68,16 +68,18 @@ PORT=3002
 MONGO_URL=<mongodb connection string>
 NODE_ENV=development
 JWT_SECRET=<random string — e.g. `openssl rand -hex 32`>
+GOOGLE_CLIENT_ID=<from Google Cloud Console — Web application OAuth client>
+GOOGLE_CLIENT_SECRET=<from Google Cloud Console>
+GOOGLE_REDIRECT_URI=http://localhost:3002/auth/google/callback
 FRONTEND_URL=http://localhost:3000
 DASHBOARD_URL=http://localhost:3004
 ```
 
-`JWT_SECRET` is **required** — `authService` throws if unset. `FRONTEND_URL` + `DASHBOARD_URL` form the CORS allowlist for credentialed requests (cookies); browsers reject wildcard origins for credentialed CORS.
+`JWT_SECRET` is **required** — `authService` throws if unset. The three `GOOGLE_*` values are **required** for login — `googleAuthService` throws if any is unset, and `GOOGLE_REDIRECT_URI` must be registered verbatim in the Google Cloud Console and match the `/auth/google/callback` route. `FRONTEND_URL` + `DASHBOARD_URL` form the CORS allowlist for credentialed requests (cookies) and are also the post-OAuth redirect targets (dashboard on success, frontend `/login` on error); browsers reject wildcard origins for credentialed CORS.
 
 ### `frontend/.env.local`
 ```
 REACT_APP_BACKEND_URL=http://localhost:3002
-REACT_APP_DASHBOARD_URL=http://localhost:3004
 ```
 
 ### `dashboard/.env.local`
