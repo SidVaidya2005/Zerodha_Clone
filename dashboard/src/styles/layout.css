@@ -30,7 +30,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 5%;
+  margin-top: 10px;
 }
 
 .col {
@@ -54,22 +54,24 @@ body {
 .menu-container {
   flex: 0 0 68%;
   height: 100%;
-  padding: 10px 20px;
+  padding: 0 var(--space-lg);
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: var(--space-lg);
 }
 
 .indices-container {
   flex: 0 0 32%;
   height: 100%;
-  padding: 10px 20px;
+  padding: 0 var(--space-lg);
   border-left: 1px solid var(--app-border);
+  background-color: var(--app-surface);
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  gap: var(--space-md);
 }
 
 .orders {

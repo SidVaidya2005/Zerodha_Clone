@@ -33,8 +33,6 @@ const Holdings = () => {
 
   return (
     <>
-      <h3 className="title">Holdings ({holdingsCount})</h3>
-
       {isLoading && (
         <div className="holdings-feedback">
           <div className="spinner-border text-primary" role="status">

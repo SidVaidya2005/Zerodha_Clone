@@ -25,69 +25,58 @@ const Summary = () => {
   const pnlSign = pnl >= 0 ? "+" : "";
 
   return (
-    <>
-      <div className="username">
-        <h6>Hi, {user.fullName}!</h6>
-        <hr className="divider" />
-      </div>
+    <div className="summary-page">
+      <h1 className="summary-greeting">Hi, {user.fullName}!</h1>
 
-      {isLoading && <p className="positions-message">Refreshing summary...</p>}
+      {isLoading && <p className="summary-banner">Refreshing summary...</p>}
       {hasError && (
-        <p className="positions-message positions-message--error">
+        <p className="summary-banner summary-banner--error">
           Unable to load live summary right now.
         </p>
       )}
 
-      <div className="section">
-        <span>
-          <p>Equity</p>
-        </span>
-
-        <div className="data">
-          <div className="first">
-            <h3>{formatCompact(currentValue)}</h3>
-            <p>Margin available</p>
+      <section className="summary-card">
+        <h2 className="summary-card-title">Equity</h2>
+        <div className="summary-card-body">
+          <div className="summary-hero">
+            <span className="summary-hero-value">₹{formatCompact(currentValue)}</span>
+            <span className="summary-hero-label">Margin available</span>
           </div>
-          <hr />
-
-          <div className="second">
-            <p>
-              Margins used <span>{formatCompact(marginsUsed)}</span>{" "}
-            </p>
-            <p>
-              Opening balance <span>{formatCompact(investment)}</span>{" "}
-            </p>
+          <div className="summary-stats">
+            <div className="summary-stat">
+              <span className="summary-stat-label">Margins used</span>
+              <span className="summary-stat-value">{formatCompact(marginsUsed)}</span>
+            </div>
+            <div className="summary-stat">
+              <span className="summary-stat-label">Opening balance</span>
+              <span className="summary-stat-value">{formatCompact(investment)}</span>
+            </div>
           </div>
         </div>
-        <hr className="divider" />
-      </div>
+      </section>
 
-      <div className="section">
-        <span>
-          <p>Holdings ({holdingsCount})</p>
-        </span>
-
-        <div className="data">
-          <div className="first">
-            <h3 className={pnlClassName}>
-              {formatCompact(pnl)} <small>{`${pnlSign}${pnlPercent.toFixed(2)}%`}</small>{" "}
-            </h3>
-            <p>P&L</p>
+      <section className="summary-card">
+        <h2 className="summary-card-title">Holdings ({holdingsCount})</h2>
+        <div className="summary-card-body">
+          <div className="summary-hero">
+            <span className={`summary-hero-value ${pnlClassName}`}>
+              {formatCompact(pnl)} <small>{`${pnlSign}${pnlPercent.toFixed(2)}%`}</small>
+            </span>
+            <span className="summary-hero-label">P&L</span>
           </div>
-          <hr />
-
-          <div className="second">
-            <p>
-              Current Value <span>{formatCompact(currentValue)}</span>{" "}
-            </p>
-            <p>
-              Investment <span>{formatCompact(investment)}</span>{" "}
-            </p>
+          <div className="summary-stats">
+            <div className="summary-stat">
+              <span className="summary-stat-label">Current value</span>
+              <span className="summary-stat-value">{formatCompact(currentValue)}</span>
+            </div>
+            <div className="summary-stat">
+              <span className="summary-stat-label">Investment</span>
+              <span className="summary-stat-value">{formatCompact(investment)}</span>
+            </div>
           </div>
         </div>
-        <hr className="divider" />
-      </div>
-    </>
+      </section>
+    </div>
   );
 };
 
