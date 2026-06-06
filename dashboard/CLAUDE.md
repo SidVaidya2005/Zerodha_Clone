@@ -33,7 +33,7 @@ Two processes:
 
 ```
 src/
-  index.js          imports ./styles/index.css, sets axios.defaults.withCredentials, wraps in UserProvider
+  index.js          imports ./styles/index.css, sets axios.defaults.withCredentials, captures the OAuth token from the URL fragment + adds a Bearer-header interceptor, wraps in UserProvider
   config.js         BACKEND_URL, PROXY_URL, FRONTEND_URL
   styles/           5-file CSS split — see uistyle rule
   layout/           Home, TopBar, Menu, Dashboard — frame chrome
@@ -72,7 +72,11 @@ A component that calls `setInterval`, `fetch`, or `axios.post` directly is the s
 
 `UserProvider` (in `context/UserContext.js`) wraps every route in `index.js`. On mount it `GET`s `${BACKEND_URL}/me`; on success it provides the user via context, on any failure it `window.location`s to `${FRONTEND_URL}/login` (which the frontend serves as a `<Navigate to="/" replace>` — the route must exist there or logged-out users 404). While the request is in flight it renders a `Loading…` placeholder — no route mounts until auth is resolved.
 
-Cookie-based auth requires every axios call to include credentials. `index.js` sets `axios.defaults.withCredentials = true` once at boot — do not pass it per-request, and do not introduce a `fetch` call that forgets `credentials: "include"`.
+Auth carries two ways. On localhost the httpOnly cookie works, so `index.js` sets `axios.defaults.withCredentials = true` once at boot — do not pass it per-request, and do not introduce a `fetch` call that forgets `credentials: "include"`. In prod the dashboard and backend are on separate sites, so the cookie is blocked as third-party; instead the OAuth callback redirects here with `#token=<jwt>&nonce=<nonce>`, and `context/authToken.js` stores the token in `localStorage`. `index.js` captures it at boot (`captureTokenFromUrl()`) and an axios request interceptor attaches `Authorization: Bearer <token>` to **backend** requests only (guarded by `url.startsWith(BACKEND_URL)` so the price proxy is never touched). `Menu.js` logout must `clearToken()` — `/logout` only clears the cookie.
+
+**Login-CSRF / session-fixation defense (`authToken.js`):** a bare `#token=` could be forged by anyone with a valid JWT, silently logging a victim in as the attacker. So login is nonce-bound. The flow starts at this app: a user arriving with `?login=start` triggers `startLoginIfRequested()` (called first in `index.js`, which then **skips rendering** since we're navigating away) — it mints a random `nonce`, stashes it in `sessionStorage`, and redirects to `${BACKEND_URL}/auth/google?nonce=<nonce>`. The nonce round-trips through the backend and comes back in the callback fragment; `captureTokenFromUrl()` accepts the token **only if** the echoed nonce matches the stashed one (single-use, constant-time compare) — otherwise the token is dropped and the gate bounces to login. An attacker can't read or predict another tab's `sessionStorage`, so forged links fail.
+
+(Trade-off: a token in `localStorage` is XSS-readable; revisit if the apps ever share an apex domain — then the first-party cookie alone suffices and both the Bearer path and the nonce dance can go.)
 
 `Menu.js` reads `user.fullName` via `useCurrentUser`, derives the avatar initials, and owns the Logout button — it POSTs `/logout`, then `window.location`s to `FRONTEND_URL` regardless of success (the user expects to leave the dashboard either way).
 

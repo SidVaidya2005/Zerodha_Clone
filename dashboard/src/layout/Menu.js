@@ -5,6 +5,7 @@ import axios from "axios";
 
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import { BACKEND_URL, FRONTEND_URL } from "../config";
+import { clearToken } from "../context/authToken";
 
 function initialsOf(fullName) {
   return fullName
@@ -31,6 +32,8 @@ const Menu = () => {
       // Even if the request fails the cookie may still be present client-side,
       // but redirecting to the frontend is the right UX either way.
     }
+    // Clear the Bearer token too — the /logout call only clears the cookie.
+    clearToken();
     window.location.href = FRONTEND_URL;
   };
 

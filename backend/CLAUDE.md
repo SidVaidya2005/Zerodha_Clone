@@ -51,8 +51,8 @@ tests/         supertest specs (holdings, orders, positions, auth) + setup.js (s
 | GET    | `/allPositions` | `positionsController.getAllPositions`                      |
 | GET    | `/allOrders`    | `ordersController.getAllOrders` (sorted newest-first)      |
 | POST   | `/newOrder`            | `ordersController.createOrder` → `orderService.placeOrder`        |
-| GET    | `/auth/google`         | `authController.googleStart` — sets state cookie, 302 to Google   |
-| GET    | `/auth/google/callback`| `authController.googleCallback` — sets auth cookie, 302 dashboard |
+| GET    | `/auth/google`         | `authController.googleStart` — no nonce → 302 dashboard `?login=start`; with nonce → sets state+nonce cookies, 302 Google |
+| GET    | `/auth/google/callback`| `authController.googleCallback` — verifies state+nonce, sets auth cookie, 302 to `DASHBOARD_URL/#token=<jwt>&nonce=<nonce>` |
 | GET    | `/me`                  | `authController.me` (behind `requireAuth`) — 200 / 401            |
 | POST   | `/logout`              | `authController.logout` — 204 + clears the cookie                 |
 
@@ -71,12 +71,13 @@ Holdings / positions / orders endpoints are **not** behind `requireAuth` — the
 
 ### Auth
 
-**Google OAuth 2.0 only** — there is no password mechanism. Login is a server-side Authorization Code flow (`google-auth-library`), and the session is still carried in the same httpOnly JWT cookie named `auth` so `requireAuth` / `/me` / `/logout` are unchanged.
+**Google OAuth 2.0 only** — there is no password mechanism. Login is a server-side Authorization Code flow (`google-auth-library`). The session JWT is delivered **two ways**: the httpOnly `auth` cookie (works same-origin / on localhost) **and** in the callback redirect's URL fragment, which the dashboard stores and replays as an `Authorization: Bearer` header. The Bearer path exists because in prod the dashboard and backend are on separate `*.onrender.com` sites, so the cookie is a third-party cookie browsers block — see `requireAuth` below.
 
 Flow:
 
-1. `GET /auth/google` (`googleStart`) generates a random `state`, stores it in a short-lived (`10m`) httpOnly `oauth_state` cookie, and 302s to Google's consent screen.
-2. `GET /auth/google/callback` (`googleCallback`) verifies `req.query.state === req.cookies.oauth_state` (CSRF — the OAuth endpoints are top-level navigations so CORS does **not** guard them), clears the state cookie, exchanges the code, finds-or-creates the user by `googleId`, sets the `auth` cookie, and 302s to the dashboard. Any failure 302s to `${FRONTEND_URL}/login?error=oauth|state` — only env-derived URLs are ever used as redirect targets (open-redirect safety). The frontend has no login page: `/login` is a `<Navigate to="/" replace>`, so the `?error=` param is currently dropped (no error UI). That redirect route must be kept or these failures 404.
+0. **Nonce mint (login-CSRF defense).** Login must be initiated from the dashboard so it can bind the session to a one-time `nonce` it keeps in its own `sessionStorage`. `GET /auth/google` **without** a valid `?nonce=` 302s to `${DASHBOARD_URL}/?login=start`; the dashboard mints a nonce and comes back to `GET /auth/google?nonce=<nonce>`. (The frontend "Sign in" button still points at `/auth/google` — this bounce is transparent.)
+1. `GET /auth/google` (`googleStart`) with a valid nonce (`^[A-Za-z0-9_-]{8,128}$`) generates a random `state`, stores `state` + `nonce` in short-lived (`10m`) httpOnly `oauth_state` / `oauth_nonce` cookies, and 302s to Google's consent screen.
+2. `GET /auth/google/callback` (`googleCallback`) verifies `req.query.state === req.cookies.oauth_state` (CSRF — the OAuth endpoints are top-level navigations so CORS does **not** guard them), clears the transient cookies, **fails closed if `oauth_nonce` is missing/invalid** (a login that didn't originate from the dashboard mint can't be bound, so it 302s to `?error=state`), exchanges the code, finds-or-creates the user by `googleId`, sets the `auth` cookie, and 302s to `${DASHBOARD_URL}/#token=<jwt>&nonce=<nonce>` (the fragment is never sent to a server, so it can't leak to logs/Referer; the dashboard only accepts the token if the echoed nonce matches what it minted). Any failure 302s to `${FRONTEND_URL}/login?error=oauth|state` — only env-derived URLs are ever used as redirect targets (open-redirect safety). The frontend has no login page: `/login` is a `<Navigate to="/" replace>`, so the `?error=` param is currently dropped (no error UI). That redirect route must be kept or these failures 404.
 
 `googleAuthService` wraps `OAuth2Client`: `getAuthUrl(state)` and `exchangeCodeForProfile(code)` (verifies the ID token, requires `email_verified`, returns `{ googleId, email, fullName, avatarUrl }`). `authService` now owns only the two JWT primitives — `signToken` / `verifyToken` (jsonwebtoken, 7-day expiry, payload `{ sub: userId, name: fullName }`). User persistence goes through `userService` (`findById` / `findByGoogleId` / `findOrCreateGoogleUser`) — `authController` never touches `UserModel` directly.
 
@@ -85,9 +86,9 @@ Cookie shape (both `auth` and `oauth_state`, via `baseCookieOptions`):
 - Dev (`NODE_ENV!=="production"`): `httpOnly; sameSite=lax; secure=false; path=/` (`auth` adds `maxAge=7d`, `oauth_state` adds `maxAge=10m`)
 - Prod: `httpOnly; sameSite=none; secure=true; ...` — required for cross-site cookies on HTTPS. The callback **must** be served over HTTPS in prod or the `secure` cookies are silently dropped and every login fails the state check.
 
-No domain is set, so the cookie is host-scoped. On localhost that means all three apps share it across ports (cookies ignore port). In prod the frontend, dashboard, and backend must share an apex domain OR all live behind one reverse proxy for the cookie to be sent.
+No domain is set, so the cookie is host-scoped. On localhost that means all three apps share it across ports (cookies ignore port). In prod the frontend, dashboard, and backend are on **separate** `*.onrender.com` sites (onrender.com is a public suffix), so the cookie is third-party on the dashboard's `/me` XHR and gets blocked — which is why the JWT is also delivered via the URL fragment + Bearer header. (Sharing an apex domain or a single reverse proxy would make the cookie alone sufficient and let you drop the Bearer path.)
 
-`middleware/requireAuth.js` reads `req.cookies.auth`, verifies, attaches `req.user = { id, fullName }`, or returns 401. Apply it per-route, not globally — most existing endpoints stay public.
+`middleware/requireAuth.js` accepts the JWT from **either** an `Authorization: Bearer` header (the dashboard's cross-site path) **or** the `auth` cookie, verifies it, attaches `req.user = { id, fullName }`, or returns 401. Apply it per-route, not globally — most existing endpoints stay public.
 
 **Stateless JWT caveat**: `POST /logout` only clears the cookie. A stolen token remains valid until the 7-day expiry. If true revocation is needed, add a token denylist or switch to server-side sessions.
 

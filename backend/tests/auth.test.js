@@ -35,6 +35,18 @@ function findCookie(res, prefix) {
 const authCookie = (res) => findCookie(res, "auth=");
 const stateCookie = (res) => findCookie(res, "oauth_state=");
 
+// Pulls the JWT the callback puts in the redirect fragment
+// (#token=<jwt>&nonce=<nonce>).
+function tokenFromRedirect(res) {
+  const match = (res.headers.location || "").match(/#token=([^&]+)/);
+  return match ? match[1] : null;
+}
+
+// A login that has cleared the dashboard's nonce mint: both the state cookie and
+// the handoff nonce cookie are present.
+const TEST_NONCE = "test-nonce-abc123";
+const LOGIN_COOKIES = `oauth_state=abc; oauth_nonce=${TEST_NONCE}`;
+
 // Returns the `state` value the server set on the oauth_state cookie.
 function stateValue(res) {
   const cookie = stateCookie(res) || "";
@@ -47,8 +59,19 @@ afterEach(() => {
 });
 
 describe("GET /auth/google", () => {
-  it("redirects to Google's consent screen and sets a matching state cookie", async () => {
+  it("bounces to the dashboard to mint a nonce when none is supplied", async () => {
     const res = await request(app).get("/auth/google").redirects(0);
+
+    expect(res.status).toBe(302);
+    expect(res.headers.location).toBe("http://localhost:3004/?login=start");
+    // No OAuth state is established until we have a nonce to bind it to.
+    expect(stateCookie(res)).toBeUndefined();
+  });
+
+  it("redirects to Google's consent screen and sets state + nonce cookies when given a nonce", async () => {
+    const res = await request(app)
+      .get(`/auth/google?nonce=${TEST_NONCE}`)
+      .redirects(0);
 
     expect(res.status).toBe(302);
     expect(res.headers.location).toMatch(/^https:\/\/accounts\.google\.com\//);
@@ -60,20 +83,24 @@ describe("GET /auth/google", () => {
     expect(stateCookie(res)).toMatch(/HttpOnly/i);
     // The state in the redirect URL must equal the one stored in the cookie.
     expect(res.headers.location).toContain(`state=${state}`);
+    // The nonce is stashed for the callback to echo back to the dashboard.
+    expect(findCookie(res, "oauth_nonce=")).toContain(TEST_NONCE);
   });
 });
 
 describe("GET /auth/google/callback", () => {
-  it("exchanges the code, creates the user, sets the auth cookie, redirects to the dashboard", async () => {
+  it("exchanges the code, creates the user, sets the auth cookie, redirects to the dashboard with the token in the fragment", async () => {
     googleAuthService.exchangeCodeForProfile.mockResolvedValue(GOOGLE_PROFILE);
 
     const res = await request(app)
       .get("/auth/google/callback?code=good-code&state=abc")
-      .set("Cookie", "oauth_state=abc")
+      .set("Cookie", LOGIN_COOKIES)
       .redirects(0);
 
     expect(res.status).toBe(302);
-    expect(res.headers.location).toBe("http://localhost:3004");
+    expect(res.headers.location).toMatch(
+      new RegExp(`^http://localhost:3004/#token=.+&nonce=${TEST_NONCE}$`)
+    );
     expect(authCookie(res)).toBeDefined();
 
     const stored = await UserModel.findOne({ googleId: GOOGLE_PROFILE.googleId });
@@ -87,11 +114,11 @@ describe("GET /auth/google/callback", () => {
 
     await request(app)
       .get("/auth/google/callback?code=c1&state=abc")
-      .set("Cookie", "oauth_state=abc")
+      .set("Cookie", LOGIN_COOKIES)
       .redirects(0);
     await request(app)
       .get("/auth/google/callback?code=c2&state=abc")
-      .set("Cookie", "oauth_state=abc")
+      .set("Cookie", LOGIN_COOKIES)
       .redirects(0);
 
     expect(await UserModel.countDocuments({ googleId: GOOGLE_PROFILE.googleId })).toBe(1);
@@ -127,12 +154,27 @@ describe("GET /auth/google/callback", () => {
 
     const res = await request(app)
       .get("/auth/google/callback?code=bad-code&state=abc")
-      .set("Cookie", "oauth_state=abc")
+      .set("Cookie", LOGIN_COOKIES)
       .redirects(0);
 
     expect(res.status).toBe(302);
     expect(res.headers.location).toBe("http://localhost:3000/login?error=oauth");
     expect(authCookie(res)).toBeUndefined();
+  });
+
+  it("rejects (fails closed) when the handoff nonce cookie is missing", async () => {
+    googleAuthService.exchangeCodeForProfile.mockResolvedValue(GOOGLE_PROFILE);
+
+    const res = await request(app)
+      .get("/auth/google/callback?code=good-code&state=abc")
+      .set("Cookie", "oauth_state=abc")
+      .redirects(0);
+
+    expect(res.status).toBe(302);
+    expect(res.headers.location).toBe("http://localhost:3000/login?error=state");
+    expect(authCookie(res)).toBeUndefined();
+    // The code is never exchanged for a login that wasn't bound to a nonce.
+    expect(googleAuthService.exchangeCodeForProfile).not.toHaveBeenCalled();
   });
 
   it("redirects to the login error page when the user denies consent", async () => {
@@ -157,7 +199,7 @@ describe("GET /me", () => {
     googleAuthService.exchangeCodeForProfile.mockResolvedValue(GOOGLE_PROFILE);
     const loginRes = await request(app)
       .get("/auth/google/callback?code=good-code&state=abc")
-      .set("Cookie", "oauth_state=abc")
+      .set("Cookie", LOGIN_COOKIES)
       .redirects(0);
     const cookie = authCookie(loginRes);
 
@@ -165,6 +207,20 @@ describe("GET /me", () => {
     expect(meRes.status).toBe(200);
     expect(meRes.body.email).toBe(GOOGLE_PROFILE.email);
     expect(meRes.body).not.toHaveProperty("googleId");
+  });
+
+  it("returns the user from a Bearer token with no cookie (cross-site path)", async () => {
+    googleAuthService.exchangeCodeForProfile.mockResolvedValue(GOOGLE_PROFILE);
+    const loginRes = await request(app)
+      .get("/auth/google/callback?code=good-code&state=abc")
+      .set("Cookie", LOGIN_COOKIES)
+      .redirects(0);
+    const token = tokenFromRedirect(loginRes);
+    expect(token).toBeTruthy();
+
+    const meRes = await request(app).get("/me").set("Authorization", `Bearer ${token}`);
+    expect(meRes.status).toBe(200);
+    expect(meRes.body.email).toBe(GOOGLE_PROFILE.email);
   });
 });
 
