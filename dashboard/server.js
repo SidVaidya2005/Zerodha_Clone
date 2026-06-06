@@ -21,24 +21,50 @@ if (!API_KEY) {
   );
 }
 
-// --- Rolling per-minute credit budget ----------------------------------------
-// The watchlist has more symbols than the free tier allows per minute, so we
-// cap how many quotes we pull each minute and serve the rest from cache.
+// --- Credit budget (per-minute AND per-day) ----------------------------------
+// Twelve Data's free tier caps usage at 8 credits/min and 800/day (1 credit per
+// symbol). We track both rolling windows and only ever spend up to whichever has
+// less headroom; when neither has room we serve cache/seed. `MAX_REFRESH_PER_REQUEST`
+// keeps a single poll from claiming the whole minute (avoids the 8/8 burst and
+// leaves room for indices).
 const CREDITS_PER_MIN = Number(process.env.TWELVEDATA_CREDITS_PER_MIN) || 8;
-let windowStart = Date.now();
-let creditsUsed = 0;
+const DAILY_LIMIT = Number(process.env.TWELVEDATA_DAILY_LIMIT) || 800;
+const MAX_REFRESH_PER_REQUEST = Number(process.env.TWELVEDATA_MAX_REFRESH_PER_REQUEST) || 6;
+
+let minuteStart = Date.now();
+let minuteUsed = 0;
+let dayStart = Date.now();
+let dayUsed = 0;
+let dailyExhaustedLogged = false;
+
+function rollWindows() {
+  const now = Date.now();
+  if (now - minuteStart >= 60_000) {
+    minuteStart = now;
+    minuteUsed = 0;
+  }
+  if (now - dayStart >= 24 * 60 * 60_000) {
+    dayStart = now;
+    dayUsed = 0;
+    dailyExhaustedLogged = false;
+  }
+}
 
 function creditsRemaining() {
-  if (Date.now() - windowStart >= 60_000) {
-    windowStart = Date.now();
-    creditsUsed = 0;
-  }
-  return Math.max(0, CREDITS_PER_MIN - creditsUsed);
+  rollWindows();
+  return Math.max(0, Math.min(CREDITS_PER_MIN - minuteUsed, DAILY_LIMIT - dayUsed));
 }
 
 function spendCredit() {
-  creditsRemaining(); // roll the window first if it has elapsed
-  creditsUsed += 1;
+  rollWindows();
+  minuteUsed += 1;
+  dayUsed += 1;
+  if (dayUsed >= DAILY_LIMIT && !dailyExhaustedLogged) {
+    dailyExhaustedLogged = true;
+    console.warn(
+      `Twelve Data daily budget (${DAILY_LIMIT}) reached — serving cached/seed prices until the 24h window rolls.`
+    );
+  }
 }
 
 // --- One quote fetch ---------------------------------------------------------
@@ -86,9 +112,10 @@ const QUOTE_TTL_MS = Number(process.env.QUOTE_TTL_MS) || 120_000;
 const quoteCache = new Map(); // symbol -> { close, previousClose, fetchedAt }
 
 // Symbols the current plan can't serve (free tier paywalls most NSE names) are
-// parked here so we don't keep spending credits re-discovering that. They fall
-// through to the dashboard's seeded price instead.
-const UNAVAILABLE_TTL_MS = Number(process.env.UNAVAILABLE_TTL_MS) || 60 * 60_000;
+// parked here so we don't keep spending credits re-discovering that. Re-checked
+// only every 12h by default, so paywalled symbols cost ~negligible daily credits.
+// They fall through to the dashboard's seeded price instead.
+const UNAVAILABLE_TTL_MS = Number(process.env.UNAVAILABLE_TTL_MS) || 12 * 60 * 60_000;
 const unavailableUntil = new Map(); // symbol -> timestamp
 
 const isUnavailable = (symbol) => {
@@ -154,7 +181,8 @@ app.get("/api/indian-stocks", async (req, res) => {
     })
     .sort((a, b) => (quoteCache.get(a)?.fetchedAt || 0) - (quoteCache.get(b)?.fetchedAt || 0));
 
-  await Promise.all(stale.slice(0, creditsRemaining()).map(refreshEquity));
+  const refreshBudget = Math.min(creditsRemaining(), MAX_REFRESH_PER_REQUEST);
+  await Promise.all(stale.slice(0, refreshBudget).map(refreshEquity));
 
   const results = symbols.map((symbol) => {
     const cached = quoteCache.get(symbol);
