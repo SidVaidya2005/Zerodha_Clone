@@ -25,7 +25,7 @@ CRA's webpack ESLint pass is disabled via `DISABLE_ESLINT_PLUGIN=true` in the `s
 Two processes:
 
 1. **React app** (`src/`) — the trading dashboard UI.
-2. **Proxy server** (`server.js`) — Express on port 3001 wrapping Yahoo Finance for live NSE/BSE prices.
+2. **Proxy server** (`server.js`) — Express on port 3001 wrapping Twelve Data for live NSE/BSE prices.
 
 `npm run dev` starts both via `concurrently`.
 
@@ -100,12 +100,14 @@ All styles in `src/styles/` as the 5-file split (same shape as frontend). The da
 
 ### Proxy server (`server.js`)
 
-Express on port 3001. Uses `yahoo-finance2` (v3+, requires explicit instantiation). For Indian stocks, tries `.NS` (NSE) first, falls back to `.BO` (BSE). No API key required.
+Express on port 3001. Uses **Twelve Data** (`/quote` endpoint, `axios`) for NSE/BSE quotes — Yahoo Finance was dropped because it blocks datacenter IPs (every cloud-hosted request returned empty). Requires `TWELVEDATA_API_KEY`; for Indian equities it queries `exchange=NSE` first, falls back to `exchange=BSE`.
+
+Twelve Data's free tier is **8 API credits/min, 800/day** (1 credit per symbol). Since the watchlist has more symbols than that, the proxy keeps a per-minute credit budget (`TWELVEDATA_CREDITS_PER_MIN`, default 8) + an in-memory quote cache (`QUOTE_TTL_MS`, default 120s): each request serves cached values immediately and refreshes only the stalest symbols up to the remaining budget, so the watchlist fills within a minute or two and stays under the limit.
 
 | Endpoint | Description |
 |---|---|
-| `GET /api/indian-stocks?symbols=TCS,INFY` | Batch quote fetch — returns `{ symbol, data: { close, previousClose } }` per symbol |
-| `GET /api/indices` | Nifty 50 (`^NSEI`) and Sensex (`^BSESN`) |
-| `GET /api/market-status` | NSE open/closed status from IST time (weekdays 09:15–15:30) |
+| `GET /api/indian-stocks?symbols=TCS,INFY` | Batch quote fetch — returns `{ symbol, data: { close, previousClose } }` per symbol (or `{ symbol, error, message }` for uncached/rate-limited symbols) |
+| `GET /api/indices` | Best-effort Nifty 50 / Sensex. The free tier doesn't expose the index spot level (search returns only ETFs), so this **429s unless `TWELVEDATA_NIFTY_SYMBOL` / `TWELVEDATA_SENSEX_SYMBOL` are set** — and `useIndicesPolling` holds its hardcoded snapshot on 429. |
+| `GET /api/market-status` | NSE open/closed status from IST time (weekdays 09:15–15:30) — computed locally, no API call |
 
 The proxy is CJS — `require()` / `module.exports`. It is linted by the backend ESLint override in the root `.eslintrc.json`, not the CRA preset.

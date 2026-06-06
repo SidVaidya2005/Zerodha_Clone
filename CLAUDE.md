@@ -8,7 +8,7 @@ Zerodha-inspired trading platform clone with three independently-runnable apps s
 
 - [backend/CLAUDE.md](backend/CLAUDE.md) — Express REST API (port 3002), layered as `routes/` → `controllers/` → `services/`.
 - [frontend/CLAUDE.md](frontend/CLAUDE.md) — Public/marketing React app (port 3000).
-- [dashboard/CLAUDE.md](dashboard/CLAUDE.md) — Trading dashboard React app (port 3004) + Yahoo Finance proxy server (port 3001, same process via `npm run dev`).
+- [dashboard/CLAUDE.md](dashboard/CLAUDE.md) — Trading dashboard React app (port 3004) + Twelve Data proxy server (port 3001, same process via `npm run dev`).
 
 ## Conventions
 
@@ -44,7 +44,7 @@ dashboard (React, port 3004 in dev)
     └── calls proxy server (port 3001) for live stock prices
 
 proxy server (Express, port 3001) — dashboard/server.js
-    └── fetches from Yahoo Finance (yahoo-finance2) for NSE/BSE quotes
+    └── fetches from Twelve Data (requires TWELVEDATA_API_KEY) for NSE/BSE quotes
 
 backend (Express, port 3002)
     └── routes → controllers → services → MongoDB (Mongoose)
