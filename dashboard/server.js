@@ -42,22 +42,42 @@ function spendCredit() {
 }
 
 // --- One quote fetch ---------------------------------------------------------
+// Returns { ok: true, quote } | { ok: false, planRestricted } so callers can
+// tell a paywalled symbol (free tier returns code 404 "…Grow or Venture plan…")
+// from a transient failure and stop re-querying the former.
 const fetchQuote = async (symbol, exchange) => {
   const params = { symbol, apikey: API_KEY };
   if (exchange) params.exchange = exchange;
-  const { data } = await axios.get(`${TD_BASE}/quote`, { params, timeout: 10_000 });
-  // Twelve Data signals problems with { status: "error", ... }.
-  if (!data || data.status === "error") return null;
-  const close = Number(data.close);
-  if (!Number.isFinite(close)) return null;
+  let data;
+  try {
+    // validateStatus: never throw — Twelve Data puts its error object in the body.
+    ({ data } = await axios.get(`${TD_BASE}/quote`, {
+      params,
+      timeout: 10_000,
+      validateStatus: () => true,
+    }));
+  } catch {
+    return { ok: false, planRestricted: false };
+  }
+
+  if (data && data.status === "error") {
+    const planRestricted = data.code === 404 && /\bplan\b/i.test(data.message || "");
+    return { ok: false, planRestricted };
+  }
+
+  const close = Number(data && data.close);
+  if (!Number.isFinite(close)) return { ok: false, planRestricted: false };
   const previousClose = Number(data.previous_close);
   const percentChange = Number(data.percent_change);
   return {
-    symbol: data.symbol || symbol,
-    close,
-    previousClose: Number.isFinite(previousClose) ? previousClose : close,
-    percentChange: Number.isFinite(percentChange) ? percentChange : 0,
-    marketState: data.is_market_open ? "REGULAR" : "CLOSED",
+    ok: true,
+    quote: {
+      symbol: data.symbol || symbol,
+      close,
+      previousClose: Number.isFinite(previousClose) ? previousClose : close,
+      percentChange: Number.isFinite(percentChange) ? percentChange : 0,
+      marketState: data.is_market_open ? "REGULAR" : "CLOSED",
+    },
   };
 };
 
@@ -65,28 +85,47 @@ const fetchQuote = async (symbol, exchange) => {
 const QUOTE_TTL_MS = Number(process.env.QUOTE_TTL_MS) || 120_000;
 const quoteCache = new Map(); // symbol -> { close, previousClose, fetchedAt }
 
+// Symbols the current plan can't serve (free tier paywalls most NSE names) are
+// parked here so we don't keep spending credits re-discovering that. They fall
+// through to the dashboard's seeded price instead.
+const UNAVAILABLE_TTL_MS = Number(process.env.UNAVAILABLE_TTL_MS) || 60 * 60_000;
+const unavailableUntil = new Map(); // symbol -> timestamp
+
+const isUnavailable = (symbol) => {
+  const until = unavailableUntil.get(symbol);
+  if (!until) return false;
+  if (Date.now() >= until) {
+    unavailableUntil.delete(symbol);
+    return false;
+  }
+  return true;
+};
+
+const markUnavailable = (symbol) => {
+  unavailableUntil.set(symbol, Date.now() + UNAVAILABLE_TTL_MS);
+};
+
 const refreshEquity = async (symbol) => {
   if (!API_KEY || creditsRemaining() < 1) return;
   spendCredit();
-  let quote = null;
-  try {
-    quote = await fetchQuote(symbol, "NSE");
-  } catch {
-    quote = null;
+  let res = await fetchQuote(symbol, "NSE");
+  if (res.planRestricted) {
+    markUnavailable(symbol);
+    return;
   }
   // Fall back to BSE only if NSE had nothing and we still have budget.
-  if (!quote && creditsRemaining() >= 1) {
+  if (!res.ok && creditsRemaining() >= 1) {
     spendCredit();
-    try {
-      quote = await fetchQuote(symbol, "BSE");
-    } catch {
-      quote = null;
+    res = await fetchQuote(symbol, "BSE");
+    if (res.planRestricted) {
+      markUnavailable(symbol);
+      return;
     }
   }
-  if (quote) {
+  if (res.ok) {
     quoteCache.set(symbol, {
-      close: quote.close,
-      previousClose: quote.previousClose,
+      close: res.quote.close,
+      previousClose: res.quote.previousClose,
       fetchedAt: Date.now(),
     });
   }
@@ -109,6 +148,7 @@ app.get("/api/indian-stocks", async (req, res) => {
   const now = Date.now();
   const stale = symbols
     .filter((symbol) => {
+      if (isUnavailable(symbol)) return false; // paywalled — don't spend credits
       const cached = quoteCache.get(symbol);
       return !cached || now - cached.fetchedAt > QUOTE_TTL_MS;
     })
@@ -119,13 +159,11 @@ app.get("/api/indian-stocks", async (req, res) => {
   const results = symbols.map((symbol) => {
     const cached = quoteCache.get(symbol);
     if (!cached) {
-      return {
-        symbol,
-        error: true,
-        message: API_KEY
-          ? "No data yet (rate-limited; will populate shortly)"
-          : "TWELVEDATA_API_KEY not configured",
-      };
+      let message;
+      if (!API_KEY) message = "TWELVEDATA_API_KEY not configured";
+      else if (isUnavailable(symbol)) message = "Not available on the current Twelve Data plan";
+      else message = "No data yet (rate-limited; will populate shortly)";
+      return { symbol, error: true, message };
     }
     return {
       symbol,
@@ -175,10 +213,12 @@ app.get("/api/indices", async (req, res) => {
   try {
     spendCredit();
     spendCredit();
-    const [nifty, sensex] = await Promise.all([
-      fetchQuote(NIFTY_SYMBOL).catch(() => null),
-      fetchQuote(SENSEX_SYMBOL).catch(() => null),
+    const [niftyRes, sensexRes] = await Promise.all([
+      fetchQuote(NIFTY_SYMBOL),
+      fetchQuote(SENSEX_SYMBOL),
     ]);
+    const nifty = niftyRes.ok ? niftyRes.quote : null;
+    const sensex = sensexRes.ok ? sensexRes.quote : null;
 
     if (!nifty && !sensex) {
       if (indicesCache.payload) return res.json(indicesCache.payload);

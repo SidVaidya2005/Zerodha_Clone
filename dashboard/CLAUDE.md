@@ -104,6 +104,8 @@ Express on port 3001. Uses **Twelve Data** (`/quote` endpoint, `axios`) for NSE/
 
 Twelve Data's free tier is **8 API credits/min, 800/day** (1 credit per symbol). Since the watchlist has more symbols than that, the proxy keeps a per-minute credit budget (`TWELVEDATA_CREDITS_PER_MIN`, default 8) + an in-memory quote cache (`QUOTE_TTL_MS`, default 120s): each request serves cached values immediately and refreshes only the stalest symbols up to the remaining budget, so the watchlist fills within a minute or two and stays under the limit.
 
+**Free-tier symbol coverage is limited** — most NSE blue-chips (HDFCBANK, RELIANCE, TCS, …) return `code 404 "…Grow or Venture plan…"`; of the default watchlist only `INFY` is live on the free tier. The proxy detects that plan-restriction and parks the symbol in an `unavailableUntil` map (`UNAVAILABLE_TTL_MS`, default 1h) so it stops spending credits re-querying it. Such symbols come back as `{ symbol, error }`, and the dashboard renders them from **seed prices** (`src/data/watchlistSymbols.js`) with a subtle drift (`useWatchlistPolling`) — so the watchlist always shows believable numbers, live where the tier allows. Upgrading the Twelve Data plan makes the rest live automatically with no code change.
+
 | Endpoint | Description |
 |---|---|
 | `GET /api/indian-stocks?symbols=TCS,INFY` | Batch quote fetch — returns `{ symbol, data: { close, previousClose } }` per symbol (or `{ symbol, error, message }` for uncached/rate-limited symbols) |
