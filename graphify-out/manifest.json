@@ -1,0 +1,812 @@
+{
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/.eslintrc.json": {
+    "mtime": 1780640800.7810187,
+    "ast_hash": "9b85f0b2e2835732ee59dfe994507387",
+    "semantic_hash": "9b85f0b2e2835732ee59dfe994507387"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/.vscode/extensions.json": {
+    "mtime": 1780640800.7817843,
+    "ast_hash": "91d42a2b884c719616f8e13b85283240",
+    "semantic_hash": "91d42a2b884c719616f8e13b85283240"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/.vscode/settings.json": {
+    "mtime": 1780640800.7818677,
+    "ast_hash": "80222cc78a995a6d55a39abe1678f264",
+    "semantic_hash": "80222cc78a995a6d55a39abe1678f264"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/app.js": {
+    "mtime": 1780640800.792106,
+    "ast_hash": "cdb4abec8f3643103012f73023d94f5e",
+    "semantic_hash": "cdb4abec8f3643103012f73023d94f5e"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/controllers/authController.js": {
+    "mtime": 1780717171.8220553,
+    "ast_hash": "f6f53af5ba7396a8c2303011dcb3ea7a",
+    "semantic_hash": "f6f53af5ba7396a8c2303011dcb3ea7a"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/controllers/holdingsController.js": {
+    "mtime": 1780640800.7931566,
+    "ast_hash": "050cd79296b7934869659d4fa2f3f66c",
+    "semantic_hash": "050cd79296b7934869659d4fa2f3f66c"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/controllers/ordersController.js": {
+    "mtime": 1780640800.7932675,
+    "ast_hash": "1116103c465cbab435a7ba0c5aac3757",
+    "semantic_hash": "1116103c465cbab435a7ba0c5aac3757"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/controllers/positionsController.js": {
+    "mtime": 1780640800.7933404,
+    "ast_hash": "92776f10b301c7226e5b965f16566f38",
+    "semantic_hash": "92776f10b301c7226e5b965f16566f38"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/index.js": {
+    "mtime": 1780640800.7934115,
+    "ast_hash": "6b1aea128bddd84245b0b587edc6d396",
+    "semantic_hash": "6b1aea128bddd84245b0b587edc6d396"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/jest.config.js": {
+    "mtime": 1780640800.7934825,
+    "ast_hash": "d9ffc3cc78a7843bbc5b50059cf674f8",
+    "semantic_hash": "d9ffc3cc78a7843bbc5b50059cf674f8"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/middleware/requireAuth.js": {
+    "mtime": 1780716471.2893417,
+    "ast_hash": "5b7c55386b11c878180dd4de15bf751a",
+    "semantic_hash": "5b7c55386b11c878180dd4de15bf751a"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/model/HoldingsModel.js": {
+    "mtime": 1780640800.7937148,
+    "ast_hash": "2db28972e19913b8a40b3c9d7aedbd96",
+    "semantic_hash": "2db28972e19913b8a40b3c9d7aedbd96"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/model/OrdersModel.js": {
+    "mtime": 1780640800.7937903,
+    "ast_hash": "6c328d9eb8b26ef1ce851de99774e90c",
+    "semantic_hash": "6c328d9eb8b26ef1ce851de99774e90c"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/model/PositionsModel.js": {
+    "mtime": 1780640800.7938585,
+    "ast_hash": "a74f48dffad02f511e856b84089ba8e5",
+    "semantic_hash": "a74f48dffad02f511e856b84089ba8e5"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/model/UserModel.js": {
+    "mtime": 1780640800.79393,
+    "ast_hash": "f91ca2fa45fbcb956725316145176d84",
+    "semantic_hash": "f91ca2fa45fbcb956725316145176d84"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/package.json": {
+    "mtime": 1780643361.6618516,
+    "ast_hash": "9b0a61fa8f5648d58d3fb1bd6643ef76",
+    "semantic_hash": "9b0a61fa8f5648d58d3fb1bd6643ef76"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/routes/auth.js": {
+    "mtime": 1780643346.1888607,
+    "ast_hash": "0893d6c290e202fc4205e2146c50dd47",
+    "semantic_hash": "0893d6c290e202fc4205e2146c50dd47"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/routes/holdings.js": {
+    "mtime": 1780640800.795314,
+    "ast_hash": "b417bc8906768e44672951be2b710bc6",
+    "semantic_hash": "b417bc8906768e44672951be2b710bc6"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/routes/orders.js": {
+    "mtime": 1780640800.7953808,
+    "ast_hash": "9adb3f5f828abcfa45931a6c99ccc77f",
+    "semantic_hash": "9adb3f5f828abcfa45931a6c99ccc77f"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/routes/positions.js": {
+    "mtime": 1780640800.7954426,
+    "ast_hash": "193b89e5fe1d6c17de540e9d0d555fe0",
+    "semantic_hash": "193b89e5fe1d6c17de540e9d0d555fe0"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/schemas/HoldingsSchema.js": {
+    "mtime": 1780640800.7955508,
+    "ast_hash": "f0eac3199b9eb61c9632cdc7cd587721",
+    "semantic_hash": "f0eac3199b9eb61c9632cdc7cd587721"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/schemas/OrdersSchema.js": {
+    "mtime": 1780640800.7956226,
+    "ast_hash": "649e025e16da94b6632b566c4827506c",
+    "semantic_hash": "649e025e16da94b6632b566c4827506c"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/schemas/PositionsSchema.js": {
+    "mtime": 1780640800.7956917,
+    "ast_hash": "3e750db6802e25db7c75883b40369457",
+    "semantic_hash": "3e750db6802e25db7c75883b40369457"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/schemas/UserSchema.js": {
+    "mtime": 1780643302.4795403,
+    "ast_hash": "4de763c5b67cfded20a0a0fc17c633af",
+    "semantic_hash": "4de763c5b67cfded20a0a0fc17c633af"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/seed/seedHoldings.js": {
+    "mtime": 1780640800.795882,
+    "ast_hash": "8c28b0732c30d5f1fb3a7378c1e0c2e5",
+    "semantic_hash": "8c28b0732c30d5f1fb3a7378c1e0c2e5"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/seed/seedPositions.js": {
+    "mtime": 1780640800.7959564,
+    "ast_hash": "097d5ff0328c4d1105e142937b57c2a8",
+    "semantic_hash": "097d5ff0328c4d1105e142937b57c2a8"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/services/authService.js": {
+    "mtime": 1780643307.2772858,
+    "ast_hash": "f2c2d45ffc887364f45b181749ee644a",
+    "semantic_hash": "f2c2d45ffc887364f45b181749ee644a"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/services/googleAuthService.js": {
+    "mtime": 1780643315.3498683,
+    "ast_hash": "4fe13007d4bf4bf8f6ed2138ae16d75c",
+    "semantic_hash": "4fe13007d4bf4bf8f6ed2138ae16d75c"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/services/holdingsService.js": {
+    "mtime": 1780640800.7961404,
+    "ast_hash": "592d8f40036d718ab1ce166dfcfecb5a",
+    "semantic_hash": "592d8f40036d718ab1ce166dfcfecb5a"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/services/orderService.js": {
+    "mtime": 1780640800.7962134,
+    "ast_hash": "06851d1e109b84aa2928f9bf91d61a77",
+    "semantic_hash": "06851d1e109b84aa2928f9bf91d61a77"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/services/positionsService.js": {
+    "mtime": 1780640800.7962782,
+    "ast_hash": "a7581d498d75ffc3827870e6c8f26171",
+    "semantic_hash": "a7581d498d75ffc3827870e6c8f26171"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/services/userService.js": {
+    "mtime": 1780643321.204973,
+    "ast_hash": "ff5c9cc7de4d500093361f21ae822726",
+    "semantic_hash": "ff5c9cc7de4d500093361f21ae822726"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/tests/auth.test.js": {
+    "mtime": 1780717300.6727824,
+    "ast_hash": "4331178c13a89cd78287887ba6975973",
+    "semantic_hash": "4331178c13a89cd78287887ba6975973"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/tests/holdings.test.js": {
+    "mtime": 1780640800.7965767,
+    "ast_hash": "1ce164623acd1e12dc9e68acc743602a",
+    "semantic_hash": "1ce164623acd1e12dc9e68acc743602a"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/tests/orders.test.js": {
+    "mtime": 1780640800.7966588,
+    "ast_hash": "880b83defa1064ac59e51d228468d8ac",
+    "semantic_hash": "880b83defa1064ac59e51d228468d8ac"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/tests/positions.test.js": {
+    "mtime": 1780640800.796725,
+    "ast_hash": "892fee9d294b586241c6311a763de78d",
+    "semantic_hash": "892fee9d294b586241c6311a763de78d"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/tests/setup.js": {
+    "mtime": 1780640800.7968042,
+    "ast_hash": "f4e9c26025ad57bd7938a8533697da99",
+    "semantic_hash": "f4e9c26025ad57bd7938a8533697da99"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/package.json": {
+    "mtime": 1780640800.7979684,
+    "ast_hash": "2c442a0149f0f7697682b556a3c5d144",
+    "semantic_hash": "2c442a0149f0f7697682b556a3c5d144"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/server.js": {
+    "mtime": 1780731537.6186643,
+    "ast_hash": "50ecc60e0d4d5428925adf9a0aa3ab20",
+    "semantic_hash": "50ecc60e0d4d5428925adf9a0aa3ab20"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/charts/BarChart.js": {
+    "mtime": 1780640800.79897,
+    "ast_hash": "a6dc560dd438b1a2ed045dccaca96126",
+    "semantic_hash": "a6dc560dd438b1a2ed045dccaca96126"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/charts/DoughnutChart.js": {
+    "mtime": 1780640800.799068,
+    "ast_hash": "337afdf034a105399ad1cb1ce9011d5b",
+    "semantic_hash": "337afdf034a105399ad1cb1ce9011d5b"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/config.js": {
+    "mtime": 1780640800.7991462,
+    "ast_hash": "e22902e3a1c3f22e824be75398c1e007",
+    "semantic_hash": "e22902e3a1c3f22e824be75398c1e007"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/context/BuyWindowContext.js": {
+    "mtime": 1780640800.7992663,
+    "ast_hash": "c6f36d954339dd70229575c819240737",
+    "semantic_hash": "c6f36d954339dd70229575c819240737"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/context/UserContext.js": {
+    "mtime": 1780680452.3522727,
+    "ast_hash": "76bc0ea4423372077fdcd6dfa9bbf79e",
+    "semantic_hash": "76bc0ea4423372077fdcd6dfa9bbf79e"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/context/authToken.js": {
+    "mtime": 1780717194.1090767,
+    "ast_hash": "a7b09cfba8b8fe7312534a852fc1d428",
+    "semantic_hash": "a7b09cfba8b8fe7312534a852fc1d428"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/data/chartPalette.js": {
+    "mtime": 1780640800.799495,
+    "ast_hash": "41b3484168c0fc89e6fc56134a2f80d2",
+    "semantic_hash": "41b3484168c0fc89e6fc56134a2f80d2"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/data/watchlistSymbols.js": {
+    "mtime": 1780730872.9051178,
+    "ast_hash": "604074e38a90522c6d117e424784cbbb",
+    "semantic_hash": "604074e38a90522c6d117e424784cbbb"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/hooks/useApiData.js": {
+    "mtime": 1780640800.7998586,
+    "ast_hash": "463b70dab0edffda575dd82fe3587754",
+    "semantic_hash": "463b70dab0edffda575dd82fe3587754"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/hooks/useCurrentUser.js": {
+    "mtime": 1780640800.7999535,
+    "ast_hash": "76c7f93669f402993af33836a2720f0c",
+    "semantic_hash": "76c7f93669f402993af33836a2720f0c"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/hooks/useHoldingsSummary.js": {
+    "mtime": 1780640800.8000457,
+    "ast_hash": "d36e11a74559dd7d542ac294b27626f6",
+    "semantic_hash": "d36e11a74559dd7d542ac294b27626f6"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/hooks/useIndicesPolling.js": {
+    "mtime": 1780640800.8001337,
+    "ast_hash": "675eb40a21c316f99280006f7b68155e",
+    "semantic_hash": "675eb40a21c316f99280006f7b68155e"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/hooks/usePortfolioSummary.js": {
+    "mtime": 1780640800.800218,
+    "ast_hash": "88a7fc49155d5a68500b88cdb7f6ae37",
+    "semantic_hash": "88a7fc49155d5a68500b88cdb7f6ae37"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/hooks/useSubmitOrder.js": {
+    "mtime": 1780640800.800297,
+    "ast_hash": "df4495cae5ac18f821dcef6a1d6c6270",
+    "semantic_hash": "df4495cae5ac18f821dcef6a1d6c6270"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/hooks/useWatchlistPolling.js": {
+    "mtime": 1780730920.527178,
+    "ast_hash": "abfc1c47db0d8523d4c8956d724b2c1f",
+    "semantic_hash": "abfc1c47db0d8523d4c8956d724b2c1f"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/index.js": {
+    "mtime": 1780717211.6595042,
+    "ast_hash": "c6efd94892f727f8617d7c56afcc823c",
+    "semantic_hash": "c6efd94892f727f8617d7c56afcc823c"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/layout/Dashboard.js": {
+    "mtime": 1780640800.800592,
+    "ast_hash": "ab4db8cda1ad67aedf24fa6fc7eb14f8",
+    "semantic_hash": "ab4db8cda1ad67aedf24fa6fc7eb14f8"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/layout/Home.js": {
+    "mtime": 1780640800.8007975,
+    "ast_hash": "c4c6a5ab263a221c40dd1c5a12f9a464",
+    "semantic_hash": "c4c6a5ab263a221c40dd1c5a12f9a464"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/layout/Menu.js": {
+    "mtime": 1780716507.297776,
+    "ast_hash": "0b65292ad5ea72359ed425be9e9fa59b",
+    "semantic_hash": "0b65292ad5ea72359ed425be9e9fa59b"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/layout/TopBar.js": {
+    "mtime": 1780640800.8009584,
+    "ast_hash": "88c00725e8e481b118b827e84f6d2d64",
+    "semantic_hash": "88c00725e8e481b118b827e84f6d2d64"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/modals/BuyActionWindow.js": {
+    "mtime": 1780640800.8010755,
+    "ast_hash": "245435dfb032056054f0bb484f1bbe5a",
+    "semantic_hash": "245435dfb032056054f0bb484f1bbe5a"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/pages/Funds.js": {
+    "mtime": 1780678551.8143468,
+    "ast_hash": "95bd5a58f79d06b7c9755046d1a49ae6",
+    "semantic_hash": "95bd5a58f79d06b7c9755046d1a49ae6"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/pages/Holdings.js": {
+    "mtime": 1780679471.576953,
+    "ast_hash": "315629e30035a17e459c0b09ee1d3769",
+    "semantic_hash": "315629e30035a17e459c0b09ee1d3769"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/pages/HoldingsRow.js": {
+    "mtime": 1780640800.8013418,
+    "ast_hash": "5ad16f304d9cc55f70adda9b1ea0623d",
+    "semantic_hash": "5ad16f304d9cc55f70adda9b1ea0623d"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/pages/Orders.js": {
+    "mtime": 1780640800.801413,
+    "ast_hash": "d18feaeb46f5352ec6259f2563632aff",
+    "semantic_hash": "d18feaeb46f5352ec6259f2563632aff"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/pages/Positions.js": {
+    "mtime": 1780640800.8014803,
+    "ast_hash": "541db91c75ea7c5e2162b00057ca68dc",
+    "semantic_hash": "541db91c75ea7c5e2162b00057ca68dc"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/pages/Summary.js": {
+    "mtime": 1780679388.5019386,
+    "ast_hash": "be97217d5af84019689fbdf9344abf23",
+    "semantic_hash": "be97217d5af84019689fbdf9344abf23"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/pages/Summary.test.js": {
+    "mtime": 1780640800.8017538,
+    "ast_hash": "d750b9bafce399c00643191dd076caf0",
+    "semantic_hash": "d750b9bafce399c00643191dd076caf0"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/utils/portfolioUtils.js": {
+    "mtime": 1780640800.8024786,
+    "ast_hash": "615e7c6ce24ebf03a08f09d88750abb1",
+    "semantic_hash": "615e7c6ce24ebf03a08f09d88750abb1"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/utils/portfolioUtils.test.js": {
+    "mtime": 1780640800.8026464,
+    "ast_hash": "8e65e730c500174a91f8747af622dbc5",
+    "semantic_hash": "8e65e730c500174a91f8747af622dbc5"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/widgets/WatchList/AnalyticsModal.js": {
+    "mtime": 1780640800.802817,
+    "ast_hash": "b5997453cd515dbb9f70b6d90de9ecf7",
+    "semantic_hash": "b5997453cd515dbb9f70b6d90de9ecf7"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/widgets/WatchList/WatchList.js": {
+    "mtime": 1780640800.8028939,
+    "ast_hash": "c05efcda7ca47193258929e822d1fd1a",
+    "semantic_hash": "c05efcda7ca47193258929e822d1fd1a"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/widgets/WatchList/WatchListActions.js": {
+    "mtime": 1780640800.8031058,
+    "ast_hash": "668f4efa3e13957558f904d886854d9e",
+    "semantic_hash": "668f4efa3e13957558f904d886854d9e"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/src/widgets/WatchList/WatchListItem.js": {
+    "mtime": 1780640800.8031886,
+    "ast_hash": "57e9b415e48e1013cca8e22e6ffa75aa",
+    "semantic_hash": "57e9b415e48e1013cca8e22e6ffa75aa"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/package.json": {
+    "mtime": 1780640800.8043883,
+    "ast_hash": "f88549bc93e421be8070a9ec7a71c7c4",
+    "semantic_hash": "f88549bc93e421be8070a9ec7a71c7c4"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/manifest.json": {
+    "mtime": 1780640800.8045685,
+    "ast_hash": "d9d975cebe2ec20b6c652e1e4c12ccf0",
+    "semantic_hash": "d9d975cebe2ec20b6c652e1e4c12ccf0"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/config.js": {
+    "mtime": 1780660975.3754594,
+    "ast_hash": "b53dceeeb962a8dacddedb02c9e94c27",
+    "semantic_hash": "b53dceeeb962a8dacddedb02c9e94c27"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/data/faqLinks.js": {
+    "mtime": 1780660991.1916287,
+    "ast_hash": "d8968d44a7b9aefd4ae0f70f8c5ab952",
+    "semantic_hash": "d8968d44a7b9aefd4ae0f70f8c5ab952"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/data/footerLinks.js": {
+    "mtime": 1780659090.3030357,
+    "ast_hash": "56a64a96fa7e0b600bd12531e6b0afc9",
+    "semantic_hash": "56a64a96fa7e0b600bd12531e6b0afc9"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/data/navItems.js": {
+    "mtime": 1780657756.0477066,
+    "ast_hash": "62f56d089751cdfe4ff0b6232b85d315",
+    "semantic_hash": "62f56d089751cdfe4ff0b6232b85d315"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/data/teamMembers.js": {
+    "mtime": 1780660441.7261355,
+    "ast_hash": "b0e016a37be6e87b55e675f42e5fec2a",
+    "semantic_hash": "b0e016a37be6e87b55e675f42e5fec2a"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/data/universeItems.js": {
+    "mtime": 1780640800.8086715,
+    "ast_hash": "fb1e876be84acbfd7b6dbd9ad9c13daa",
+    "semantic_hash": "fb1e876be84acbfd7b6dbd9ad9c13daa"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/index.js": {
+    "mtime": 1780661228.936302,
+    "ast_hash": "171764569af2ea0bc9f1fad63a05175b",
+    "semantic_hash": "171764569af2ea0bc9f1fad63a05175b"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/about/AboutPage.js": {
+    "mtime": 1780661577.1540217,
+    "ast_hash": "2f75e6df7e56468f736805d488669806",
+    "semantic_hash": "2f75e6df7e56468f736805d488669806"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/about/Hero.js": {
+    "mtime": 1780660167.568757,
+    "ast_hash": "67d5369430ff7a9d049fa772ccfa8a8c",
+    "semantic_hash": "67d5369430ff7a9d049fa772ccfa8a8c"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/about/Team.js": {
+    "mtime": 1780640800.809041,
+    "ast_hash": "c1592d66822e8bcc063258c8d2d287bf",
+    "semantic_hash": "c1592d66822e8bcc063258c8d2d287bf"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/components/FAQLinkColumn.js": {
+    "mtime": 1780661021.4684749,
+    "ast_hash": "d66ca510a80844bf64c53110c0c2c746",
+    "semantic_hash": "d66ca510a80844bf64c53110c0c2c746"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/components/FeatureBlock.js": {
+    "mtime": 1780640800.8097665,
+    "ast_hash": "91314345c987054e4fa9715dc876099c",
+    "semantic_hash": "91314345c987054e4fa9715dc876099c"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/components/FooterColumn.js": {
+    "mtime": 1780659358.2217426,
+    "ast_hash": "c5c3b5299af75716afdb7188eedbd913",
+    "semantic_hash": "c5c3b5299af75716afdb7188eedbd913"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/components/PageHero.js": {
+    "mtime": 1780640800.8099973,
+    "ast_hash": "82ab26fa4a36f5b7896c8b28295dded9",
+    "semantic_hash": "82ab26fa4a36f5b7896c8b28295dded9"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/components/PricingTable.js": {
+    "mtime": 1780640800.810068,
+    "ast_hash": "a28bfe8fb626d17a9337e317c0e67982",
+    "semantic_hash": "a28bfe8fb626d17a9337e317c0e67982"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/components/SignupCTAButton.js": {
+    "mtime": 1780657951.9126873,
+    "ast_hash": "f6a15c7abfe111499498233a56f96415",
+    "semantic_hash": "f6a15c7abfe111499498233a56f96415"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/components/TeamMemberCard.js": {
+    "mtime": 1780660438.9129794,
+    "ast_hash": "c65be772ceb342c5ea4c2ee996333bc3",
+    "semantic_hash": "c65be772ceb342c5ea4c2ee996333bc3"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/components/UniverseTile.js": {
+    "mtime": 1780640800.810284,
+    "ast_hash": "27373d5602437ec885ede2ae56fea17b",
+    "semantic_hash": "27373d5602437ec885ede2ae56fea17b"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/home/Awards.js": {
+    "mtime": 1780640800.8104148,
+    "ast_hash": "922c22fc850668e872875514065a41f2",
+    "semantic_hash": "922c22fc850668e872875514065a41f2"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/home/Education.js": {
+    "mtime": 1780640800.8106031,
+    "ast_hash": "2ca333b504a77917d68cec7e6480247d",
+    "semantic_hash": "2ca333b504a77917d68cec7e6480247d"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/home/Hero.js": {
+    "mtime": 1780640800.8107958,
+    "ast_hash": "299d5f4abfb87676cd71f7b279c97006",
+    "semantic_hash": "299d5f4abfb87676cd71f7b279c97006"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/home/HomePage.js": {
+    "mtime": 1780640800.810881,
+    "ast_hash": "e7b8e3d7c1f617a644b70bc13fcdc3ac",
+    "semantic_hash": "e7b8e3d7c1f617a644b70bc13fcdc3ac"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/home/Pricing.js": {
+    "mtime": 1780640800.8109634,
+    "ast_hash": "f6f72e968e6ae40b50fbaa21288ceebf",
+    "semantic_hash": "f6f72e968e6ae40b50fbaa21288ceebf"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/home/Stats.js": {
+    "mtime": 1780657960.5113254,
+    "ast_hash": "6acc35af315c627f891fd71cbcdb07c5",
+    "semantic_hash": "6acc35af315c627f891fd71cbcdb07c5"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/pricing/AccountOpeningCharges.js": {
+    "mtime": 1780640800.8111737,
+    "ast_hash": "74f45665f436100d638a16075fabfdc6",
+    "semantic_hash": "74f45665f436100d638a16075fabfdc6"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/pricing/DematAMC.js": {
+    "mtime": 1780640800.811257,
+    "ast_hash": "0375fc3ccbf13312d4268cbfb20559cc",
+    "semantic_hash": "0375fc3ccbf13312d4268cbfb20559cc"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/pricing/Hero.js": {
+    "mtime": 1780640800.811334,
+    "ast_hash": "9ead5c52fa4447e80bc96d2147b1d659",
+    "semantic_hash": "9ead5c52fa4447e80bc96d2147b1d659"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/pricing/PricingPage.js": {
+    "mtime": 1780640800.8114173,
+    "ast_hash": "8862bad31ddcfee9d6f44b4a191f8b28",
+    "semantic_hash": "8862bad31ddcfee9d6f44b4a191f8b28"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/pricing/ValueAddedServices.js": {
+    "mtime": 1780640800.811501,
+    "ast_hash": "b2303992f4e70179df1ce2cc4d4b5345",
+    "semantic_hash": "b2303992f4e70179df1ce2cc4d4b5345"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/products/Hero.js": {
+    "mtime": 1780640800.811629,
+    "ast_hash": "031d22c8b2e0cbe2873eca1f2357d7a2",
+    "semantic_hash": "031d22c8b2e0cbe2873eca1f2357d7a2"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/products/ProductsPage.js": {
+    "mtime": 1780640800.8118305,
+    "ast_hash": "3d67ac4d68bd4943d6dc22f769dce0d3",
+    "semantic_hash": "3d67ac4d68bd4943d6dc22f769dce0d3"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/products/Universe.js": {
+    "mtime": 1780640800.8120317,
+    "ast_hash": "bd8651d7724e5d40d4d82a863f57e0ef",
+    "semantic_hash": "bd8651d7724e5d40d4d82a863f57e0ef"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/shared/Footer.js": {
+    "mtime": 1780659709.8294444,
+    "ast_hash": "27a8646189118622ed9384d43adbf119",
+    "semantic_hash": "27a8646189118622ed9384d43adbf119"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/shared/Navbar.js": {
+    "mtime": 1780659787.3640735,
+    "ast_hash": "e10481c1637cccc962c983a8fbb5da16",
+    "semantic_hash": "e10481c1637cccc962c983a8fbb5da16"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/shared/Navbar.test.js": {
+    "mtime": 1780640800.8123405,
+    "ast_hash": "ea9813202351f1f090873acdba2b6cd4",
+    "semantic_hash": "ea9813202351f1f090873acdba2b6cd4"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/shared/NotFound.js": {
+    "mtime": 1780640800.8124325,
+    "ast_hash": "2f607c9ce94a7631e3121c37feb19b08",
+    "semantic_hash": "2f607c9ce94a7631e3121c37feb19b08"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/shared/OpenAccount.js": {
+    "mtime": 1780640800.8125112,
+    "ast_hash": "bf74ef6c7ac2d801b41267d1c7f2b203",
+    "semantic_hash": "bf74ef6c7ac2d801b41267d1c7f2b203"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/support/Hero.js": {
+    "mtime": 1780661002.1677046,
+    "ast_hash": "7edcd1d7f7278e8a93c39ae17c8383c2",
+    "semantic_hash": "7edcd1d7f7278e8a93c39ae17c8383c2"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/support/SupportFaq.js": {
+    "mtime": 1780661013.7105553,
+    "ast_hash": "d22824628ad275bbf6c06d1444eadd9f",
+    "semantic_hash": "d22824628ad275bbf6c06d1444eadd9f"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/src/landing_page/support/SupportPage.js": {
+    "mtime": 1780660995.7102606,
+    "ast_hash": "e93d5e3e78557796a9415b826f9b5316",
+    "semantic_hash": "e93d5e3e78557796a9415b826f9b5316"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/package.json": {
+    "mtime": 1780640800.8148384,
+    "ast_hash": "944addcc7aec041455935b6274b3ceb7",
+    "semantic_hash": "944addcc7aec041455935b6274b3ceb7"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/.github/dependabot.yml": {
+    "mtime": 1780640800.781139,
+    "ast_hash": "a87ac14e390c7fbef2f6c580a5d68e1a",
+    "semantic_hash": "a87ac14e390c7fbef2f6c580a5d68e1a"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/.github/workflows/ci.yml": {
+    "mtime": 1780640800.7812774,
+    "ast_hash": "d491ce236b7af552435cba98edf34788",
+    "semantic_hash": "d491ce236b7af552435cba98edf34788"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/.github/workflows/codeql.yml": {
+    "mtime": 1780640800.7814023,
+    "ast_hash": "8251f7eea2e9c363ba46473bbe41b52e",
+    "semantic_hash": "8251f7eea2e9c363ba46473bbe41b52e"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/AGENTS.md": {
+    "mtime": 1780661976.9248128,
+    "ast_hash": "ea3f83478651291824c2fa4998c22869",
+    "semantic_hash": "ea3f83478651291824c2fa4998c22869"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/CLAUDE.md": {
+    "mtime": 1780726472.2749577,
+    "ast_hash": "93cabe764d1ea298887ba52e9b3464f6",
+    "semantic_hash": "93cabe764d1ea298887ba52e9b3464f6"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/CONTRIBUTING.md": {
+    "mtime": 1780640800.78207,
+    "ast_hash": "eb0b012305fa7115eca4748b6e52e5a8",
+    "semantic_hash": "eb0b012305fa7115eca4748b6e52e5a8"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/README.md": {
+    "mtime": 1780640800.782322,
+    "ast_hash": "dac4f57cdbab93f80579757fc8eeb72d",
+    "semantic_hash": "dac4f57cdbab93f80579757fc8eeb72d"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/SECURITY.md": {
+    "mtime": 1780640800.7824607,
+    "ast_hash": "3425ebb13b8cf7d065623f793955bd37",
+    "semantic_hash": "3425ebb13b8cf7d065623f793955bd37"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/backend/CLAUDE.md": {
+    "mtime": 1780717355.9981925,
+    "ast_hash": "f38b145a99755fbcf78590e6fc7cc455",
+    "semantic_hash": "f38b145a99755fbcf78590e6fc7cc455"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/CLAUDE.md": {
+    "mtime": 1780731580.5236104,
+    "ast_hash": "73a8fa042d04223f1dcc1f0e18501df5",
+    "semantic_hash": "73a8fa042d04223f1dcc1f0e18501df5"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/public/index.html": {
+    "mtime": 1780640800.7982197,
+    "ast_hash": "f4c2c750a796f6ad97de12a36492a16d",
+    "semantic_hash": "f4c2c750a796f6ad97de12a36492a16d"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/public/robots.txt": {
+    "mtime": 1780640800.7985363,
+    "ast_hash": "fa1ded1ed7c11438a9b0385b1e112850",
+    "semantic_hash": "fa1ded1ed7c11438a9b0385b1e112850"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/CLAUDE.md": {
+    "mtime": 1780661832.5873942,
+    "ast_hash": "e2d95c76bb61db40f60691ebf662d4bd",
+    "semantic_hash": "e2d95c76bb61db40f60691ebf662d4bd"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/designZerodha.md": {
+    "mtime": 1780640800.8035598,
+    "ast_hash": "27c78a2b572c54b4212b4cfdbd5b233d",
+    "semantic_hash": "27c78a2b572c54b4212b4cfdbd5b233d"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/index.html": {
+    "mtime": 1780640800.804497,
+    "ast_hash": "9ac11dfb78ac47fbbffa8568b688e4bb",
+    "semantic_hash": "9ac11dfb78ac47fbbffa8568b688e4bb"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/robots.txt": {
+    "mtime": 1780640800.8079283,
+    "ast_hash": "b6216d61c03e6ce0c9aea6ca7808f7ca",
+    "semantic_hash": "b6216d61c03e6ce0c9aea6ca7808f7ca"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/assets/Dashboard.png": {
+    "mtime": 1780640800.7835815,
+    "ast_hash": "30585fd8fbdeafdcc919e00e72fd152d",
+    "semantic_hash": "30585fd8fbdeafdcc919e00e72fd152d"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/assets/Dashboard:Holding .png": {
+    "mtime": 1780640800.785661,
+    "ast_hash": "885267c831851f97cddc6becd2d7a70b",
+    "semantic_hash": "885267c831851f97cddc6becd2d7a70b"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/assets/Dashboard:Holding Chart.png": {
+    "mtime": 1780640800.7871156,
+    "ast_hash": "9ae1c69b9eb9ca5da63746c8a8208497",
+    "semantic_hash": "9ae1c69b9eb9ca5da63746c8a8208497"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/assets/Homepage.png": {
+    "mtime": 1780640800.789006,
+    "ast_hash": "61d81f50240add04d1f4c7211b94c762",
+    "semantic_hash": "61d81f50240add04d1f4c7211b94c762"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/assets/Pricing.png": {
+    "mtime": 1780640800.7900736,
+    "ast_hash": "e009570e0fb27a925f915aaa5ab26d3e",
+    "semantic_hash": "e009570e0fb27a925f915aaa5ab26d3e"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/assets/Sign Up.png": {
+    "mtime": 1780640800.7906795,
+    "ast_hash": "74de0319ccd2b4ebf201a262ac5db70b",
+    "semantic_hash": "74de0319ccd2b4ebf201a262ac5db70b"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/assets/Support.png": {
+    "mtime": 1780640800.7916908,
+    "ast_hash": "83289ecc7e8e94a5851e4a1d0f1e0f93",
+    "semantic_hash": "83289ecc7e8e94a5851e4a1d0f1e0f93"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/dashboard/public/logo.png": {
+    "mtime": 1780640800.7983282,
+    "ast_hash": "1833d32017dd41ea075510f006e96e0f",
+    "semantic_hash": "1833d32017dd41ea075510f006e96e0f"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/MyImage.jpg": {
+    "mtime": 1780640800.8053076,
+    "ast_hash": "0244ff3c872eced09a843e7a15b69f42",
+    "semantic_hash": "0244ff3c872eced09a843e7a15b69f42"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/appstoreBadge.svg": {
+    "mtime": 1780640800.8054187,
+    "ast_hash": "dcdf7f5774aa176b588aa18bb65cd46b",
+    "semantic_hash": "dcdf7f5774aa176b588aa18bb65cd46b"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/coin.png": {
+    "mtime": 1780640800.8054895,
+    "ast_hash": "b810bc93eb12377d20214d21eb930aed",
+    "semantic_hash": "b810bc93eb12377d20214d21eb930aed"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/console.png": {
+    "mtime": 1780640800.805606,
+    "ast_hash": "9799519e24a62885bdf394a1dfed421f",
+    "semantic_hash": "9799519e24a62885bdf394a1dfed421f"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/dittoLogo.png": {
+    "mtime": 1780640800.8057723,
+    "ast_hash": "d43a0b03a4b5ad670b3b8eff11da8a99",
+    "semantic_hash": "d43a0b03a4b5ad670b3b8eff11da8a99"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/ecosystem.png": {
+    "mtime": 1780640800.8059642,
+    "ast_hash": "e738122c22cf532ad1249ea00123596d",
+    "semantic_hash": "e738122c22cf532ad1249ea00123596d"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/education.svg": {
+    "mtime": 1780640800.8060923,
+    "ast_hash": "5cee3cef51d7d4cc5f21f495e43f4eb6",
+    "semantic_hash": "5cee3cef51d7d4cc5f21f495e43f4eb6"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/googlePlayBadge.svg": {
+    "mtime": 1780640800.8061814,
+    "ast_hash": "c3f75b8865a6dcd8a2ec39b50636e345",
+    "semantic_hash": "c3f75b8865a6dcd8a2ec39b50636e345"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/homeHero.png": {
+    "mtime": 1780640800.8064988,
+    "ast_hash": "812e8e7f20320bcd8fca8035c99259bf",
+    "semantic_hash": "812e8e7f20320bcd8fca8035c99259bf"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/intradayTrades.svg": {
+    "mtime": 1780640800.806592,
+    "ast_hash": "4b9ed09dd372d4b8de5d4166ef5c41a6",
+    "semantic_hash": "4b9ed09dd372d4b8de5d4166ef5c41a6"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/kite.png": {
+    "mtime": 1780640800.8067076,
+    "ast_hash": "b38411b1033b32df3f2c2e1f7687f6da",
+    "semantic_hash": "b38411b1033b32df3f2c2e1f7687f6da"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/kiteconnect.png": {
+    "mtime": 1780640800.8068497,
+    "ast_hash": "6fdb41abdf9f432f5d23254bc1c4415c",
+    "semantic_hash": "6fdb41abdf9f432f5d23254bc1c4415c"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/largestBroker.svg": {
+    "mtime": 1780640800.8069608,
+    "ast_hash": "f9724c00566e71ca1dd6d5593f9789cb",
+    "semantic_hash": "f9724c00566e71ca1dd6d5593f9789cb"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/logo.svg": {
+    "mtime": 1780640800.807043,
+    "ast_hash": "db730bb841762a65b40b3113fe1e7f6d",
+    "semantic_hash": "db730bb841762a65b40b3113fe1e7f6d"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/pressLogos.png": {
+    "mtime": 1780640800.8071215,
+    "ast_hash": "2f934e5dfefb09828cae8ccc45e331de",
+    "semantic_hash": "2f934e5dfefb09828cae8ccc45e331de"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/pricingEquity.svg": {
+    "mtime": 1780640800.807196,
+    "ast_hash": "147c0f49727255819c647a9e1180cd24",
+    "semantic_hash": "147c0f49727255819c647a9e1180cd24"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/sensibullLogo.svg": {
+    "mtime": 1780640800.8072987,
+    "ast_hash": "172ba82636047dd644cd3567d242b9b5",
+    "semantic_hash": "172ba82636047dd644cd3567d242b9b5"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/smallcaseLogo.png": {
+    "mtime": 1780640800.8073776,
+    "ast_hash": "f4869e6b6b6ffb18ea242f23f74d79f6",
+    "semantic_hash": "f4869e6b6b6ffb18ea242f23f74d79f6"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/streakLogo.png": {
+    "mtime": 1780640800.8075774,
+    "ast_hash": "1a5ba51441a2d23b405bec555c9597e7",
+    "semantic_hash": "1a5ba51441a2d23b405bec555c9597e7"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/tijori.svg": {
+    "mtime": 1780640800.8076522,
+    "ast_hash": "08d76fa1d327e33783f58c661bd1d0ce",
+    "semantic_hash": "08d76fa1d327e33783f58c661bd1d0ce"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/varsity.png": {
+    "mtime": 1780640800.8077545,
+    "ast_hash": "7d642247f3c6ef1a7146bb70e62e1085",
+    "semantic_hash": "7d642247f3c6ef1a7146bb70e62e1085"
+  },
+  "/Users/siddarthvaidya/Downloads/Visual_Studio_Code/ZerodhaRebuild/frontend/public/media/images/zerodhaFundhouse.png": {
+    "mtime": 1780640800.80786,
+    "ast_hash": "1cca2f90e2700cf6d6defa5a4fe61af0",
+    "semantic_hash": "1cca2f90e2700cf6d6defa5a4fe61af0"
+  }
+}

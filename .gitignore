@@ -44,6 +44,14 @@ Thumbs.db
 !.vscode/extensions.json
 !.vscode/settings.json
 
+# ─── graphify (commit the graph, ignore machine-local scratch) ───────────────
+# graph.json / graph.html / GRAPH_REPORT.md / manifest.json are tracked.
+# These two hold absolute paths to the local machine — regenerated each run.
+graphify-out/.graphify_python
+graphify-out/.graphify_root
+# Content-hashed incremental-rebuild cache — derived, churns on every edit.
+graphify-out/cache/
+
 # ─── Claude Code (keep committed) ────────────────────────────────────────────
 # .claude/ contains project-scoped rules — commit these
 # Ignore only personal local overrides + session-local state
