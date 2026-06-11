@@ -20,6 +20,12 @@ A Zerodha-inspired trading platform clone, built as a full-stack learning projec
 
 ![Holdings Chart](assets/Dashboard:Holding%20Chart.png)
 
+![Positions](assets/Dashboard:Postitions.png)
+
+![Orders](assets/Dashboard:Orders.png)
+
+![Funds](assets/Dashboard:Funds.png)
+
 ![Support](assets/Support.png)
 
 ## Tech stack
